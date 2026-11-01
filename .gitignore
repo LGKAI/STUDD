@@ -1,0 +1,30 @@
+# 1. Byte-code & Cache của Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# 2. Môi trường ảo
+venv/
+.venv/
+env/
+
+# 3. File tạm của Jupyter Notebook
+.ipynb_checkpoints/
+
+# 4. Thư mục log của Weights & Biases
+wandb/
+
+# 5. File cấu hình của Editor
+.vscode/
+.idea/
+
+# 6. Dữ liệu nặng
+data/*.csv
+data/*.arff
+data/*.parquet
+# Giữ lại file .gitkeep để Git không xóa folder data
+!data/.gitkeep
+
+# 7. File rác hệ điều hành
+.DS_Store
+Thumbs.db
