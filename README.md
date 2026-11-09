@@ -15,3 +15,26 @@
   * **Sản phẩm nộp:** File `ID.pptx` (Poster workshop)
 * **Kỷ luật thực nghiệm (5% điểm):** Chất lượng repository GitHub và theo dõi thực nghiệm đầy đủ trên Weights & Biases (W&B)
   * **W&B Project Dashboard:** [https://wandb.ai/lgkai-hcmus/STUDD](https://wandb.ai/lgkai-hcmus/STUDD)
+
+---
+
+## Cấu trúc Thư mục Dự án
+
+```text
+Project1_STUDD/
+├── data/             # Dữ liệu chuẩn (OpenML cache) và dữ liệu giả lập (synthetic)
+├── src/              # Mã nguồn cài đặt mô hình STUDD, Page-Hinkley và bộ nạp dữ liệu
+│   ├── __init__.py   # Đóng gói package src
+│   ├── detector.py   # Module 1: Thuật toán kiểm định tuần tự Page-Hinkley
+│   ├── studd.py      # Module 2: Kiến trúc Teacher - Student phát hiện Concept Drift
+│   └── data_loader.py# Module 3: Bộ nạp dữ liệu luồng tự động (OpenML & Synthetic)
+├── experiments/      # Kịch bản chạy thực nghiệm (Reproduction & Stress Testing)
+│   ├── reproduce.py  # Chạy thực nghiệm tái hiện so sánh đối đầu với bài báo
+│   └── stress_test.py# Kịch bản kiểm thử chịu tải và phản biện lý thuyết
+├── notebooks/        # Jupyter Notebooks phân tích và trực quan hóa kết quả
+├── results/          # Biểu đồ trượt xuất ra (figures) và bảng số liệu (tables)
+├── docs/             # Bài báo gốc STUDD, Slide báo cáo giữa kỳ và Poster cuối kỳ
+├── .gitignore        # Cấu hình bỏ qua file rác, môi trường ảo và dữ liệu nặng
+├── requirements.txt  # Danh sách các thư viện phụ thuộc chuẩn Python 3.9+
+└── README.md         # Tài liệu giới thiệu đề tài, các cột mốc và cấu trúc dự án
+```
