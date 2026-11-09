@@ -38,3 +38,13 @@ Project1_STUDD/
 ├── requirements.txt  # Danh sách các thư viện phụ thuộc chuẩn Python 3.9+
 └── README.md         # Tài liệu giới thiệu đề tài, các cột mốc và cấu trúc dự án
 ```
+
+---
+
+## Bảng Ánh xạ Thực nghiệm (Experiment Mapping Table — Weights & Biases)
+
+| Thí nghiệm | Bộ dữ liệu | Script Thực thi | Link W&B Run | Tóm tắt Kết quả Thực nghiệm |
+| :--- | :--- | :--- | :--- | :--- |
+| **EXP-01 (Hình 7)** | `abrupt_drift` | [`experiments/reproduce.py`](file:///d:/ChuyenNganhAI/1_MachineLearning/Project1_STUDD/experiments/reproduce.py) | [Run `dasuvj0s`](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/dasuvj0s) | STUDD đạt $\kappa = 0.750$ (Paper: $0.73$), vượt xa Baseline tĩnh ($\kappa = 0.299$) và bắt trúng cả 2 điểm Drift. |
+| **EXP-02 (Bảng 3 & 4)** | `electricity` | [`experiments/reproduce.py`](file:///d:/ChuyenNganhAI/1_MachineLearning/Project1_STUDD/experiments/reproduce.py) | [Run `dasuvj0s`](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/dasuvj0s) | STUDD đạt $\kappa = 0.621$ với chi phí nhãn $\text{Cost} = 0.40$ (Paper: $0.43$), tiết kiệm $60\%$ nhãn so với SS ($\text{Cost} = 1.00$). |
+| **EXP-03 (Bảng 3 & 4)** | `ozone` | [`experiments/reproduce.py`](file:///d:/ChuyenNganhAI/1_MachineLearning/Project1_STUDD/experiments/reproduce.py) | [Run `dasuvj0s`](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/dasuvj0s) | STUDD đạt $\kappa = 0.142$ (Paper: $0.13$, độ lệch $+0.012$), không báo động giả ($\text{FAR} = 0$) trong khi OS báo động giả $3$ lần ($\text{Cost} = 0.79$). |

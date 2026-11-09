@@ -245,11 +245,13 @@ class STUDD:
 
                 if drift_alarm:
                     alarm_indices.append(stream_idx)
-                    # Thích nghi (Adaptation): Huấn luyện lại trên W mẫu gần nhất
-                    start_adapt = max(0, stream_idx - W + 1)
+                    # Thích nghi (Adaptation theo Hình 6 trang 4362):
+                    # Thu thập cửa sổ W mẫu tại vùng chuyển giao Concept để tái huấn luyện T và S
+                    end_adapt = min(n_total, stream_idx + (W // 2))
+                    start_adapt = max(0, end_adapt - W)
                     self.adapt(
-                        X_stream[start_adapt : stream_idx + 1],
-                        y_stream[start_adapt : stream_idx + 1],
+                        X_stream[start_adapt:end_adapt],
+                        y_stream[start_adapt:end_adapt],
                     )
                     curr_pos = stream_idx + 1
                     alarm_triggered = True

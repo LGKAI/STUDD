@@ -151,19 +151,32 @@ def generate_abrupt_drift_stream(
     boundaries = [0] + sorted(drift_points) + [n_samples]
 
     X_List, y_list = [], []
+    # Các hướng dịch chuyển phân phối rõ rệt qua từng Concept (mô phỏng AbruptInsects)
+    concept_means = [
+        np.zeros(n_features, dtype=np.float32),
+        np.array([1.8, -1.8, 0.5, -0.5] + [0.0] * (n_features - 4), dtype=np.float32),
+        np.array([0.2, -0.2, 2.2, -2.2] + [0.0] * (n_features - 4), dtype=np.float32),
+    ]
+    concept_weights = [
+        np.array([1.2, 1.0, 0.8, 0.5] + [0.1] * (n_features - 4), dtype=np.float32),
+        np.array([-1.0, 1.2, -0.8, 0.6] + [0.1] * (n_features - 4), dtype=np.float32),
+        np.array([0.6, 0.8, -1.2, 1.0] + [0.1] * (n_features - 4), dtype=np.float32),
+    ]
+
     for seg_idx in range(len(boundaries) - 1):
         start, end = boundaries[seg_idx], boundaries[seg_idx + 1]
         seg_len = end - start
+        c_idx = seg_idx % len(concept_means)
 
-        # Mỗi phân đoạn (concept) có tâm phân phối p(X) và siêu phẳng quy luật p(y|X) khác nhau
-        mean_shift = rng.uniform(-1.5, 1.5, size=(n_features,)) * seg_idx
-        cov_scale = 1.0 + 0.3 * (seg_idx % 2)
-        X_seg = rng.normal(loc=mean_shift, scale=cov_scale, size=(seg_len, n_features)).astype(np.float32)
+        # Mỗi phân đoạn (concept) có tâm phân phối p(X) và quy luật p(y|X) riêng biệt
+        cov_scale = 1.0 if c_idx == 0 else 1.6
+        X_seg = rng.normal(
+            loc=concept_means[c_idx], scale=cov_scale, size=(seg_len, n_features)
+        ).astype(np.float32)
 
-        weights = rng.uniform(-1.5, 1.5, size=(n_features,))
-        # Kết hợp cả thành phần tuyến tính và phi tuyến bậc hai
-        logits = X_seg @ weights + 0.4 * (X_seg[:, 0] * X_seg[:, 1])
-        y_seg = (logits > np.median(logits)).astype(np.int64)
+        logits = X_seg @ concept_weights[c_idx]
+        threshold_val = float(concept_means[c_idx] @ concept_weights[c_idx])
+        y_seg = (logits > threshold_val).astype(np.int64)
 
         X_List.append(X_seg)
         y_list.append(y_seg)

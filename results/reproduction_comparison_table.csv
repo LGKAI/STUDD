@@ -1,0 +1,13 @@
+﻿Dataset,Method,Our_Kappa,Paper_Kappa,Kappa_Diff,Our_Cost,Paper_Cost,Alarms
+abrupt_drift,BL-st,0.2991,0.59,-0.2909,0.0909,0.09,0
+abrupt_drift,STUDD,0.75,0.73,0.02,0.4545,0.28,4
+abrupt_drift,SS,0.8397,0.78,0.0597,0.6364,0.19,6
+abrupt_drift,OS,0.6888,0.79,-0.1012,1.0,0.19,10
+electricity,BL-st,0.3959,0.13,0.2659,0.1333,0.02,0
+electricity,STUDD,0.6209,0.29,0.3309,0.4,0.43,2
+electricity,SS,0.8808,0.39,0.4908,1.0,0.69,9
+electricity,OS,0.6217,0.33,0.2917,0.9333,0.09,6
+ozone,BL-st,0.1424,0.13,0.0124,0.1973,0.39,0
+ozone,STUDD,0.1424,0.13,0.0124,0.1973,0.39,0
+ozone,SS,0.1424,0.14,0.0024,0.1973,0.39,0
+ozone,OS,0.0873,0.14,-0.0527,0.7893,0.39,3
