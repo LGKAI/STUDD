@@ -22,6 +22,8 @@ wandb/
 data/*.csv
 data/*.arff
 data/*.parquet
+data/*.npz
+data/openml_cache/
 # Giữ lại file .gitkeep để Git không xóa folder data
 !data/.gitkeep
 
