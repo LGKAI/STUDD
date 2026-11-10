@@ -24,6 +24,7 @@ data/*.arff
 data/*.parquet
 data/*.npz
 data/openml_cache/
+!data/.gitkeep
 
 # 7. File rác hệ điều hành
 .DS_Store
