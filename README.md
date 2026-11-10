@@ -4,7 +4,30 @@
 
 ---
 
-## Các Cột mốc & Bài nộp Đồ án
+## 1. Tổng quan về Bài nghiên cứu STUDD
+
+### 1.1. Bối cảnh & Bài toán Concept Drift
+Trong các hệ thống học máy triển khai trên luồng dữ liệu thời gian thực (Data Streams) như IoT, phát hiện gian lận tài chính hay dự báo phụ tải điện năng, môi trường luôn biến động khiến phân phối dữ liệu $P(X, Y)$ thay đổi theo thời gian. Hiện tượng này được gọi là **Trôi dạt khái niệm (Concept Drift)**, làm cho mô hình học máy huấn luyện trên dữ liệu cũ bị suy giảm độ chính xác nghiêm trọng.
+
+### 1.2. Hạn chế của các phương pháp truyền thống
+Phần lớn các thuật toán phát hiện Concept Drift kinh điển (như DDM, EDDM, ADWIN, Page-Hinkley giám sát) đều thuộc nhóm **có giám sát (supervised)**. Chúng đòi hỏi hệ thống phải có **nhãn thực tế tức thì ($y_t$)** ngay sau mỗi dự đoán để đo lường sai số. Tuy nhiên, trong thực tế sản xuất:
+* Việc gán nhãn thực tế tốn kém chi phí chuyên gia rất lớn.
+* Nhãn thường bị trễ thời gian rất dài (delayed feedback) hoặc hoàn toàn không có nhãn (unlabeled stream).
+
+### 1.3. Giải pháp của STUDD (Student-Teacher Drift Detection)
+Bài báo nghiên cứu đề xuất phương pháp **STUDD** (*A Student-Teacher Method for Unsupervised Concept Drift Detection* - Cerqueira et al., *Machine Learning* 2023 Springer) nhằm phát hiện trôi dạt mà **không cần nhãn thực tế** theo cơ chế sau:
+1. **Kiến trúc Thầy - Trò (Teacher - Student Paradigm):**
+   * **Teacher ($T$):** Mô hình tĩnh ban đầu, đóng vai trò chuyên gia tham chiếu đưa ra nhãn dự đoán $\hat{y}_{t, T}$.
+   * **Student ($S$):** Mô hình học trực tuyến (online learner), được huấn luyện để **học bắt chước** hành vi của Teacher. Nhãn mà Student học theo chính là dự đoán của Teacher $\hat{y}_{t, T}$, hoàn toàn không cần nhãn thật $y_t$.
+2. **Cơ chế Phát hiện Trôi dạt (Unsupervised Detection):**
+   * Với mỗi mẫu dữ liệu mới $x_t$, cả Teacher và Student cùng đưa ra dự đoán. Sai số bắt chước (Mimicry Loss / Discrepancy) $L_t = \mathbb{I}(\hat{y}_{t, T} \neq \hat{y}_{t, S})$ được theo dõi liên tục thông qua thuật toán kiểm định tuần tự **Page-Hinkley (PH)**.
+   * Khi dữ liệu ổn định, Student bắt chước Teacher rất tốt ($L_t \approx 0$). Khi Concept Drift xảy ra, phân phối dữ liệu biến đổi khiến Student và Teacher phát sinh bất đồng lớn $\rightarrow$ Giá trị tích lũy Page-Hinkley tăng vọt vượt ngưỡng cho phép ($\lambda$), kích hoạt cảnh báo phát hiện Concept Drift.
+3. **Thích nghi Tối ưu Chi phí (Active Adaptive Retraining):**
+   * Chỉ khi có tín hiệu cảnh báo Drift từ STUDD, hệ thống mới yêu cầu nhãn thực tế (True Labels) cho một tập mẫu cục bộ để tái huấn luyện lại Teacher và Student. Nhờ đó, STUDD giúp cân bằng tối ưu giữa **hiệu năng mô hình** và **tiết kiệm tối đa chi phí gán nhãn**.
+
+---
+
+## 2. Các Cột mốc & Bài nộp Đồ án
 
 * **Giai đoạn 1:** Milestone 1 (Chọn bài báo) ──► Nộp form đăng ký (Pass/Fail)
 * **Giai đoạn 2:** Milestone 2 (Đọc hiểu) + Lab 1 (Tái hiện thực nghiệm) ──► Nộp **SLIDE GIỮA KỲ (45% điểm)**
@@ -18,7 +41,7 @@
 
 ---
 
-## Cấu trúc Thư mục Dự án
+## 3. Cấu trúc Thư mục Dự án
 
 ```text
 Project1_STUDD/
@@ -38,3 +61,59 @@ Project1_STUDD/
 ├── requirements.txt  # Danh sách các thư viện phụ thuộc chuẩn Python 3.9+
 └── README.md         # Tài liệu giới thiệu đề tài, các cột mốc và cấu trúc dự án
 ```
+
+---
+
+## 4. Hướng dẫn Cài đặt & Chạy Thực nghiệm
+
+### Bước 1: Khởi tạo và kích hoạt môi trường ảo
+Khuyến nghị sử dụng Python 3.9 đến 3.11:
+
+* **Trên Windows (PowerShell):**
+  ```powershell
+  python -m venv venv
+  .\venv\Scripts\Activate.ps1
+  ```
+* **Trên Linux / macOS:**
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+
+### Bước 2: Cài đặt các thư viện phụ thuộc
+```powershell
+pip install -r requirements.txt
+```
+
+### Bước 3: Đăng nhập tài khoản Weights & Biases (W&B)
+Để đồng bộ kết quả thực nghiệm lên dashboard của nhóm:
+```powershell
+python -m wandb login
+```
+*(Lấy API key tại [https://wandb.ai/authorize](https://wandb.ai/authorize) và dán vào terminal khi được nhắc)*
+
+### Bước 4: Kiểm thử các module độc lập (Unit Test)
+Chạy kiểm tra từng thành phần cốt lõi của hệ thống:
+```powershell
+# 1. Kiểm thử thuật toán kiểm định tuần tự Page-Hinkley (Module 1)
+python src/detector.py
+
+# 2. Kiểm thử khung làm việc Teacher - Student và phát hiện trôi dạt (Module 2)
+python src/studd.py
+
+# 3. Kiểm thử bộ nạp dữ liệu luồng tổng hợp và benchmark OpenML (Module 3)
+python src/data_loader.py
+```
+
+### Bước 5: Chạy thực nghiệm tái hiện (Reproduction Experiments)
+Chạy toàn bộ quy trình so sánh 4 chiến lược (`BL-st`, `STUDD`, `SS`, `OS`) trên cả 3 luồng dữ liệu (`abrupt_drift`, `electricity`, `ozone`):
+```powershell
+python experiments/reproduce.py
+```
+
+Sau khi chạy xong:
+* Toàn bộ chỉ số, tham số và biểu đồ phân tích được đẩy trực tiếp lên dashboard: [W&B lgkai-hcmus/STUDD](https://wandb.ai/lgkai-hcmus/STUDD).
+* Các file trực quan hóa và bảng kết quả chất lượng cao (300 DPI) được lưu tại thư mục `results/`:
+  * `results/fig1_rolling_kappa_abrupt_drift.png`: Biểu đồ Kappa score trượt theo thời gian.
+  * `results/fig2_performance_vs_cost_comparison.png`: Biểu đồ so sánh hiệu năng (Kappa) và chi phí gán nhãn giữa 4 phương pháp.
+  * `results/reproduction_comparison_table.csv`: Bảng tổng hợp số liệu chi tiết.
