@@ -24,8 +24,6 @@ data/*.arff
 data/*.parquet
 data/*.npz
 data/openml_cache/
-# Giữ lại file .gitkeep để Git không xóa folder data
-!data/.gitkeep
 
 # 7. File rác hệ điều hành
 .DS_Store
