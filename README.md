@@ -2,7 +2,7 @@
 
 Đồ án Nhập môn học máy
 
-Dự án nghiên cứu, thực nghiệm và cài đặt lại (reproduce) mô hình **STUDD** dựa trên bài báo khoa học:
+Nghiên cứu, thực nghiệm và cài đặt lại (reproduce) mô hình **STUDD** dựa trên bài báo khoa học:
 
 > **STUDD: A Student–Teacher Method for Unsupervised Concept Drift Detection**  
 > *Vitor Cerqueira, Heitor Murilo Gomes, Albert Bifet, Luis Torgo* (Dalhousie University, University of Waikato, Télécom ParisTech).  
