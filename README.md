@@ -117,3 +117,60 @@ Sau khi chạy xong:
   * `results/fig1_rolling_kappa_abrupt_drift.png`: Biểu đồ Kappa score trượt theo thời gian.
   * `results/fig2_performance_vs_cost_comparison.png`: Biểu đồ so sánh hiệu năng (Kappa) và chi phí gán nhãn giữa 4 phương pháp.
   * `results/reproduction_comparison_table.csv`: Bảng tổng hợp số liệu chi tiết.
+
+
+---
+
+## 4. Hướng dẫn Cài đặt & Chạy Thực nghiệm
+
+### Bước 1: Khởi tạo và kích hoạt môi trường ảo
+Khuyến nghị sử dụng Python 3.9 đến 3.11:
+
+* **Trên Windows (PowerShell):**
+  ```powershell
+  python -m venv venv
+  .\venv\Scripts\Activate.ps1
+  ```
+* **Trên Linux / macOS:**
+  ```bash
+  python3 -m venv venv
+  source venv/bin/activate
+  ```
+
+### Bước 2: Cài đặt các thư viện phụ thuộc
+```powershell
+pip install -r requirements.txt
+```
+
+### Bước 3: Đăng nhập tài khoản Weights & Biases (W&B)
+Để đồng bộ kết quả thực nghiệm lên dashboard của nhóm:
+```powershell
+python -m wandb login
+```
+*(Lấy API key tại [https://wandb.ai/authorize](https://wandb.ai/authorize) và dán vào terminal khi được nhắc)*
+
+### Bước 4: Kiểm thử các module độc lập (Unit Test)
+Chạy kiểm tra từng thành phần cốt lõi của hệ thống:
+```powershell
+# 1. Kiểm thử thuật toán kiểm định tuần tự Page-Hinkley (Module 1)
+python src/detector.py
+
+# 2. Kiểm thử khung làm việc Teacher - Student và phát hiện trôi dạt (Module 2)
+python src/studd.py
+
+# 3. Kiểm thử bộ nạp dữ liệu luồng tổng hợp và benchmark OpenML (Module 3)
+python src/data_loader.py
+```
+
+### Bước 5: Chạy thực nghiệm tái hiện (Reproduction Experiments)
+Chạy toàn bộ quy trình so sánh 4 chiến lược (`BL-st`, `STUDD`, `SS`, `OS`) trên cả 3 luồng dữ liệu (`abrupt_drift`, `electricity`, `ozone`):
+```powershell
+python experiments/reproduce.py
+```
+
+Sau khi chạy xong:
+* Toàn bộ chỉ số, tham số và biểu đồ phân tích được đẩy trực tiếp lên dashboard: [W&B lgkai-hcmus/STUDD](https://wandb.ai/lgkai-hcmus/STUDD).
+* Các file trực quan hóa và bảng kết quả chất lượng cao (300 DPI) được lưu tại thư mục `results/`:
+  * `results/fig1_rolling_kappa_abrupt_drift.png`: Biểu đồ Kappa score trượt theo thời gian.
+  * `results/fig2_performance_vs_cost_comparison.png`: Biểu đồ so sánh hiệu năng (Kappa) và chi phí gán nhãn giữa 4 phương pháp.
+  * `results/reproduction_comparison_table.csv`: Bảng tổng hợp số liệu chi tiết.
