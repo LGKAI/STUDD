@@ -6,7 +6,8 @@ Dự án nghiên cứu, thực nghiệm và cài đặt lại (reproduce) mô h�
 
 > **STUDD: A Student–Teacher Method for Unsupervised Concept Drift Detection**  
 > *Vitor Cerqueira, Heitor Murilo Gomes, Albert Bifet, Luis Torgo* (Dalhousie University, University of Waikato, Télécom ParisTech).  
-> Công bố tại: **Machine Learning (Springer 2023)**, pages 4351–4378.
+> Công bố tại: **Machine Learning (Springer 2023)**, pages 4351–4378.  
+> Xếp hạng (Rank): **Q1** (SCIE / Scopus).
 
 ---
 
