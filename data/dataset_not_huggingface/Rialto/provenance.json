@@ -1,0 +1,42 @@
+{
+  "dataset": "Rialto",
+  "provider": "USP Data Stream Repository",
+  "source_url": "https://drive.google.com/file/d/1TVGYtJ1VnFFhAgrG5oZd1J8Jk6ShRbMi/view",
+  "download_url": "https://drive.usercontent.google.com/download?id=1TVGYtJ1VnFFhAgrG5oZd1J8Jk6ShRbMi&export=download&confirm=t",
+  "download_sha256": "43b4949c186dc53f26bad6782aba08a266d3f91cc7199ca1b8cfc7ff874e1034",
+  "download_bytes": 9738654,
+  "files": [
+    "data/to_upload_huggingface/Rialto/Rialto.csv"
+  ],
+  "validation": {
+    "dataset": "Rialto",
+    "folder": "data/to_upload_huggingface/Rialto",
+    "rows": 82250,
+    "column_width_counts": {
+      "28": 82250
+    },
+    "class_counts": {
+      "0": 8225,
+      "1": 8225,
+      "2": 8225,
+      "3": 8225,
+      "4": 8225,
+      "5": 8225,
+      "6": 8225,
+      "7": 8225,
+      "8": 8225,
+      "9": 8225
+    },
+    "missing_feature_values": 0,
+    "nonfinite_feature_values": 0,
+    "nonnumeric_feature_values": 0,
+    "data_file": "Rialto.csv",
+    "data_bytes": 9738654,
+    "data_sha256": "43b4949c186dc53f26bad6782aba08a266d3f91cc7199ca1b8cfc7ff874e1034",
+    "paper_rows": 82250,
+    "paper_total_columns": 27,
+    "paper_classes": 10,
+    "has_header": false
+  },
+  "equivalence": "Downloaded upstream benchmark; not established identical to paper preprocessing."
+}

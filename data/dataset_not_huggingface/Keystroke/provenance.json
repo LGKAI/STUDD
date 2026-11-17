@@ -1,0 +1,42 @@
+{
+  "dataset": "Keystroke",
+  "provider": "dos Reis incremental-ks supplemental repository",
+  "source_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Keystroke.zip",
+  "download_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Keystroke.zip",
+  "download_sha256": "234e571ce70e0a0d53334a96d5a584f11432a9b4ef7bc0658bce1303833e8676",
+  "download_bytes": 36009,
+  "files": [
+    "data/to_upload_huggingface/Keystroke/Keystroke.data"
+  ],
+  "validation": {
+    "dataset": "Keystroke",
+    "folder": "data/to_upload_huggingface/Keystroke",
+    "rows": 1600,
+    "column_width_counts": {
+      "11": 1600
+    },
+    "class_counts": {
+      "3": 400,
+      "2": 400,
+      "1": 400,
+      "4": 400
+    },
+    "missing_feature_values": 0,
+    "nonfinite_feature_values": 0,
+    "nonnumeric_feature_values": 0,
+    "data_file": "Keystroke.data",
+    "data_bytes": 114833,
+    "data_sha256": "adb61d7945185ed33f28e29d097a2dbed96c07d95d67f329c6db740d0c0ea845",
+    "paper_rows": 1600,
+    "paper_total_columns": 10,
+    "paper_classes": 4,
+    "has_header": false
+  },
+  "equivalence": "Downloaded upstream benchmark; not established identical to paper preprocessing.",
+  "additional_distribution": {
+    "provider": "USP Data Stream Repository",
+    "url": "https://drive.usercontent.google.com/download?id=1AmkbMseb0-oBud06Gi26U-wy7DMFRtfL&export=download&confirm=t",
+    "sha256": "31aad87b4c851bce5bae51c5f1754ed3156cdd5d1429f7cd09a88d351f50e69f",
+    "comparison": "All 1600 ordered numeric records including targets match local data; no local data modifications."
+  }
+}

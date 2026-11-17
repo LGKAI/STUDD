@@ -1,0 +1,43 @@
+{
+  "dataset": "Posture",
+  "provider": "dos Reis incremental-ks supplemental repository",
+  "source_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Posture.zip",
+  "download_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Posture.zip",
+  "download_sha256": "e54431d30aa623164ba65416c9658dfe206456f737f5362e3591b6e7eafc1f39",
+  "download_bytes": 3905866,
+  "files": [
+    "data/to_upload_huggingface/Posture/Posture.data"
+  ],
+  "validation": {
+    "dataset": "Posture",
+    "folder": "data/to_upload_huggingface/Posture",
+    "rows": 164860,
+    "column_width_counts": {
+      "4": 164860
+    },
+    "class_counts": {
+      "sitting on the ground": 11779,
+      "lying": 54480,
+      "sitting": 27244,
+      "sitting down": 1706,
+      "standing up from lying": 18361,
+      "walking": 32710,
+      "lying down": 6168,
+      "falling": 2973,
+      "on all fours": 5210,
+      "standing up from sitting on the ground": 2848,
+      "standing up from sitting": 1381
+    },
+    "missing_feature_values": 0,
+    "nonfinite_feature_values": 0,
+    "nonnumeric_feature_values": 0,
+    "data_file": "Posture.data",
+    "data_bytes": 10038586,
+    "data_sha256": "400e552cf8d8386c8319fab0428b266a60e2ad88b4802812af8d7666d5ef4a36",
+    "paper_rows": 164859,
+    "paper_total_columns": 4,
+    "paper_classes": 11,
+    "has_header": false
+  },
+  "equivalence": "Downloaded upstream benchmark; not established identical to paper preprocessing."
+}

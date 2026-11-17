@@ -1,0 +1,59 @@
+{
+  "dataset": "Powersupply",
+  "provider": "USP Data Stream Repository",
+  "source_url": "https://drive.google.com/file/d/1YWncempzW_MDMJcRvyh377449ytOSh9g/view",
+  "download_url": "https://drive.usercontent.google.com/download?id=1YWncempzW_MDMJcRvyh377449ytOSh9g&export=download&confirm=t",
+  "download_sha256": "e1ee08c09d154577ca9f7d2edc079993c32422dc290c722b1560ee83e9f8647f",
+  "download_bytes": 396873,
+  "files": [
+    "data/to_upload_huggingface/Powersupply/Powersupply.csv"
+  ],
+  "validation": {
+    "dataset": "Powersupply",
+    "folder": "data/to_upload_huggingface/Powersupply",
+    "rows": 29928,
+    "column_width_counts": {
+      "3": 29927,
+      "4": 1
+    },
+    "class_counts": {
+      "0": 1247,
+      "1": 1247,
+      "2": 1246,
+      "3": 1247,
+      "4": 1247,
+      "5": 1247,
+      "6": 1248,
+      "7": 1247,
+      "8": 1247,
+      "9": 1246,
+      "10": 1247,
+      "11": 1247,
+      "12": 1247,
+      "13": 1247,
+      "14": 1247,
+      "15": 1247,
+      "16": 1247,
+      "17": 1247,
+      "18": 1247,
+      "19": 1247,
+      "20": 1247,
+      "21": 1247,
+      "22": 1247,
+      "23": 1247,
+      "": 1
+    },
+    "missing_feature_values": 0,
+    "nonfinite_feature_values": 0,
+    "nonnumeric_feature_values": 0,
+    "data_file": "Powersupply.csv",
+    "data_bytes": 396873,
+    "data_sha256": "e1ee08c09d154577ca9f7d2edc079993c32422dc290c722b1560ee83e9f8647f",
+    "paper_rows": 29928,
+    "paper_total_columns": 2,
+    "paper_classes": 24,
+    "has_header": false,
+    "known_anomaly": "Record 22203 has one trailing empty field; raw last-column parsing produces an empty target. No fix applied."
+  },
+  "equivalence": "Downloaded upstream benchmark; not established identical to paper preprocessing."
+}

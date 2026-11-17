@@ -1,0 +1,37 @@
+{
+  "checked_on": "2026-11-17",
+  "method": "Public Hugging Face dataset search API; public Kaggle dataset listing API; ordered comparison against downloaded upstream references",
+  "Electricity": {
+    "selected": "mstz/electricity",
+    "revision": "5f26b8dd2ecdd56f56694fe4f260a1adaa6d77a9",
+    "rows_compared": 45312,
+    "all_feature_values_equal": true,
+    "all_labels_equal_after_mapping": true,
+    "order_preserved": true,
+    "transform": "is_up: 1 -> UP, 0 -> DOWN"
+  },
+  "Bike": {
+    "selected": "t22000t/bike-sharing-tabular",
+    "revision": "6b645e0cedbc5208fcca11ac94544b088478bf61",
+    "rows_compared": 17379,
+    "all_feature_values_equal": true,
+    "all_labels_equal_after_mapping": true,
+    "order_preserved": true,
+    "transform": "select temp, atemp, hum, windspeed; target high iff cnt >= 142 else low; fixed benchmark reconstruction, no training on cnt"
+  },
+  "InsectsAbrupt": {
+    "selected": "pham121/studd-insects-abrupt",
+    "result": "No equivalent identified by the recorded searches; not proof that none exists anywhere",
+    "queries": [
+      "AbruptInsects",
+      "abrupt insects",
+      "insects drift",
+      "Insects",
+      "STUDD",
+      "elecNormNew"
+    ],
+    "action": "Published unchanged upstream archive with README, provenance and upstream MIT notice",
+    "revision": "90238617f8f88f5ae0f99350e65abc1f194bf37a"
+  },
+  "search_limitations": "Keyword search is not exhaustive. HF Insects matches are unrelated image/audio datasets; name similarity is insufficient."
+}

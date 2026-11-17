@@ -1,0 +1,1616 @@
+{
+  "checked_on": "2026-11-17",
+  "datasets": [
+    {
+      "dataset": "Electricity",
+      "paper_rows": 45312,
+      "paper_total_columns": 9,
+      "paper_classes": 2,
+      "run_rows_cap": 45312,
+      "status": "verified",
+      "hf_repository": "mstz/electricity",
+      "note": "Khớp toàn bộ giá trị, nhãn và thứ tự với ARFF tham chiếu sau mapping is_up 1/0 → UP/DOWN.",
+      "url": "https://huggingface.co/datasets/mstz/electricity",
+      "revision": "5f26b8dd2ecdd56f56694fe4f260a1adaa6d77a9",
+      "download_url": "https://huggingface.co/datasets/mstz/electricity/resolve/5f26b8dd2ecdd56f56694fe4f260a1adaa6d77a9/electricity/train.csv",
+      "source_bytes": 2998239
+    },
+    {
+      "dataset": "CoverType",
+      "paper_rows": 581012,
+      "paper_total_columns": 55,
+      "paper_classes": 5,
+      "run_rows_cap": 150000,
+      "status": "candidate",
+      "hf_repository": "mstz/covertype",
+      "note": "Card mô tả 7 lớp; paper Bảng 1 ghi 5. Chưa kiểm tra nội dung/luồng và cách lọc lớp. Bản jxie/covtype chia train/val/test, không ghép tùy ý để làm luồng.",
+      "url": "https://huggingface.co/datasets/mstz/covertype",
+      "revision": "72ae206f21f416f3e7981183537e9ab071aff006",
+      "candidate_files": [
+        {
+          "path": "covtype.data",
+          "size": 75170171,
+          "type": "file"
+        }
+      ],
+      "source_bytes": 75170171,
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "ForestCoverType.csv",
+          "url": "https://drive.google.com/file/d/1V40LhiMLJfnwlY5keoFiLEOoU6zmIZrx/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=1V40LhiMLJfnwlY5keoFiLEOoU6zmIZrx",
+          "verified": "File name and ID in public USP catalog; file contents not downloaded/verified in this step"
+        }
+      ],
+      "local_path": "data/CoverType/covtype.data",
+      "observed_issue": "581012 data rows width 55; first header row width 52; 7 data classes"
+    },
+    {
+      "dataset": "Poker",
+      "paper_rows": 1025010,
+      "paper_total_columns": 12,
+      "paper_classes": 10,
+      "run_rows_cap": 150000,
+      "status": "candidate",
+      "hf_repository": "yzhuang/metatree_pokerhand",
+      "note": "Metadata có 580.432 train + 248.769 validation = 829.201 mẫu, không khớp 1.025.010 trong paper. X là sequence uint8, có id; chưa chứng minh phục hồi được thứ tự và đủ mẫu. Chỉ là ứng viên họ dữ liệu.",
+      "url": "https://huggingface.co/datasets/yzhuang/metatree_pokerhand",
+      "revision": "1b04c2227c63fdc4dff43d71f81fca4fb894c949",
+      "candidate_files": [
+        {
+          "path": "data/train-00000-of-00001-0c6c83b736c7a121.parquet",
+          "size": 4933688,
+          "type": "file"
+        },
+        {
+          "path": "data/validation-00000-of-00001-762fb80d68af8863.parquet",
+          "size": 2183067,
+          "type": "file"
+        }
+      ],
+      "source_bytes": 7116755,
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "PokerHand.csv",
+          "url": "https://drive.google.com/file/d/1cGcAHeSYUoyN_JCo9SYKneG9pn4VeQ2k/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=1cGcAHeSYUoyN_JCo9SYKneG9pn4VeQ2k",
+          "verified": "File name and ID in public USP catalog; file contents not downloaded/verified in this step"
+        }
+      ],
+      "local_path": "data/Poker"
+    },
+    {
+      "dataset": "Gas",
+      "paper_rows": 13910,
+      "paper_total_columns": 17,
+      "paper_classes": 6,
+      "run_rows_cap": 13910,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-gas",
+      "note": "Chưa xác định được đúng bản benchmark. Các bản gas-chamber năm 2025 và synthetic MOX không tương đương.",
+      "hf_search_url": "https://huggingface.co/datasets?search=Gas",
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "GasSensorArray.csv",
+          "url": "https://drive.google.com/file/d/11igK96DPWn8cgIwHfp2_w8JdpmTYsHVz/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=11igK96DPWn8cgIwHfp2_w8JdpmTYsHVz",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/Gas/GasSensorArray.csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-gas",
+      "revision": "9a73335cbe0368e5ae0a57245b1c9dabcbed5e6b",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-gas/resolve/9a73335cbe0368e5ae0a57245b1c9dabcbed5e6b/GasSensorArray.csv",
+      "source_bytes": 17278995,
+      "hf_file_hash_validation": {
+        "data_file": "GasSensorArray.csv",
+        "bytes": 17278995,
+        "hash_algorithm": "sha256",
+        "local_hash": "e0dcfe689c01b6401edf5865f6dcf62b1a5351e00bdbb038cbd93ee3581783f7",
+        "remote_hash": "e0dcfe689c01b6401edf5865f6dcf62b1a5351e00bdbb038cbd93ee3581783f7",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "cc-by-4.0"
+    },
+    {
+      "dataset": "Luxembourg",
+      "paper_rows": 1901,
+      "paper_total_columns": 31,
+      "paper_classes": 2,
+      "run_rows_cap": 1901,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-luxembourg",
+      "note": "Cần bộ khảo sát Internet 2002–2007; các corpus ngôn ngữ Luxembourg không đúng bài toán.",
+      "hf_search_url": "https://huggingface.co/datasets?search=Luxembourg",
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "Luxembourg.csv",
+          "url": "https://drive.google.com/file/d/1BwiUIE97rZbZbMHGODbWaGpSJ7DmGwMB/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=1BwiUIE97rZbZbMHGODbWaGpSJ7DmGwMB",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/Luxembourg/Luxembourg.csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-luxembourg",
+      "revision": "5ccd00c9a23ed7f10123a0903b64d0e3db3f01d8",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-luxembourg/resolve/5ccd00c9a23ed7f10123a0903b64d0e3db3f01d8/Luxembourg.csv",
+      "source_bytes": 222420,
+      "hf_file_hash_validation": {
+        "data_file": "Luxembourg.csv",
+        "bytes": 222420,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "d35e2be5decff82f757545cefa472bf7d4adfe31",
+        "remote_hash": "d35e2be5decff82f757545cefa472bf7d4adfe31",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "cc-by-4.0"
+    },
+    {
+      "dataset": "Ozone",
+      "paper_rows": 2574,
+      "paper_total_columns": 32,
+      "paper_classes": 2,
+      "run_rows_cap": 2574,
+      "status": "candidate",
+      "hf_repository": "mstz/ozone",
+      "note": "Đã đọc CSV: 1hr có 1.848 dòng, 8hr có 1.847 dòng; cả hai 73 cột. Không khớp paper 2.574 × 32. Cần đúng bản xử lý missing/chọn đặc trưng; không tự cắt cột để khớp.",
+      "url": "https://huggingface.co/datasets/mstz/ozone",
+      "revision": "5d212857f5ff830b714abdeb014532aa34c3e659",
+      "candidate_files": [
+        {
+          "path": "1hr/train.csv",
+          "size": 637069,
+          "type": "file"
+        },
+        {
+          "path": "8hr/train.csv",
+          "size": 636725,
+          "type": "file"
+        }
+      ],
+      "source_bytes": 1273794,
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "Ozone.csv",
+          "url": "https://drive.google.com/file/d/1WNsYV4-kc51S9E6x1JuniRZ0LM6EEZjB/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=1WNsYV4-kc51S9E6x1JuniRZ0LM6EEZjB",
+          "verified": "File name and ID in public USP catalog; file contents not downloaded/verified in this step"
+        }
+      ],
+      "local_path": "data/Ozone"
+    },
+    {
+      "dataset": "Sensors",
+      "paper_rows": 2219803,
+      "paper_total_columns": 5,
+      "paper_classes": 54,
+      "run_rows_cap": 150000,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-sensors",
+      "note": "Cần nhận diện 54 sensor từ dữ liệu môi trường. Không thay bằng Gas hoặc dữ liệu IoT có tên gần giống.",
+      "hf_search_url": "https://huggingface.co/datasets?search=Sensors",
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "SensorStream.csv",
+          "url": "https://drive.google.com/file/d/1T8QhOH4z6gV2yvB4gA7dyisvnotKcy6t/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=1T8QhOH4z6gV2yvB4gA7dyisvnotKcy6t",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/Sensors/SensorStream.csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-sensors",
+      "revision": "6a197a84d50fdb4c758ad7c26484f3aa4b9dbe80",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-sensors/resolve/6a197a84d50fdb4c758ad7c26484f3aa4b9dbe80/SensorStream.csv",
+      "source_bytes": 88697101,
+      "hf_file_hash_validation": {
+        "data_file": "SensorStream.csv",
+        "bytes": 88697101,
+        "hash_algorithm": "sha256",
+        "local_hash": "51c4047966380c426da71d7344c1f232474986263028f69cf521637d2e1b2dee",
+        "remote_hash": "51c4047966380c426da71d7344c1f232474986263028f69cf521637d2e1b2dee",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "cc-by-4.0"
+    },
+    {
+      "dataset": "Powersupply",
+      "paper_rows": 29928,
+      "paper_total_columns": 2,
+      "paper_classes": 24,
+      "run_rows_cap": 29928,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-powersupply",
+      "note": "Cần bộ nhận diện giờ, 24 lớp từ công ty điện Italy; dữ liệu robot cắm sạc không liên quan.",
+      "hf_search_url": "https://huggingface.co/datasets?search=Powersupply",
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "Powersupply.csv",
+          "url": "https://drive.google.com/file/d/1YWncempzW_MDMJcRvyh377449ytOSh9g/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=1YWncempzW_MDMJcRvyh377449ytOSh9g",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/Powersupply/Powersupply.csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-powersupply",
+      "revision": "72bb16473088cf5c29ab8721ae892db4ffd4af67",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-powersupply/resolve/72bb16473088cf5c29ab8721ae892db4ffd4af67/Powersupply.csv",
+      "source_bytes": 396873,
+      "hf_file_hash_validation": {
+        "data_file": "Powersupply.csv",
+        "bytes": 396873,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "974d1108dc704f509dc8b54972e3aea3a6ad7840",
+        "remote_hash": "974d1108dc704f509dc8b54972e3aea3a6ad7840",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "cc-by-4.0"
+    },
+    {
+      "dataset": "Rialto",
+      "paper_rows": 82250,
+      "paper_total_columns": 27,
+      "paper_classes": 10,
+      "run_rows_cap": 82250,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-rialto",
+      "note": "Cần đặc trưng ảnh đã xử lý, 10 lớp; ảnh/corpus có nhắc cầu Rialto không phải benchmark.",
+      "hf_search_url": "https://huggingface.co/datasets?search=Rialto",
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "Rialto.csv",
+          "url": "https://drive.google.com/file/d/1TVGYtJ1VnFFhAgrG5oZd1J8Jk6ShRbMi/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=1TVGYtJ1VnFFhAgrG5oZd1J8Jk6ShRbMi",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/Rialto/Rialto.csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-rialto",
+      "revision": "9a876990a741fded06b2a6ede80302fe83e12eb1",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-rialto/resolve/9a876990a741fded06b2a6ede80302fe83e12eb1/Rialto.csv",
+      "source_bytes": 9738654,
+      "hf_file_hash_validation": {
+        "data_file": "Rialto.csv",
+        "bytes": 9738654,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "7394777a2347a3ff447d13e591369099c145438d",
+        "remote_hash": "7394777a2347a3ff447d13e591369099c145438d",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "cc-by-4.0"
+    },
+    {
+      "dataset": "Outdoor",
+      "paper_rows": 4000,
+      "paper_total_columns": 21,
+      "paper_classes": 40,
+      "run_rows_cap": 4000,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-outdoor",
+      "note": "Cần 4.000 mẫu, 40 lớp đối tượng dưới điều kiện ánh sáng thay đổi; không phải ảnh outdoor tổng quát.",
+      "hf_search_url": "https://huggingface.co/datasets?search=Outdoor",
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "Outdoor.csv",
+          "url": "https://drive.google.com/file/d/1u-5rDllhrsUKzrHnvouD-gQwqDLIeOjt/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=1u-5rDllhrsUKzrHnvouD-gQwqDLIeOjt",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/Outdoor/Outdoor.csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-outdoor",
+      "revision": "34d9a05ba9f8b3bf385ab78b66b5eccb0301611f",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-outdoor/resolve/34d9a05ba9f8b3bf385ab78b66b5eccb0301611f/Outdoor.csv",
+      "source_bytes": 570673,
+      "hf_file_hash_validation": {
+        "data_file": "Outdoor.csv",
+        "bytes": 570673,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "9a58e5e704815a3d1009c353c3fa9553b6c59880",
+        "remote_hash": "9a58e5e704815a3d1009c353c3fa9553b6c59880",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "cc-by-4.0"
+    },
+    {
+      "dataset": "Keystroke",
+      "paper_rows": 1600,
+      "paper_total_columns": 10,
+      "paper_classes": 4,
+      "run_rows_cap": 1600,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-keystroke",
+      "note": "Các nguồn Aalto/136M trên HF khác bộ 1.600 mẫu, 4 lớp của paper.",
+      "hf_search_url": "https://huggingface.co/datasets?search=Keystroke",
+      "external_sources": [
+        {
+          "provider": "dos Reis incremental-ks supplemental repository",
+          "url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Keystroke.zip",
+          "filename": "Keystroke.zip",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/Keystroke/Keystroke.data",
+      "url": "https://huggingface.co/datasets/pham121/studd-keystroke",
+      "revision": "38da3e5d1a59471dee117d9e7dfe83e3a8e9d0c0",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-keystroke/resolve/38da3e5d1a59471dee117d9e7dfe83e3a8e9d0c0/Keystroke.data",
+      "source_bytes": 114833,
+      "hf_file_hash_validation": {
+        "data_file": "Keystroke.data",
+        "bytes": 114833,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "a55880492059102510fdca00d0feb9119e2ac5b5",
+        "remote_hash": "a55880492059102510fdca00d0feb9119e2ac5b5",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "cc-by-4.0"
+    },
+    {
+      "dataset": "NOAA",
+      "paper_rows": 18159,
+      "paper_total_columns": 8,
+      "paper_classes": 2,
+      "run_rows_cap": 18159,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-noaa",
+      "note": "Cần luồng rain/no-rain 50 năm. KunhanGao/NOAA-weather chứa forecasting/infill/QA, không phải bản benchmark đã chứng minh tương đương.",
+      "hf_search_url": "https://huggingface.co/datasets?search=NOAA",
+      "external_sources": [
+        {
+          "provider": "USP Data Stream Repository",
+          "filename": "NOAA.csv",
+          "url": "https://drive.google.com/file/d/1lfisx3jZsj7Y1UM5HcYaMr9nOzXsTrEX/view",
+          "download_url": "https://drive.google.com/uc?export=download&id=1lfisx3jZsj7Y1UM5HcYaMr9nOzXsTrEX",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/NOAA/NOAA.csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-noaa",
+      "revision": "1b6992238d2c8fee692f5b5fd24de691380b7bc2",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-noaa/resolve/1b6992238d2c8fee692f5b5fd24de691380b7bc2/NOAA.csv",
+      "source_bytes": 700956,
+      "hf_file_hash_validation": {
+        "data_file": "NOAA.csv",
+        "bytes": 700956,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "645231fda2ccfcbfcc14333218a5b4dfcdfe6cd4",
+        "remote_hash": "645231fda2ccfcbfcc14333218a5b4dfcdfe6cd4",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "cc-by-4.0"
+    },
+    {
+      "dataset": "Bike",
+      "paper_rows": 17378,
+      "paper_total_columns": 5,
+      "paper_classes": 2,
+      "run_rows_cap": 17378,
+      "status": "verified",
+      "hf_repository": "t22000t/bike-sharing-tabular",
+      "note": "Đã tái tạo khớp tất cả 17.379 mẫu nguồn: chọn temp/atemp/hum/windspeed, high nếu cnt ≥ 142. Paper ghi 17.378, giữ nguyên 17.379 và báo chênh lệch.",
+      "url": "https://huggingface.co/datasets/t22000t/bike-sharing-tabular",
+      "revision": "6b645e0cedbc5208fcca11ac94544b088478bf61",
+      "download_url": "https://huggingface.co/datasets/t22000t/bike-sharing-tabular/resolve/6b645e0cedbc5208fcca11ac94544b088478bf61/hour.csv",
+      "source_bytes": 1156736
+    },
+    {
+      "dataset": "Arabic",
+      "paper_rows": 8800,
+      "paper_total_columns": 28,
+      "paper_classes": 10,
+      "run_rows_cap": 8800,
+      "status": "candidate",
+      "hf_repository": "ailuntz/SpokenArabicDigits",
+      "note": "Có TRAIN/TEST .ts của SpokenArabicDigits. Chưa xác minh đủ mẫu, thống kê MFCC, cột giới tính hoặc thứ tự luồng. Không phải bản tabular 28 cột sẵn dùng.",
+      "url": "https://huggingface.co/datasets/ailuntz/SpokenArabicDigits",
+      "revision": "5f2e9861cfc1dff9caa9e37cd43aa22d38f05ee9",
+      "candidate_files": [
+        {
+          "path": "SpokenArabicDigits_TEST.ts",
+          "size": 9344215,
+          "type": "file"
+        },
+        {
+          "path": "SpokenArabicDigits_TRAIN.ts",
+          "size": 28266699,
+          "type": "file"
+        }
+      ],
+      "source_bytes": 37610914,
+      "external_sources": [
+        {
+          "provider": "dos Reis incremental-ks supplemental repository",
+          "url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Arabic_Paper_Fixed.zip",
+          "filename": "Arabic_Paper_Fixed.zip",
+          "verified": "Repository file listing checked; not downloaded in this step"
+        }
+      ],
+      "local_path": "data/Arabic",
+      "observed_issue": "6599 train + 2199 test = 8798 nonempty data lines in the downloaded .ts files; not 8800"
+    },
+    {
+      "dataset": "ArabicShuffled",
+      "paper_rows": 8800,
+      "paper_total_columns": 28,
+      "paper_classes": 10,
+      "run_rows_cap": 8800,
+      "status": "candidate",
+      "hf_repository": "ailuntz/SpokenArabicDigits",
+      "note": "Chỉ là nguồn dữ liệu nền như Arabic, không phải mirror ArabicShuffled. Phải tái tạo thứ tự theo giới tính đúng nguồn dos Reis; không shuffle ngẫu nhiên thay thế.",
+      "url": "https://huggingface.co/datasets/ailuntz/SpokenArabicDigits",
+      "revision": "5f2e9861cfc1dff9caa9e37cd43aa22d38f05ee9",
+      "candidate_files": [
+        {
+          "path": "SpokenArabicDigits_TEST.ts",
+          "size": 9344215,
+          "type": "file"
+        },
+        {
+          "path": "SpokenArabicDigits_TRAIN.ts",
+          "size": 28266699,
+          "type": "file"
+        }
+      ],
+      "source_bytes": 37610914,
+      "external_sources": [
+        {
+          "provider": "dos Reis incremental-ks supplemental repository",
+          "url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/ArabicDigit_Shuffled_With_Sex.zip",
+          "filename": "ArabicDigit_Shuffled_With_Sex.zip",
+          "verified": "Repository file listing checked; not downloaded in this step"
+        }
+      ],
+      "local_path": "data/Arabic",
+      "observed_issue": "6599 train + 2199 test = 8798 nonempty data lines in the downloaded .ts files; not 8800"
+    },
+    {
+      "dataset": "Insects",
+      "paper_rows": 5325,
+      "paper_total_columns": 50,
+      "paper_classes": 5,
+      "run_rows_cap": 5325,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-insects",
+      "note": "Chưa có bản HF được xác định đúng benchmark 5 lớp, 49 feature. Không dùng bản INSECTS mới 6 lớp/33 feature hoặc InsectSound.",
+      "hf_search_url": "https://huggingface.co/datasets?search=Insects",
+      "external_sources": [
+        {
+          "provider": "dos Reis incremental-ks supplemental repository",
+          "url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Insects.zip",
+          "filename": "Insects.zip",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/Insects/Insects.data",
+      "url": "https://huggingface.co/datasets/pham121/studd-insects",
+      "revision": "4fa53b650844ef482a59e486a2927e84cf64e09a",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-insects/resolve/4fa53b650844ef482a59e486a2927e84cf64e09a/Insects.data",
+      "source_bytes": 2485847,
+      "hf_file_hash_validation": {
+        "data_file": "Insects.data",
+        "bytes": 2485847,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "1857d0a9b0fed21f6c5fa4aebe6df58dfe90f831",
+        "remote_hash": "1857d0a9b0fed21f6c5fa4aebe6df58dfe90f831",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "mit"
+    },
+    {
+      "dataset": "InsectsAbrupt",
+      "paper_rows": 5325,
+      "paper_total_columns": 50,
+      "paper_classes": 5,
+      "run_rows_cap": 5325,
+      "status": "verified",
+      "hf_repository": "pham121/studd-insects-abrupt",
+      "note": "Mirror nhóm đã đăng, giữ nguyên archive upstream. Đã xác minh 5.325 dòng, 49 feature, nhãn và thứ tự.",
+      "url": "https://huggingface.co/datasets/pham121/studd-insects-abrupt",
+      "revision": "90238617f8f88f5ae0f99350e65abc1f194bf37a",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-insects-abrupt/resolve/90238617f8f88f5ae0f99350e65abc1f194bf37a/AbruptInsects.zip",
+      "source_bytes": 748537
+    },
+    {
+      "dataset": "Posture",
+      "paper_rows": 164859,
+      "paper_total_columns": 4,
+      "paper_classes": 11,
+      "run_rows_cap": 150000,
+      "status": "mirrored_upstream",
+      "hf_repository": "pham121/studd-posture",
+      "note": "ronka/postureDataset là ảnh good/bad posture, không phải dữ liệu cảm biến 11 lớp trong paper.",
+      "hf_search_url": "https://huggingface.co/datasets?search=Posture",
+      "external_sources": [
+        {
+          "provider": "dos Reis incremental-ks supplemental repository",
+          "url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Posture.zip",
+          "filename": "Posture.zip",
+          "verified": "Downloaded and mirrored on public Hugging Face; data hash matches local upstream download. Paper preprocessing equivalence not established."
+        }
+      ],
+      "external_local_path": "data/dataset_not_huggingface/Posture/Posture.data",
+      "url": "https://huggingface.co/datasets/pham121/studd-posture",
+      "revision": "cfd7b8b678acb60f888901839e2c109e6b5a589f",
+      "download_url": "https://huggingface.co/datasets/pham121/studd-posture/resolve/cfd7b8b678acb60f888901839e2c109e6b5a589f/Posture.data",
+      "source_bytes": 10038586,
+      "hf_file_hash_validation": {
+        "data_file": "Posture.data",
+        "bytes": 10038586,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "c249ef6e03d4bf2d7a30bc53808955cde3818015",
+        "remote_hash": "c249ef6e03d4bf2d7a30bc53808955cde3818015",
+        "matches_local_source": true
+      },
+      "hf_license_metadata": "cc-by-4.0"
+    },
+    {
+      "dataset": "GMSC",
+      "paper_rows": 150000,
+      "paper_total_columns": 11,
+      "paper_classes": 2,
+      "run_rows_cap": 150000,
+      "status": "candidate",
+      "hf_repository": "algcache/GiveMeSomeCredit",
+      "note": "Có ZIP Give Me Some Credit. Chưa mở/kiểm tra số dòng, missing, cột ID và thứ tự. Không dùng tập test không có nhãn làm phần đánh giá.",
+      "url": "https://huggingface.co/datasets/algcache/GiveMeSomeCredit",
+      "revision": "4c2dab0dce91172737cf3413e023bd16834f1fa1",
+      "candidate_files": [
+        {
+          "path": "Give-Me-Some-Credit.zip",
+          "size": 5408918,
+          "type": "file"
+        }
+      ],
+      "source_bytes": 5408918,
+      "local_path": "data/GMSC",
+      "observed_issue": "cs-training.csv:150000 rows,12 columns including ID; missing/stream order not yet verified"
+    }
+  ],
+  "queries": [
+    "covtype",
+    "covertype",
+    "poker",
+    "gas sensor",
+    "gas_sensor",
+    "luxembourg",
+    "ozone",
+    "sensor stream",
+    "powersupply",
+    "power_supply",
+    "rialto",
+    "outdoor",
+    "keystroke",
+    "NOAA",
+    "weather drift",
+    "arabic",
+    "insects",
+    "posture",
+    "GMSC",
+    "give me some credit",
+    "give_me_some_credit",
+    "studd",
+    "electricity",
+    "bike-sharing",
+    "gas",
+    "pokerhand",
+    "poker-hand",
+    "spoken_arabic",
+    "arabic_digit",
+    "sensor",
+    "localization",
+    "NOAA weather",
+    "stream classification",
+    "insect",
+    "internet usage"
+  ],
+  "query_results": {
+    "covtype": [
+      "jxie/covtype"
+    ],
+    "covertype": [
+      "mstz/covertype",
+      "yzhuang/autotree_automl_covertype_gosdt_d3",
+      "yzhuang/autotree_automl_covertype_gosdt_l512_d3",
+      "yzhuang/autotree_automl_covertype_gosdt_l512_d3_sd3",
+      "yzhuang/autotree_automl_covertype_gosdt_l512_d3_sd1",
+      "yzhuang/autotree_automl_covertype_gosdt_l512_d3_sd2",
+      "yzhuang/autotree_automl_covertype_sgosdt_l256_d3_sd0",
+      "yzhuang/autotree_automl_covertype_gosdt_l256_d3_sd0",
+      "yzhuang/autotree_automl_10000_covertype_sgosdt_l256_dim10_d3_sd0",
+      "yzhuang/autotree_automl_100000_covertype_sgosdt_l256_dim10_d3_sd0",
+      "narimanee/covertype"
+    ],
+    "poker": [
+      "Pokernights/Musicindustry",
+      "aierwiki/poker_face",
+      "Francesco/poker-cards-cxcvz",
+      "GDavila/pokercard1",
+      "yzhuang/metatree_pokerhand",
+      "Pokerzera/Dias2",
+      "JerryMccree/Poker_reward_agent_data",
+      "mlfoundations-dev/stackexchange_poker",
+      "RZ412/PokerBench",
+      "pokerstu32/huglor",
+      "gb6077/pokerstars.de-2",
+      "gb6077/pokerstars.de-3",
+      "gb6077/pokerstars.de-simple",
+      "Pokerwf/KnowLogic",
+      "jingws/poker",
+      "martinnnnn/poker",
+      "SoelMgd/Poker_Dataset",
+      "wesleyyliu/PokerBenchExpanded",
+      "the-acorn-ai/kuhn-poker-Qwen-QwQ-32B-5000",
+      "the-acorn-ai/kuhn-poker-Qwen-QwQ-32B-5000-sft",
+      "commitpau/so101_poker_play",
+      "commitpau/so101_poker_play_train",
+      "commitpau/sos101_poker_play_validation",
+      "ozerbar/so101_poker_play_trimmed",
+      "commitpau/eval_so101_poker_play",
+      "the-acorn-ai/kuhn-poker-Qwen3-32B-5000-sft",
+      "spiral-rl/Spiral-Kuhn-Poker-Qwen3-32B-SFT",
+      "LegendaryAKx3/sae-kuhn-poker",
+      "TamasSimonds/poker_safety_realignment",
+      "chirunder/labelled_poker_cards",
+      "dcaustin33/poker_rollouts",
+      "simonycl/self-play-sft-kuhn-poker-Qwen-Qwen3-32B",
+      "gabbler/PokerData",
+      "gabbler/PokerSentences",
+      "takara-ai/poker_hands"
+    ],
+    "gas sensor": [
+      "Debdoot/gas-chamber-sensor-logs",
+      "Laborator/gas-sensor-profiles"
+    ],
+    "gas_sensor": [
+      "Debdoot/gas-chamber-sensor-logs",
+      "Laborator/gas-sensor-profiles"
+    ],
+    "luxembourg": [
+      "Lemswasabi/luxembourgish-asr-rtl-lu",
+      "Shdorsh/luxembourgish-lu",
+      "saillab/alpaca_luxembourgish_taco",
+      "saillab/alpaca-luxembourgish-cleaned",
+      "FrancophonIA/Luxembourg_Museum_Websites",
+      "FrancophonIA/Luxembourg_website",
+      "FrancophonIA/COVID-19_Luxembourg",
+      "FrancophonIA/List_names_Luxembourgish_administrations",
+      "UE-CESE/Droits_fondamentaux_et_etat_de_droit_visite_Luxembourg",
+      "FrancophonIA/dictionnaire_tigrigna_francais_luxembourgeois",
+      "shunyalabs/luxembourgish-speech-dataset",
+      "kjhq/Luxembourg-Stock-Symbols-and-Metadata",
+      "AndreyTorkhov/bvt2203_torkhov_30_pipertts_luxembourgish",
+      "Thomcles/YodaLingua-Luxembourgish-Extended",
+      "emailmarketingdataset/luxembourg-business-contact-list",
+      "emailmarketingdataset/luxembourg-consumer-mailing-list",
+      "Speech-data/Luxembourgish-Speech-Dataset",
+      "ud-synthetic/luxembourgian-passports",
+      "chathome-lu/luxembourg-real-estate-market",
+      "Decima-Data/luxembourgish-parliamentary-corpus",
+      "endomorphosis/ipfs_luxembourg_laws",
+      "justicedao/ipfs_luxembourg_laws_ir",
+      "LuxKeyb/luxembourgish-corpus",
+      "ffatty/plaintext-wikipedia-full-luxembourgish",
+      "endomorphosis/ipfs_luxembourg_municipal_laws",
+      "justicedao/ipfs_luxembourg_municipal_laws_ir",
+      "amritbir1/luxembourg-housing-market-aggregates",
+      "amritbir1/luxembourg-commute-travel-times",
+      "companies-directory/luxembourg-companies",
+      "justicedao/ipfs_luxembourg_laws_rc2",
+      "jnorthrup/justicedao__ipfs_luxembourg_laws_ir"
+    ],
+    "ozone": [
+      "mstz/ozone",
+      "OzoneAsai/wikibooks",
+      "OzoneAsai/datasets",
+      "OzoneAsai/calculation",
+      "OzoneAsai/factorExpander",
+      "OzoneAsai/4typeCalculation",
+      "OzoneAsai/picts",
+      "evgmaslov/ozon_ecup",
+      "OzoneAsai/EnglishFlashcards",
+      "bromleyp/ozone_level",
+      "OzoneAsai/GloSocTes1Audio",
+      "Geoweaver/ozone_training_data",
+      "open-llm-leaderboard/ozone-ai__0x-lite-details",
+      "open-llm-leaderboard/ozone-research__Chirp-01-details",
+      "kilartur/ozon_ecom",
+      "ozoneproject/test-questions-newsiq",
+      "ozoneproject/test-questions-pulsecheck",
+      "ozoneproject/test-questions-sourceverify",
+      "ozoneproject/news-prompts",
+      "MLLab-TS/ozone_level",
+      "electricsheepafrica/africa-owid-consumption-of-ozone-depleting-substances",
+      "electricsheepeurope/europe-owid-consumption-of-ozone-depleting-substances",
+      "electricsheepasia/asia-owid-consumption-of-ozone-depleting-substances",
+      "electricsheepafrica/africa-owid-ozone-depleting-substance-consumption",
+      "electricsheepafrica/africa-owid-ozone-depleting-substances-index",
+      "electricsheepafrica/africa-owid-ozone-o3-concentration-in-ppb",
+      "electricsheepasia/asia-owid-ozone-depleting-substance-consumption",
+      "electricsheepasia/asia-owid-ozone-depleting-substances-index",
+      "electricsheepasia/asia-owid-ozone-o3-concentration-in-ppb",
+      "electricsheepeurope/europe-owid-ozone-depleting-substance-consumption",
+      "electricsheepeurope/europe-owid-ozone-depleting-substances-index",
+      "electricsheepeurope/europe-owid-ozone-o3-concentration-in-ppb",
+      "electricsheepafrica/africa-mauritius-consumption-of-controlled-ozone-depleting-substances-by-se-13f6feeb",
+      "electricsheepafrica/africa-mauritius-consumption-of-controlled-ozone-depleting-substances-by-ty-b6bada34",
+      "electricsheepafrica/africa-mauritius-consumption-of-controlled-ozone-depleting-substances-by-ty-f091eafc"
+    ],
+    "sensor stream": [
+      "TUaxhuiax/cinderpeak-sensor-stream-ggh2528q7m2"
+    ],
+    "powersupply": [],
+    "power_supply": [
+      "WWZzz/rlbench_plug_charger_in_power_supply"
+    ],
+    "rialto": [],
+    "outdoor": [
+      "UniqueData/outdoor_garbage",
+      "ml20max/nature-outdoor",
+      "satyambarnwal/outdoor",
+      "hyeongyeolryu/korean_outdoor_ocr",
+      "NuclearUnicorn-UWC/mit-indoor-outdoor",
+      "smartcat/Amazon_Sports_and_Outdoors_2018",
+      "smartcat/Amazon_Sports_and_Outdoors_2023",
+      "UniDataPro/outdoor-garbage",
+      "Neerajk4/emma_outdoor_dataset2",
+      "milistu/Amazon_Sports_and_Outdoors_2014",
+      "xyz9911/Outdoor_VLN",
+      "OPR-Project/ITLP-Campus-Outdoor",
+      "svjack/polygonrunway_blender_b3d_outdoor_cube_videos",
+      "desonglll/reside-outdoor",
+      "evelynhong/embodied_web_agent_outdoor_trajectory",
+      "evelynhong/embodied_web_agent_outdoor_annotation",
+      "evelynhong/embodied_web_agent_outdoor_env",
+      "andlyu/newiii_outdoor",
+      "andlyu/newiii_outdoor_val",
+      "andlyu/newiii_outdoor_cc",
+      "andlyu/newiii_outdoor_clean",
+      "CATIE-AQ/XMRec_metadata_fr_Sports_and_Outdoors",
+      "nanaj/outdoor_pet",
+      "CATIE-AQ/XMRec_reviews_fr_Sports_and_Outdoors",
+      "andlyu/bb_outdoor_0",
+      "andlyu/bb_outdoor_1",
+      "andlyu/bb_outdoor_2",
+      "andlyu/bb_outdoor_3_lift",
+      "andlyu/bb_outdoor_1_pull_subset",
+      "andlyu/bb_outdoor_1_pull_subset_v2",
+      "UniflexAI/rosbag_d435i_go2_outdoor",
+      "xinghanDM/rosbag_d435i_outdoor",
+      "riotu-lab/Os-rfodg-outdoor-uav-dataset-taif-saudi-arabia",
+      "riotu-lab/os-rfodg-outdoor-uav-synthetic-dataset-taif-saudi-arabia",
+      "YzHuangYanzhen/Amazon-Reviews-2023-SR-L1O-Sports_and_Outdoors"
+    ],
+    "keystroke": [
+      "rokset3/keystrokes136M_normalized_features",
+      "onepunchdimash/aalto_keystroke_features_normalized",
+      "dishamodi/keystroke-dataset-raw-generated",
+      "dishamodi/Keystroke_Processed",
+      "andrewt28/keystroke-typing-videos",
+      "Sakuzas/key_stroke_sound",
+      "jiwonjiwonjiwon/keystroke-heatmaps",
+      "jiwonjiwonjiwon/keystroke-heatmaps2",
+      "jiwonjiwonjiwon/keystroke-heatmaps3",
+      "notZ0R0/Gameplay-Dataset-Provider_valorant-pro-keystrokes",
+      "drix10/keystroke-llm",
+      "emgena/computer_use_keystroke_rate_limiter_teaser"
+    ],
+    "NOAA": [
+      "NMFS-OSI/NOAA-PIFSC-ESD-CORAL-Bleaching-Dataset",
+      "Qdrant/NOAA-Buoy",
+      "brianofrim/NOAA_buoycams",
+      "yueq92/NOAA_narratives_NER",
+      "alea-institute/kl3m-data-dotgov-oceanservice.noaa.gov",
+      "alea-institute/kl3m-data-dotgov-www.nmfs.noaa.gov",
+      "alea-institute/kl3m-data-dotgov-www.noaa.gov",
+      "alea-institute/kl3m-data-dotgov-www.nws.noaa.gov",
+      "atticus-carter/NOAA_AFSC_MML_Iceseals_Classification",
+      "atticus-carter/NOAA_AFSC_MML_Iceseals_Transects",
+      "alea-institute/kl3m-filter-data-dotgov-oceanservice.noaa.gov",
+      "alea-institute/kl3m-filter-data-dotgov-www.nmfs.noaa.gov",
+      "alea-institute/kl3m-filter-data-dotgov-www.noaa.gov",
+      "alea-institute/kl3m-filter-data-dotgov-www.nws.noaa.gov",
+      "Rocking-Mat/babylm_train_noAANN",
+      "Chrismoon/NOAA_AFSC_MML_Moon_Pinnipeds",
+      "ml-project-group-3/NOAA_GHCN_Daily",
+      "remiconnesson/oceanservice-noaa-facts",
+      "AdamMuhtar/NOAA-HRRR-HRRRAK-All-ImageCaption",
+      "AdamMuhtar/NOAA-HRRR-CONUS-ImageCaption",
+      "azizsi/noaa-wind-assignment2",
+      "krithik274/NOAA-PIFSC-ESD-CORAL-Bleaching-Dataset",
+      "extreme-weather-impacts/NOAA_event_with_summary",
+      "acewithalka/NOAA-PIFSC-ESD-CORAL-Bleaching-Dataset",
+      "lukeslp/noaa-significant-storms",
+      "NMFS-OSI/noaa-pacific-benthic-cover-t1",
+      "NMFS-OSI/noaa-pacific-benthic-cover-t1-all",
+      "NMFS-OSI/noaa-pacific-benthic-cover-t3-all",
+      "NMFS-OSI/noaa-pacific-benthic-cover-t3",
+      "NMFS-OSI/NOAA-PIFSC-ESD-ESA-CORAL-ICRA-Dataset",
+      "claritystorm/noaa-storm-events",
+      "AsukaWasHere/noaa-storm-events",
+      "akridge/noaa-pacific-benthic-cover-t1-all",
+      "Armencrete/NOAA_30YR_ClimateNormals_HRLY",
+      "Anshifkk/noaa-gsod-2011-2020-duckdb-bq042"
+    ],
+    "weather drift": [],
+    "arabic": [
+      "abuelkhair-corpus/arabic_billion_words",
+      "ranim/Algerian-Arabic",
+      "milistu/AMAZON-Products-2023-Arabic",
+      "silma-ai/arabic-broad-benchmark",
+      "inception42/Arabic-IFEval",
+      "riotu-lab/arabic_reverse_dictionary",
+      "datahiveai/arabic-multidialect-emotional-speech-demo",
+      "oddadmix/arabic-audio-collection-syrian-podcast",
+      "Bayanat-Labs/arabic-reconciliation-bench",
+      "QCRI/arabic_pos_dialect",
+      "halabi2016/arabic_speech_corpus",
+      "Abdo1Kamr/Arabic_Hadith",
+      "Iftoo95/Arabic_Sentiment_and_Topics",
+      "aminedjebbie/Multi-Arabic-dialects",
+      "mksaad/Arabic_news",
+      "s3h/arabic-gec",
+      "s3h/arabic-grammar-corrections",
+      "s3h/gec-arabic",
+      "abdusah/arabic_speech_massive",
+      "abdusah/arabic_speech_massive_sm",
+      "Abdelrahman-Rezk/Arabic_Poem_Comprehensive_Dataset_APCD",
+      "khalidalt/ultimate_arabic_news",
+      "ZeyadAhmed/Arabic-SQuADv2.0",
+      "Paul/hatecheck-arabic",
+      "sepidmnorozy/Arabic_sentiment",
+      "nehalelkaref/classical_arabic_poetry",
+      "BDas/ArabicNLPDataset",
+      "KFUPM-JRCAI/arabic-acoustic-poetry-benchmark",
+      "Harsit/xnli2.0_arabic",
+      "arbml/Arabic_RC",
+      "arbml/arabic_text_diacritization",
+      "arbml/arabic_stop_words",
+      "omerist/arabicReviews-ds-mini",
+      "Harsit/xnli2.0_train_arabic",
+      "mohamedabdullah/Arabic-unique-words"
+    ],
+    "insects": [
+      "Francesco/insects-mytwu",
+      "P147852369/Insects",
+      "b11901037/Insect_Sound_Classification_dataset",
+      "DynamicSuperb/Insect_Sound_Classification_dataset",
+      "monster-monash/InsectSound",
+      "academic-datasets/InsectSet459",
+      "leonelgv/pollinator-insects-dataset",
+      "FrancophonIA/Wolof_Vocabulary_Insects",
+      "LibreYOLO/insects-mytwu",
+      "Meshal777/Insects",
+      "DaniilKA/light-trap-insects-yolo",
+      "alexisBb/arctic-insects-data",
+      "Emulated-Inc/insect-song-recordist-shift",
+      "PiotrSty/bio-insects-taxonomy-en",
+      "PiotrSty/bio-insects-molecular-en",
+      "PiotrSty/bio-insects-ecology-en",
+      "pham121/studd-insects-abrupt"
+    ],
+    "posture": [
+      "ronka/postureDataset",
+      "Chennzi/rowing_posture_problem",
+      "wmash/mash_posturemodels",
+      "knarayan/cloud_posture_checks",
+      "knarayan/cspm_posture_checks_name_to_query",
+      "knarayan/cloud_posture_checks_name_and_desc",
+      "anilbhujel/Gilt_posture_dataset",
+      "sayantan47/POLAR-Posture-Level-Action-Recognition-Dataset",
+      "Khubaib01/ConfiDetect-Confidence-Posture-Dataset",
+      "alsyakuuu/humanoid-basic-posture-dataset",
+      "fvandi/english-posture-and-body-care-health-30",
+      "beldua/everyday-posture-and-body-awareness",
+      "tritauzen/everyday-posture-and-body-awareness",
+      "mhmdyvsvf/humanoid-balance-posture",
+      "Caplin43/han-humanoid-posture-dataset-v1",
+      "mathewsaji/POLAR-Posture-Level-Action-Recognition-Dataset",
+      "shangzx/Infant-Sleep-Posture-Recognition-Image-Dataset",
+      "alerterra/nuclear_missile_posture",
+      "anilbhujel/viewpoint-aware-pig-posture-recognition",
+      "THULab/dvt217_imitate_posture_260126_lerobot",
+      "freedomcoreai/atlas-security-posture",
+      "DiaHidvegi/robot-postures",
+      "pat2echo/fall-detection-posture-classification",
+      "yhqs06/fall-detection-posture-classification",
+      "anote-ai/PostureAndSustainmentOptimization",
+      "SamratSahoo/1_pp_toys_plate_vae_style_timing_apex_posture_prpl",
+      "SamratSahoo/1_pp_toys_plate_vae_style_timing_apex_learned_posture_prpl",
+      "SamratSahoo/1_pp_toys_plate_vae_style_timing_apex_learned_posture_v2_prpl",
+      "SamratSahoo/3_pp_sort_fruits_toys_vae_style_timing_apex_learned_posture_v2_prpl",
+      "SamratSahoo/4_pack_toys_vae_style_timing_apex_learned_posture_v2_prpl",
+      "SamratSahoo/1_pp_toys_plate_vae_timing_apex_learned_posture_prpl",
+      "SamratSahoo/1_pp_toys_plate_vae_style_apex_learned_posture_prpl",
+      "SamratSahoo/3_pp_sort_fruits_toys_vae_timing_apex_learned_posture_prpl",
+      "SamratSahoo/3_pp_sort_fruits_toys_vae_style_apex_learned_posture_prpl",
+      "SamratSahoo/4_pack_toys_vae_timing_apex_learned_posture_prpl"
+    ],
+    "GMSC": [],
+    "give me some credit": [
+      "algcache/GiveMeSomeCredit"
+    ],
+    "give_me_some_credit": [
+      "algcache/GiveMeSomeCredit"
+    ],
+    "studd": [
+      "N424242/stud_dset_1",
+      "N424242/stud_dset_full",
+      "N424242/stud_dset_2",
+      "N424242/stud_dset_2bw",
+      "pham121/studd-insects-abrupt"
+    ],
+    "electricity": [
+      "tulipa762/electricity_load_diagrams",
+      "rajistics/electricity_demand",
+      "maxcembalest/electricity",
+      "mstz/electricity",
+      "scirik/datasets_electricity",
+      "yzhuang/autotree_automl_electricity_gosdt_d3",
+      "yzhuang/autotree_automl_electricity_gosdt_l512_d3",
+      "yzhuang/autotree_automl_electricity_gosdt_l512_d3_sd1",
+      "yzhuang/autotree_automl_electricity_gosdt_l512_d3_sd2",
+      "yzhuang/autotree_automl_electricity_gosdt_l512_d3_sd3",
+      "yzhuang/autotree_automl_electricity_sgosdt_l256_d3_sd0",
+      "yzhuang/autotree_automl_electricity_gosdt_l256_d3_sd0",
+      "yzhuang/autotree_automl_10000_electricity_sgosdt_l256_dim7_d3_sd0",
+      "yzhuang/autotree_automl_100000_electricity_sgosdt_l256_dim7_d3_sd0",
+      "yzhuang/autotree_automl_electricity_dim7_sd0",
+      "EDS-lab/electricity-demand",
+      "worldboss/electricity-prices",
+      "LeoTungAnh/electricity_hourly",
+      "vedanthpbharadwaj/electricity_cleaned.csv",
+      "naimul011/Electricity_Load_Forecasting_using_LLMS",
+      "Praekelt/ElectricityMeterReadings1o4",
+      "Weijie1996/electricity_consumption_data",
+      "marical/electricity",
+      "OpenSynth/TUDelft-Electricity-Consumption-1.0",
+      "antitheft159/_908_electricity_demands",
+      "antitheft159/_818_electricity_demand",
+      "FrancophonIA/Electricity_Glossary",
+      "briannnnnnnnnn/Electricity_wholesale_market_data_2024",
+      "briannnnnnnnnn/electricity_Industry_Data",
+      "briannnnnnnnnn/electricity_Industry",
+      "SamuelM0422/Hourly-Electricity-Demand-Brazil-Dataset",
+      "huggingface/electricity-production",
+      "esholmess/ElectricityandMagnetismFormulas-Turkish",
+      "francisrafal/single-home-electricity",
+      "electricsheepafrica/africa-electricity-access-all"
+    ],
+    "bike-sharing": [
+      "supersam7/bike_sharing",
+      "PellelNitram/european-bike-sharing-dataset",
+      "lmoncla/lyon-velov-bike-sharing-dataset",
+      "b-fatma/bike-sharing-federated",
+      "t22000t/bike-sharing-tabular"
+    ],
+    "gas": [
+      "histai/HISTAI-gastrointestinal",
+      "HaoChen2/Gastric-X",
+      "toqi/GasGround",
+      "gayanin/pubmed-gastro-maskfilling",
+      "gayanin/pubmed-gastro-paraphrasing",
+      "gayanin/pubmed-gastro-summarisation",
+      "fathyshalab/reklamation24_wasser-strom-gas",
+      "fathyshalab/reklamation24_wasser-strom-gas-full",
+      "fathyshalab/reklamation24_wasser-strom-gas-intent",
+      "Reasat/arch_gastric",
+      "GastonOrphant/embedded_faqs_medicare",
+      "gasha/nva-akb47_alice",
+      "elizathornton/elizabeth_gaskell_unfinished_novel",
+      "akrutin26/oil_and_gas",
+      "gasolsun/financial-reward",
+      "elizathornton/gaskell-bp",
+      "Fucheng/GaSNet-II-SDSS-dataset",
+      "gasp/french_rap_songs",
+      "LH658onceagain/gaster",
+      "qqqqq1/Gastropathy",
+      "CyberHarem/gascogne_azurlane",
+      "gaspad/semantic-seg",
+      "Gaspiche/rubicuir_1",
+      "qqqqq1/GastroBot.evaluateragas",
+      "qqqqq1/GastrobotRAGAS",
+      "Gaspiche/rubicuir_grab_cut",
+      "clarkmaio/gas_trading",
+      "EDS-lab/gas-demand",
+      "gassirbek/ksd_120hours_kk",
+      "alex-labuda/gas-demand",
+      "dlxjj/gasr",
+      "helical-ai/gastrulation_mmusculus",
+      "jangmark1994/gastest",
+      "jangmark1994/20240909_gas",
+      "jangmark1994/gas_data2_0911",
+      "gaspard7/wiki_gpac",
+      "Fucheng/GaSNet-I",
+      "supergoose/buzz_sources_214_gas",
+      "ScoutieAutoML/russian_oil_gas_news_telegram_dataset",
+      "aaronjpi/gasoline-prices",
+      "GASS-Method/SVI4BuildingFunc",
+      "GasStationManager/CodeProofBenchmark",
+      "sheabatchelder/International_Greenhouse_Gas_Emissions",
+      "ynuwara/norsk-olje-gass-LLM",
+      "ynuwara/norsk-olje-gass-ColPali",
+      "ynuwara/norsk-olje-gass-QnA-ColPali",
+      "zeyugao/GastricSemanticSegmentation",
+      "gasmichel/DramaCV",
+      "FrancophonIA/Termcat_Japanese_Gastronomy",
+      "FrancophonIA/Termcat_Gastronomy_Near-Orient",
+      "kikiwangkun/gaspath",
+      "IAlsace/lexique_gastronomie",
+      "mesrikanthreddy/Oil-and-Gas-ds",
+      "Lckoo1230/gasing",
+      "alea-institute/kl3m-data-pacer-gasb",
+      "alea-institute/kl3m-data-pacer-gasd",
+      "Maxwe11y/gaslighting",
+      "EuskadIA/dictionnaire_gastromomique_basque",
+      "Solus-PG/gaslighting-dataset",
+      "Solus-PG/gaslighting-dataset-raw",
+      "Solus-PG/gaslighting-dataset-formatted",
+      "french-datasets/gasp-french_rap_songs",
+      "issai/Global_Gastronomic_Culinary_Dataset",
+      "asigalov61/MIDI-GAS",
+      "linoyts/wan_gasping",
+      "gasmichel/QuoteTTS",
+      "GaspardNW/Mousseur_RAW_AUDIO",
+      "somosnlp-hackathon-2025/patrimonio-gastronomico-hispano",
+      "weathon/sim_gast",
+      "weathon/sim_gas",
+      "gasolsun/DynamicRAG-Eval-Data",
+      "GaspardNW/Metal_RAW_AUDIO",
+      "GaspardNW/Metal_2.72sec_2PourcentSilent_0aug_0shiftAug_specmask0_nfft2048_hop512_sr48000",
+      "GaspardNW/Metal_2.72sec_2PourcentSilent_2aug_2shiftAug_specmask0_nfft2048_hop512_sr48000",
+      "phuongthe/gasai",
+      "GaspardNW/VentFroid_RAW_AUDIO",
+      "gyx666/GaslightingBench",
+      "gyx666/Gaslighting_Bench",
+      "GaspardNW/VentFroid_2.72sec_2PourcentSilent_0aug_0shiftAug_specmask0_nfft2048_hop512_sr48000",
+      "GaspardNW/VentFroid_2.72sec_2PourcentSilent_3aug_1shiftAug_specmask0_nfft2048_hop512_sr48000",
+      "GaspardNW/Animaux_RAW_AUDIO",
+      "GaspardNW/Animaux_2.72sec_2PourcentSilent_0aug_0shiftAug_specmask0_nfft2048_hop512_sr48000",
+      "GaspardNW/Animaux_2.72sec_2PourcentSilent_3aug_1shiftAug_specmask0_nfft2048_hop512_sr48000",
+      "Alwaly/gastrointestinal",
+      "somosnlp-hackathon-2025/gastronomia-hispana-qa",
+      "somosnlp-hackathon-2025/gastronomia-hispana-dpo",
+      "samhormozian/GasLeakPlumes",
+      "ghanaopenai/ga-speech-text-parallel-90k",
+      "UCleQmAR/so101_gasp_mesuring_tape",
+      "aline-gassenn/MedDialog-Audio",
+      "aline-gassenn/MedDialog-Audio_v2",
+      "gasix666/pc-component-reviewsRevised",
+      "mlnomad/imnet1k_gasmask_respirator_gas_helmet",
+      "mlnomad/imnet1k_gas_pump_gasoline_pump_petrol_pump_island_dispenser",
+      "teamasap/gastrointestinal-pathology-dataset",
+      "teamasap/gastrointestinal-and-liver-pathology-dataset",
+      "azizamv/Gas-OnlineRetail-Dataset",
+      "adamantix/Dataset_Lagi-Uas-Gaskeun",
+      "gasolsun/DynamicRAG_Training_Data_150k",
+      "Gaston666/Hamama"
+    ],
+    "pokerhand": [
+      "yzhuang/metatree_pokerhand",
+      "takara-ai/poker_hands"
+    ],
+    "poker-hand": [
+      "yzhuang/metatree_pokerhand",
+      "takara-ai/poker_hands",
+      "gunahkarcasper/poker-gto-strategy-and-hand-ranges"
+    ],
+    "spoken_arabic": [
+      "mohnasgbr/spoken-arabic-digits",
+      "badrex/MADIS5-spoken-arabic-dialects",
+      "Geethuzzz/spoken-arabic-dialects",
+      "Geethuzzz/spoken-arabic-dialects-with-transcriptions",
+      "ailuntz/SpokenArabicDigits",
+      "THULab/SpokenArabicDigits"
+    ],
+    "arabic_digit": [
+      "mohnasgbr/spoken-arabic-digits",
+      "arunasank/mib_arabic_0_1-digit",
+      "arunasank/mib_arabic_1_1-digit",
+      "galilai-group/arabic-digits",
+      "moekh/arabicDigits"
+    ],
+    "sensor": [
+      "martingrzzler/sensory-modality-ratings",
+      "keylei/White_Light_Triangulation_Sensor_for_Flexible_Inspection_System_train",
+      "keylei/White_Light_Triangulation_Sensor_for_Flexible_Inspection_System_test",
+      "scarysnake/sensory-awareness-benchmark",
+      "astrin0321/SensorServerv1.0",
+      "ami-iit/sensorless-torque-control",
+      "zechenli03/sensor_qa_data",
+      "mujunaidalam/sensor_names_dataset",
+      "mujunaidalam/sensor_names_dataset_updated",
+      "famousdetectiveadrianmonk/sensor-ocr-benchmark",
+      "gdurkin/sensor_translate_s1s2",
+      "jeorgexyz/hvac_sensor_data",
+      "MelinaLaimon/sensorium_all_2023",
+      "lucasnuzzi/sensor-data",
+      "pi2academy/Building_Energy_Consumption_Sensor_Data",
+      "wolfeiq/accelerometer_raw_emotion_recognition_smartphone_sensors",
+      "Dhanyaa93914/sensory_gears_fera",
+      "Dhanyaa93914/sensory_gear_fera",
+      "bhaskars113/llm-sensory-training-ver-1.0",
+      "bhaskars113/sensory_training_dataset",
+      "bhaskars113/sensory_training_dataset_relevant",
+      "bhaskars113/sensory_relevance_training_dataset",
+      "prashanthbsp/sensory-v1.0.0",
+      "prashanthbsp/sensory-v2.0.0",
+      "akarra/carla_sensor_data_automatic",
+      "LeRobot-worldwide-hackathon/7-LeCyborg-so100_emg_sensor",
+      "AnasElkhabbaz/sensor_dataset",
+      "LeRobot-worldwide-hackathon/316-NeuralLogic-sensor_dataset2",
+      "gdurkin/sensor_translation_los_angeles",
+      "Mephesto1/sensor-pod-history",
+      "MrC4t/LeCyborg-so100_emg_sensor",
+      "EphraimChuahLeePing/AI_Soul_Sensory_System",
+      "EphraimChuahLeePing/AI_Soul_Sensory_System_by_Ephraim_Chuah",
+      "MecharlieNi/Tactile-Sensor",
+      "danielsanjosepro/test_sensors",
+      "Minax007/sensor",
+      "Debdoot/gas-chamber-sensor-logs",
+      "burcuonel/result_sensor_data",
+      "aleo113/sleep_sensor",
+      "BASH-Lab/SensorCaps",
+      "electricsheepafrica/africa-synth-telecom-hardware-sensor-data-nigeria",
+      "electricsheepafrica/nigerian_energy_and_utilities_equipment_sensors",
+      "electricsheepafrica/nigerian_energy_and_utilities_turbine_generator_sensors",
+      "electricsheepafrica/nigerian_transport_and_logistics_autonomous_vehicle_sensors",
+      "electricsheepafrica/nigerian_transport_and_logistics_bridge_tunnel_sensors",
+      "electricsheepafrica/nigerian_transport_and_logistics_engine_sensors",
+      "Breno-de-Angelo/unitree-g1-manipulation-extra-sensors",
+      "hm1997/bonse-sensord",
+      "wayne-redemption/Sensor_Driven_Environmental_Monitoring_LLM_Evaluation_Dataset",
+      "NifferLi/cold-chain-strawberry-sensors",
+      "hoa12356/sensor_llm",
+      "Amittripipathi/engine-sensor-data",
+      "Amittripipathi/engine-sensor-data-cleaned",
+      "Amittripipathi/engine-sensor-data-train-test",
+      "Shivansh1969/pi-sensor-log",
+      "Tasfiya025/Geospatial-Weather-Station-Sensor-Data",
+      "dda71427/sensor_action_dataset.json",
+      "alifend910/robot_sensor_data.json",
+      "hoangs/viet-robot-sensor-readings",
+      "Rendra86318/robot_sensor_data.json",
+      "alifend910/robot_car_sensors.json",
+      "alsyakuuu/basic-humanoid-sensor-labels",
+      "Shoriful025/autonomous-vehicle-sensor-telemetry-v1",
+      "kraimon/humanoid-sensor-state-dataset",
+      "dda71427/dataset_sensor.json",
+      "acengnew/humanoid-sensor-awareness",
+      "alifend910/kapal_sensor.json",
+      "ermandmand/humanoid-sensor-training-data",
+      "alifend910/sensor_data.json",
+      "alifend910/pompa_air_sensor.json",
+      "alifnd9/robot_sensors.json",
+      "alifend910/sensor_semprot.json",
+      "ermandmand/humanoid-sensor-state-dataset",
+      "Shoriful025/autonomous_vehicle_sensor_fusion_telemetry",
+      "alifend910/keyboard_camera_sensor.json",
+      "acengnew/humanoid-sensor-command-dataset",
+      "alifend910/robot_toy_sensors.json",
+      "dda71427/robot_sensors.json",
+      "beldua/sensory-overload-management-prompts",
+      "afp995/robotics-sensor-records",
+      "Zowel/urban_air_quality_sensor_logs",
+      "Shoriful025/autonomous_vehicle_sensor_fusion_anomalies",
+      "ermandmand/humanoid-sensor-dataset-v1",
+      "dda71427/kipas_sensor.json",
+      "Zowel/autonomous_vehicle_sensor_fusion",
+      "afp995/robotics-sensor",
+      "Shoriful025/autonomous_vehicle_sensor_logs",
+      "alifend910/sensor_to_action.json",
+      "acengnew/robot-sensor-readings-json",
+      "afp995/robotics-sensor-r",
+      "VIOLETGANTENG/violetganteng-robot-sensor-reading-dataset",
+      "VIOLETGANTENG/violetganteng-robot-sensor-reading-dataset1",
+      "VIOLETGANTENG/violetganteng-robot-sensor-reading-dataset2",
+      "Shoriful025/autonomous_vehicle_multi_sensor_fusion_logs",
+      "acengnew/localization-sensor-fusion-json",
+      "Shoriful025/oceanic_carbon_sequestration_sensor_array",
+      "10bodrex/Multi-Sensored",
+      "Chenglu0602/Single-sensory-AI",
+      "dda71427/fan_robot_sensor_readings.json",
+      "achiepatricia/han-sensor-signal-dataset-v1"
+    ],
+    "localization": [
+      "svenschultze/lidar-localization",
+      "zhaospei/vul-localization",
+      "TerminatorJ/localization_dataset",
+      "TerminatorJ/localization_multiRNA",
+      "JetBrains-Research/lca-bug-localization",
+      "JefferyZhan/Language-prompted-Localization-Dataset",
+      "udmurtNLP/django-localization-eng-udm",
+      "bug-localization/apache_bugs",
+      "csebuetnlp/illusionVQA-Soft-Localization",
+      "tiginamaria/bug-localization",
+      "TerminatorJ/LoRNA_localization",
+      "bug-localization/BeetleBox",
+      "SaProtHub/Dataset-Subcellular_Localization-DeepLoc",
+      "SaProtHub/Dataset-Binary_Localization-DeepLoc",
+      "amir-kazemi/aidovecl-vehicle-detection-classification-localization",
+      "biomap-research/localization_prediction",
+      "GleghornLab/localization_prediction",
+      "5CD-AI/Viet-Localization-VQA",
+      "galtimur/lca-bug-localization-test",
+      "felerminoali/Mozila-Common-Voice-page-Emakhuwa-localization",
+      "cyberagent/in-store-visual-localization",
+      "proteinglm/localization_prediction",
+      "bolt-lab/continuous-localization",
+      "bolt-lab/continuous-localization-20",
+      "bolt-lab/continuous-localization-100",
+      "bolt-lab/continuous-localization-1000",
+      "mumtahin-uofu/test-wireless-device-localization-dataset",
+      "icmlbenchname/bug-localization",
+      "ligdis/opencell_localization",
+      "Sakuna/ver_localization_unbalanced_01",
+      "nubahador/ChirpLoc100K___A_Synthetic_Spectrogram_Dataset_for_Chirp_Localization",
+      "morrislab/protein-localization",
+      "secmlr/SURFI-p1_claude_localization_5000_hybrid",
+      "secmlr/SURFI-p1_claude_localization_2000_filtered_selected_500",
+      "secmlr/SURFI-p1_claude_localization_500_no_reasoning",
+      "secmlr/SURFI-p1_claude_localization_200_enriched_reasoning",
+      "secmlr/SURFI-p1_claude_localization_2000_enriched_reasoning",
+      "secmlr/SURFI-p1_claude_localization_2000_enriched_reasoning_filtered",
+      "secmlr/SURFI-p1_claude_localization_1500_enriched_reasoning_filtered",
+      "secmlr/SURFI-p1_claude_localization_1500_enriched_reasoning_filtered_filtered",
+      "secmlr/SURFI-p1_claude_localization_433_enriched_sampled_250",
+      "secmlr/SURFI-p1_claude_localization_1500_filtered_filtered_500subset",
+      "secmlr/SURFI-p1_claude_localization_433_enriched_sampled_100",
+      "secmlr/SURFI-p1_claude_localization_433_enriched_sampled_10",
+      "Xecades/AerialExtreMatch-Localization",
+      "israel/localization",
+      "KNOXZhao/llm_localization",
+      "yhqu/protein_localization",
+      "SWE-Swiss/SWESwiss-SFT-Localization-5K",
+      "Sakuna/ver_localization_balanced_01",
+      "Xiaowei0402/uniprot_subcellular_localization",
+      "ZoneTwelve/Thermal-Heatmap-Source-Localization",
+      "anon-iclr-submission/benchname-bug-localization",
+      "Xtremely-Doped-Punk/ImageNet_Object_Localization-Validation_Data",
+      "chakirdz/Sound_Based_Bird_Localization",
+      "melaniewille/uod-class-disparities-localization-study-RUOD-4C",
+      "melaniewille/uod-class-disparities-localization-study-DUO",
+      "nativemind/mozgach_localizations",
+      "OpenSportsLab/soccernetpro-localization-GAR",
+      "Tvisterious/gretelai_synthetic_text_to_sql_russian_prompts_localization",
+      "Head-inthe-Cloud/ucsc-palms-indoor-localization",
+      "TalonMeyer/gas-leak-source-localization-dataset-yolo",
+      "SilvioGiancola/soccernetpro-localization-snbas",
+      "labhamlet/Nat-HEAR-localization",
+      "labhamlet/Nat-HEAR-Ambisonics-localization",
+      "acengnew/localization-sensor-fusion-json",
+      "ClarusC64/m4-failure-topology-localization-v0.1",
+      "ClarusC64/F1-decoherence-trigger-localization-v0.1",
+      "ClarusC64/aviation-vibration-manifold-distortion-and-fault-localization-v0.1",
+      "closedaxis-12573/full_pose_semantic_localization_dataset_gazebo",
+      "OpenSportsLab/soccernetpro-localization-tennis",
+      "AroticMerch/humanoid-spatial-localization-dataset",
+      "Emilyk-k/real-time-indoor-localization-catadioptric-vision-triplet-loss-data",
+      "carling/Sentiment_localization",
+      "closedaxis-12573/hardware_semantic_localization_dataset",
+      "Cerilong/Sentiment_Localization",
+      "closedaxis-12573/unknown_objects_semantic_localization_dataset_gazebo",
+      "TalonMeyer/gasvid_plume_source_localization_yolo_dataset",
+      "closedaxis-12573/partial_map_semantic_localization_dataset_gazebo",
+      "hazemessam/subcellular-localization",
+      "closedaxis-12573/no_visible_object_localization_dataset_gazebo",
+      "SprintML/watermark_localization",
+      "PGCodeLLM/amir-code-localization-data",
+      "Nano1337/wgo-bench-localization",
+      "ShantyCam/mio-tcd-localization",
+      "alucent/mirror-lca-bug-localization",
+      "ashish-soni08/repro-qot-localization-artifacts",
+      "khoa-na/pothole-gps-localization-demos",
+      "yogeshn07/SEMICON-2026-Localization-DS5-v1",
+      "lingamvamshikrishnareddy/ramanv-image-real-localization",
+      "professorsynapse/eh-j-space-localization-qwen3-4b",
+      "RyuMasamichi/Image_Forgery_Localization_Datasets",
+      "3mmyzhou/gsm8k-error-localization",
+      "RICK-0316/ucsc-palms-indoor-localization",
+      "Pjzno/localization",
+      "sammlapp/pa_forest_bird_localization_2024",
+      "sammlapp/ovenbird-localization-dataset",
+      "sammlapp/pa_forest_bird_localization_2023",
+      "dndan/game-localization-guide-ar",
+      "Tejaswiniprabhakaran19/patchpilot-localization"
+    ],
+    "NOAA weather": [
+      "extreme-weather-impacts/NOAA_event_with_summary",
+      "KunhanGao/NOAA-weather"
+    ],
+    "stream classification": [],
+    "insect": [
+      "Francesco/insects-mytwu",
+      "P147852369/Insects",
+      "MambaHub/InsectMambaData",
+      "b11901037/Insect_Sound_Classification_dataset",
+      "DynamicSuperb/Insect_Sound_Classification_dataset",
+      "EnmmmmOvO/insect-pest-dataset",
+      "nanashi7744/rice-insect-dataset",
+      "copycat-project/laion2b6plus_insect_bug",
+      "monster-monash/InsectSound",
+      "dishishshawn/insect-relevance-dataset",
+      "Starrrrrry/arxiv_insect",
+      "zkdeng/weed_insect_50k",
+      "academic-datasets/InsectSet459",
+      "leonelgv/pollinator-insects-dataset",
+      "mlnomad/imnet1k_walking_stick_walkingstick_stick_insect",
+      "FrancophonIA/Wolof_Vocabulary_Insects",
+      "yunusonur/Insect-RLAIF-Dataset",
+      "licaso/nva-insect",
+      "hkanade/insect_image_retrieval",
+      "sasha/insectarium_gala",
+      "yuyan-chen/open-insect-bci",
+      "yuyan-chen/open-insect",
+      "sasha/insectarium-butterflies",
+      "french-open-data/suivi-photographique-des-insectes-pollinisateurs-spipoll",
+      "midjuly/InsectBase",
+      "dani-armeta/insectNet",
+      "Genius-Society/insecta",
+      "LibreYOLO/insects-mytwu",
+      "rjb444045/lab_insect_10_second_set",
+      "rjb444045/lab_insect_1_minute_set",
+      "CaioFreitas05/br_insecta",
+      "yashm/clip-insect-sex-data",
+      "electricsheepafrica/africa-who-number-of-insecticide-classes-to-which-resistance-was",
+      "electricsheepafrica/africa-who-population-with-access-to-an-insecticide-treated-bed-net",
+      "electricsheepafrica/africa-who-pregnant-women-sleeping-under-insecticide-treated-nets",
+      "electricsheepafrica/africa-who-children-aged-5-years-sleeping-under-insecticide-treated",
+      "electricsheepasia/asia-who-pregnant-women-sleeping-under-insecticide-treated-nets",
+      "electricsheepasia/asia-who-children-aged-5-years-sleeping-under-insecticide-treated",
+      "electricsheepasia/asia-who-number-of-insecticide-classes-to-which-resistance-was",
+      "sasha/insectarium_2026",
+      "Meshal777/Insects",
+      "electricsheepafrica/africa-owid-insecticide-use",
+      "electricsheepasia/asia-owid-insecticide-use",
+      "electricsheepeurope/europe-owid-insecticide-use",
+      "sasha/insectarium_meta_2026",
+      "inz/forestry-insect-images-20260707",
+      "Project-AgML/soybean_insect_classification",
+      "DaniilKA/light-trap-insects-yolo",
+      "BigTrev89/wingbeats-insect-audio",
+      "Mustafa5645344/specifly-insect-dataset",
+      "alexisBb/arctic-insects-data",
+      "Project-AgML/BAU_insectV2_classification",
+      "Emulated-Inc/sci-insect-specimen-family-new-country",
+      "Emulated-Inc/insect-song-recordist-shift",
+      "inz/speciesu-insecta",
+      "briana3910/medical-insect-467421",
+      "PiotrSty/bio-insects-taxonomy-en",
+      "PiotrSty/bio-insects-molecular-en",
+      "PiotrSty/bio-insects-ecology-en",
+      "pham121/studd-insects-abrupt"
+    ],
+    "internet usage": [
+      "tor24/indian-household-internet-usage"
+    ]
+  },
+  "candidate_metadata": {
+    "ailuntz/SpokenArabicDigits": {
+      "sha": "5f2e9861cfc1dff9caa9e37cd43aa22d38f05ee9",
+      "card": null,
+      "files": [
+        {
+          "path": ".gitattributes",
+          "size": 2525,
+          "type": "file"
+        },
+        {
+          "path": "SpokenArabicDigits_TEST.ts",
+          "size": 9344215,
+          "type": "file"
+        },
+        {
+          "path": "SpokenArabicDigits_TRAIN.ts",
+          "size": 28266699,
+          "type": "file"
+        }
+      ],
+      "url": "https://huggingface.co/datasets/ailuntz/SpokenArabicDigits"
+    },
+    "algcache/GiveMeSomeCredit": {
+      "sha": "4c2dab0dce91172737cf3413e023bd16834f1fa1",
+      "card": null,
+      "files": [
+        {
+          "path": ".gitattributes",
+          "size": 2504,
+          "type": "file"
+        },
+        {
+          "path": "Give-Me-Some-Credit.zip",
+          "size": 5408918,
+          "type": "file"
+        }
+      ],
+      "url": "https://huggingface.co/datasets/algcache/GiveMeSomeCredit"
+    },
+    "mstz/covertype": {
+      "sha": "72ae206f21f416f3e7981183537e9ab071aff006",
+      "card": {
+        "task_categories": [
+          "tabular-classification"
+        ],
+        "language": [
+          "en"
+        ],
+        "tags": [
+          "biology",
+          "UCI",
+          "binary_classification",
+          "multiclass_classification"
+        ],
+        "pretty_name": "Covertype",
+        "size_categories": [
+          "100K<n<1M"
+        ],
+        "license": "cc"
+      },
+      "files": [
+        {
+          "path": ".gitattributes",
+          "size": 2314,
+          "type": "file"
+        },
+        {
+          "path": "README.md",
+          "size": 951,
+          "type": "file"
+        },
+        {
+          "path": "covertype.py",
+          "size": 26308,
+          "type": "file"
+        },
+        {
+          "path": "covtype.data",
+          "size": 75170171,
+          "type": "file"
+        }
+      ],
+      "url": "https://huggingface.co/datasets/mstz/covertype"
+    },
+    "mstz/ozone": {
+      "sha": "5d212857f5ff830b714abdeb014532aa34c3e659",
+      "card": {
+        "configs": [
+          {
+            "config_name": "8hr",
+            "data_files": [
+              {
+                "path": "8hr/train.csv",
+                "split": "train"
+              }
+            ],
+            "default": true
+          },
+          {
+            "config_name": "1hr",
+            "data_files": [
+              {
+                "path": "1hr/train.csv",
+                "split": "train"
+              }
+            ],
+            "default": false
+          }
+        ],
+        "language": "en",
+        "license": "cc",
+        "pretty_name": "Ozone",
+        "size_categories": "1M<n<10M",
+        "tags": [
+          "tabular_classification",
+          "binary_classification",
+          "multiclass_classification"
+        ],
+        "task_categories": [
+          "tabular-classification"
+        ]
+      },
+      "files": [
+        {
+          "path": "1hr",
+          "size": 0,
+          "type": "directory"
+        },
+        {
+          "path": "8hr",
+          "size": 0,
+          "type": "directory"
+        },
+        {
+          "path": ".gitattributes",
+          "size": 2265,
+          "type": "file"
+        },
+        {
+          "path": "1hr/train.csv",
+          "size": 637069,
+          "type": "file"
+        },
+        {
+          "path": "8hr/train.csv",
+          "size": 636725,
+          "type": "file"
+        },
+        {
+          "path": "README.md",
+          "size": 982,
+          "type": "file"
+        }
+      ],
+      "url": "https://huggingface.co/datasets/mstz/ozone"
+    },
+    "yzhuang/metatree_pokerhand": {
+      "sha": "1b04c2227c63fdc4dff43d71f81fca4fb894c949",
+      "card": {
+        "dataset_info": {
+          "features": [
+            {
+              "name": "id",
+              "dtype": "int64"
+            },
+            {
+              "name": "X",
+              "sequence": "uint8"
+            },
+            {
+              "name": "y",
+              "dtype": "int64"
+            }
+          ],
+          "splits": [
+            {
+              "name": "train",
+              "num_bytes": 14510800,
+              "num_examples": 580432
+            },
+            {
+              "name": "validation",
+              "num_bytes": 6219225,
+              "num_examples": 248769
+            }
+          ],
+          "download_size": 7116755,
+          "dataset_size": 20730025
+        }
+      },
+      "files": [
+        {
+          "path": "data",
+          "size": 0,
+          "type": "directory"
+        },
+        {
+          "path": ".gitattributes",
+          "size": 2307,
+          "type": "file"
+        },
+        {
+          "path": "README.md",
+          "size": 491,
+          "type": "file"
+        },
+        {
+          "path": "data/train-00000-of-00001-0c6c83b736c7a121.parquet",
+          "size": 4933688,
+          "type": "file"
+        },
+        {
+          "path": "data/validation-00000-of-00001-762fb80d68af8863.parquet",
+          "size": 2183067,
+          "type": "file"
+        }
+      ],
+      "url": "https://huggingface.co/datasets/yzhuang/metatree_pokerhand"
+    }
+  }
+}

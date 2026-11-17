@@ -1,0 +1,38 @@
+{
+  "dataset": "Gas",
+  "provider": "USP Data Stream Repository",
+  "source_url": "https://drive.google.com/file/d/11igK96DPWn8cgIwHfp2_w8JdpmTYsHVz/view",
+  "download_url": "https://drive.usercontent.google.com/download?id=11igK96DPWn8cgIwHfp2_w8JdpmTYsHVz&export=download&confirm=t",
+  "download_sha256": "e0dcfe689c01b6401edf5865f6dcf62b1a5351e00bdbb038cbd93ee3581783f7",
+  "download_bytes": 17278995,
+  "files": [
+    "data/to_upload_huggingface/Gas/GasSensorArray.csv"
+  ],
+  "validation": {
+    "dataset": "Gas",
+    "folder": "data/to_upload_huggingface/Gas",
+    "rows": 13910,
+    "column_width_counts": {
+      "129": 13910
+    },
+    "class_counts": {
+      "4": 1936,
+      "3": 1641,
+      "6": 1833,
+      "2": 2926,
+      "1": 2565,
+      "5": 3009
+    },
+    "missing_feature_values": 0,
+    "nonfinite_feature_values": 0,
+    "nonnumeric_feature_values": 0,
+    "data_file": "GasSensorArray.csv",
+    "data_bytes": 17278995,
+    "data_sha256": "e0dcfe689c01b6401edf5865f6dcf62b1a5351e00bdbb038cbd93ee3581783f7",
+    "paper_rows": 13910,
+    "paper_total_columns": 17,
+    "paper_classes": 6,
+    "has_header": false
+  },
+  "equivalence": "Downloaded upstream benchmark; not established identical to paper preprocessing."
+}

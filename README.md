@@ -181,3 +181,7 @@ Sau khi chạy xong:
   * `results/fig1_rolling_kappa_abrupt_drift.png`: Biểu đồ Kappa score trượt theo thời gian.
   * `results/fig2_performance_vs_cost_comparison.png`: Biểu đồ so sánh hiệu năng (Kappa) và chi phí gán nhãn giữa 4 phương pháp.
   * `results/reproduction_comparison_table.csv`: Bảng tổng hợp số liệu chi tiết.
+
+## Dataset branch snapshot
+
+The `data` branch adds the dataset files and [19-dataset source report](docs/dataset_reports/STUDD_19_DATASETS_REPORT.md). Original HF links and external upstream links are both retained. See [data/README.md](data/README.md) for folder meanings and verification limitations. These files do not constitute new model results.

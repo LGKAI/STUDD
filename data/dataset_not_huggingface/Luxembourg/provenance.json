@@ -1,0 +1,40 @@
+{
+  "dataset": "Luxembourg",
+  "provider": "USP Data Stream Repository",
+  "source_url": "https://drive.google.com/file/d/1BwiUIE97rZbZbMHGODbWaGpSJ7DmGwMB/view",
+  "download_url": "https://drive.usercontent.google.com/download?id=1BwiUIE97rZbZbMHGODbWaGpSJ7DmGwMB&export=download&confirm=t",
+  "download_sha256": "cfc6ef67791af901c209c85ae2caa5c69f673941fe31eb4ce12415e0069edc8b",
+  "download_bytes": 222420,
+  "files": [
+    "data/to_upload_huggingface/Luxembourg/Luxembourg.csv"
+  ],
+  "validation": {
+    "dataset": "Luxembourg",
+    "folder": "data/to_upload_huggingface/Luxembourg",
+    "rows": 1902,
+    "column_width_counts": {
+      "32": 1902
+    },
+    "class_counts": {
+      "label": 1,
+      "1": 924,
+      "0": 977
+    },
+    "missing_feature_values": 0,
+    "nonfinite_feature_values": 0,
+    "nonnumeric_feature_values": 31,
+    "data_file": "Luxembourg.csv",
+    "data_bytes": 222420,
+    "data_sha256": "cfc6ef67791af901c209c85ae2caa5c69f673941fe31eb4ce12415e0069edc8b",
+    "paper_rows": 1901,
+    "paper_total_columns": 31,
+    "paper_classes": 2,
+    "has_header": true,
+    "data_rows_excluding_header": 1901,
+    "data_class_counts_excluding_header": {
+      "1": 924,
+      "0": 977
+    }
+  },
+  "equivalence": "Downloaded upstream benchmark; not established identical to paper preprocessing."
+}

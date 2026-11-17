@@ -1,0 +1,446 @@
+{
+  "checked_on": "2026-11-17",
+  "method": "Unauthenticated Hugging Face API; immutable data hash compared with local source; no data mutation",
+  "datasets": {
+    "Gas": {
+      "repository": "pham121/studd-gas",
+      "url": "https://huggingface.co/datasets/pham121/studd-gas",
+      "revision": "9a73335cbe0368e5ae0a57245b1c9dabcbed5e6b",
+      "private": false,
+      "license": "cc-by-4.0",
+      "files": [
+        {
+          "type": "file",
+          "oid": "84aa5c68c2dc82d7811258e596698b546fd32ff3",
+          "size": 2559,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "a179e3aacc1364a0d6fe12d180d76788e6c6ccae",
+          "size": 17278995,
+          "lfs": {
+            "oid": "e0dcfe689c01b6401edf5865f6dcf62b1a5351e00bdbb038cbd93ee3581783f7",
+            "size": 17278995,
+            "pointerSize": 133
+          },
+          "xetHash": "bff2337036c9c301ac8470f459ec8521751f421411b3fabc78c077b5080ecfe2",
+          "path": "GasSensorArray.csv"
+        },
+        {
+          "type": "file",
+          "oid": "550675e61109f98c8999d16e1eb43300ceb796ed",
+          "size": 3141,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "559b5caf2d2b3d2a03b18a7e5ff7897feedd43d8",
+          "size": 1240,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "GasSensorArray.csv",
+        "bytes": 17278995,
+        "hash_algorithm": "sha256",
+        "local_hash": "e0dcfe689c01b6401edf5865f6dcf62b1a5351e00bdbb038cbd93ee3581783f7",
+        "remote_hash": "e0dcfe689c01b6401edf5865f6dcf62b1a5351e00bdbb038cbd93ee3581783f7",
+        "matches_local_source": true
+      }
+    },
+    "Luxembourg": {
+      "repository": "pham121/studd-luxembourg",
+      "url": "https://huggingface.co/datasets/pham121/studd-luxembourg",
+      "revision": "5ccd00c9a23ed7f10123a0903b64d0e3db3f01d8",
+      "private": false,
+      "license": "cc-by-4.0",
+      "files": [
+        {
+          "type": "file",
+          "oid": "bed0738c7eeb449bca98b5d2f33c89a1ee56349a",
+          "size": 2504,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "d35e2be5decff82f757545cefa472bf7d4adfe31",
+          "size": 222420,
+          "path": "Luxembourg.csv"
+        },
+        {
+          "type": "file",
+          "oid": "718c5f497154d60f2a6b2066bc20d2aac61c007e",
+          "size": 2716,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "e259f9d6e429e3e0ba7f484167fc707d79c79bcd",
+          "size": 1322,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "Luxembourg.csv",
+        "bytes": 222420,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "d35e2be5decff82f757545cefa472bf7d4adfe31",
+        "remote_hash": "d35e2be5decff82f757545cefa472bf7d4adfe31",
+        "matches_local_source": true
+      }
+    },
+    "Sensors": {
+      "repository": "pham121/studd-sensors",
+      "url": "https://huggingface.co/datasets/pham121/studd-sensors",
+      "revision": "6a197a84d50fdb4c758ad7c26484f3aa4b9dbe80",
+      "private": false,
+      "license": "cc-by-4.0",
+      "files": [
+        {
+          "type": "file",
+          "oid": "988f276ef243a1ae6c97ac9361be26b49688f633",
+          "size": 2557,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "340edb0bf64d05afec13aeaa055db849d11cb073",
+          "size": 2556,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "8f8b88f1410178904508d588ab9d3ba1a0ecc1b2",
+          "size": 88697101,
+          "lfs": {
+            "oid": "51c4047966380c426da71d7344c1f232474986263028f69cf521637d2e1b2dee",
+            "size": 88697101,
+            "pointerSize": 133
+          },
+          "xetHash": "ef4e5c1b662217245d5257b173be460b81b1a7652a89f1d10d7847fb6668238b",
+          "path": "SensorStream.csv"
+        },
+        {
+          "type": "file",
+          "oid": "058985877f70f1ebef65b0eda1a2e558cc412123",
+          "size": 2295,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "SensorStream.csv",
+        "bytes": 88697101,
+        "hash_algorithm": "sha256",
+        "local_hash": "51c4047966380c426da71d7344c1f232474986263028f69cf521637d2e1b2dee",
+        "remote_hash": "51c4047966380c426da71d7344c1f232474986263028f69cf521637d2e1b2dee",
+        "matches_local_source": true
+      }
+    },
+    "Powersupply": {
+      "repository": "pham121/studd-powersupply",
+      "url": "https://huggingface.co/datasets/pham121/studd-powersupply",
+      "revision": "72bb16473088cf5c29ab8721ae892db4ffd4af67",
+      "private": false,
+      "license": "cc-by-4.0",
+      "files": [
+        {
+          "type": "file",
+          "oid": "bed0738c7eeb449bca98b5d2f33c89a1ee56349a",
+          "size": 2504,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "974d1108dc704f509dc8b54972e3aea3a6ad7840",
+          "size": 396873,
+          "path": "Powersupply.csv"
+        },
+        {
+          "type": "file",
+          "oid": "76c9fc8e87826d4fbd032fbfdf117fc267859109",
+          "size": 2636,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "a036cc86534904ad918f8dbdac366fb06c05adf3",
+          "size": 1740,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "Powersupply.csv",
+        "bytes": 396873,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "974d1108dc704f509dc8b54972e3aea3a6ad7840",
+        "remote_hash": "974d1108dc704f509dc8b54972e3aea3a6ad7840",
+        "matches_local_source": true
+      }
+    },
+    "Rialto": {
+      "repository": "pham121/studd-rialto",
+      "url": "https://huggingface.co/datasets/pham121/studd-rialto",
+      "revision": "9a876990a741fded06b2a6ede80302fe83e12eb1",
+      "private": false,
+      "license": "cc-by-4.0",
+      "files": [
+        {
+          "type": "file",
+          "oid": "bed0738c7eeb449bca98b5d2f33c89a1ee56349a",
+          "size": 2504,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "08332d0393551612c011617d1ecad0eca85e6377",
+          "size": 2484,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "7394777a2347a3ff447d13e591369099c145438d",
+          "size": 9738654,
+          "path": "Rialto.csv"
+        },
+        {
+          "type": "file",
+          "oid": "1debe62e292112941c242f33ba962a8894597fdd",
+          "size": 1302,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "Rialto.csv",
+        "bytes": 9738654,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "7394777a2347a3ff447d13e591369099c145438d",
+        "remote_hash": "7394777a2347a3ff447d13e591369099c145438d",
+        "matches_local_source": true
+      }
+    },
+    "Outdoor": {
+      "repository": "pham121/studd-outdoor",
+      "url": "https://huggingface.co/datasets/pham121/studd-outdoor",
+      "revision": "34d9a05ba9f8b3bf385ab78b66b5eccb0301611f",
+      "private": false,
+      "license": "cc-by-4.0",
+      "files": [
+        {
+          "type": "file",
+          "oid": "bed0738c7eeb449bca98b5d2f33c89a1ee56349a",
+          "size": 2504,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "9a58e5e704815a3d1009c353c3fa9553b6c59880",
+          "size": 570673,
+          "path": "Outdoor.csv"
+        },
+        {
+          "type": "file",
+          "oid": "45b707ec6cad887feaddbdbdbaaed2a69f104803",
+          "size": 2483,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "39dd569df23544c12ec9a04865de8aa811a10978",
+          "size": 1803,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "Outdoor.csv",
+        "bytes": 570673,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "9a58e5e704815a3d1009c353c3fa9553b6c59880",
+        "remote_hash": "9a58e5e704815a3d1009c353c3fa9553b6c59880",
+        "matches_local_source": true
+      }
+    },
+    "Keystroke": {
+      "repository": "pham121/studd-keystroke",
+      "url": "https://huggingface.co/datasets/pham121/studd-keystroke",
+      "revision": "38da3e5d1a59471dee117d9e7dfe83e3a8e9d0c0",
+      "private": false,
+      "license": "cc-by-4.0",
+      "files": [
+        {
+          "type": "file",
+          "oid": "bed0738c7eeb449bca98b5d2f33c89a1ee56349a",
+          "size": 2504,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "a55880492059102510fdca00d0feb9119e2ac5b5",
+          "size": 114833,
+          "path": "Keystroke.data"
+        },
+        {
+          "type": "file",
+          "oid": "2b29db28da38875c1b58ce8a00b29913e2ecf8e5",
+          "size": 1064,
+          "path": "LICENSE"
+        },
+        {
+          "type": "file",
+          "oid": "9dd6d6c52c7c763b6ecdf52cc6fd953b2bb026ed",
+          "size": 2839,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "27d5f2d8f7a82768a945e0aa3a96aaf5fc8c304c",
+          "size": 1697,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "Keystroke.data",
+        "bytes": 114833,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "a55880492059102510fdca00d0feb9119e2ac5b5",
+        "remote_hash": "a55880492059102510fdca00d0feb9119e2ac5b5",
+        "matches_local_source": true
+      }
+    },
+    "NOAA": {
+      "repository": "pham121/studd-noaa",
+      "url": "https://huggingface.co/datasets/pham121/studd-noaa",
+      "revision": "1b6992238d2c8fee692f5b5fd24de691380b7bc2",
+      "private": false,
+      "license": "cc-by-4.0",
+      "files": [
+        {
+          "type": "file",
+          "oid": "bed0738c7eeb449bca98b5d2f33c89a1ee56349a",
+          "size": 2504,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "645231fda2ccfcbfcc14333218a5b4dfcdfe6cd4",
+          "size": 700956,
+          "path": "NOAA.csv"
+        },
+        {
+          "type": "file",
+          "oid": "848def7d617af74973160bb55e8269c3afb597ff",
+          "size": 2536,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "360844e521faa3f82246913dbe82a7f3ac5d9b14",
+          "size": 1150,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "NOAA.csv",
+        "bytes": 700956,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "645231fda2ccfcbfcc14333218a5b4dfcdfe6cd4",
+        "remote_hash": "645231fda2ccfcbfcc14333218a5b4dfcdfe6cd4",
+        "matches_local_source": true
+      }
+    },
+    "Insects": {
+      "repository": "pham121/studd-insects",
+      "url": "https://huggingface.co/datasets/pham121/studd-insects",
+      "revision": "4fa53b650844ef482a59e486a2927e84cf64e09a",
+      "private": false,
+      "license": "mit",
+      "files": [
+        {
+          "type": "file",
+          "oid": "bed0738c7eeb449bca98b5d2f33c89a1ee56349a",
+          "size": 2504,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "1857d0a9b0fed21f6c5fa4aebe6df58dfe90f831",
+          "size": 2485847,
+          "path": "Insects.data"
+        },
+        {
+          "type": "file",
+          "oid": "2b29db28da38875c1b58ce8a00b29913e2ecf8e5",
+          "size": 1064,
+          "path": "LICENSE"
+        },
+        {
+          "type": "file",
+          "oid": "09fd13a64a562c44e853469f923d23023a675699",
+          "size": 2700,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "71712dfa087fdb2455eecf4defe19ca0efe8a036",
+          "size": 1319,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "Insects.data",
+        "bytes": 2485847,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "1857d0a9b0fed21f6c5fa4aebe6df58dfe90f831",
+        "remote_hash": "1857d0a9b0fed21f6c5fa4aebe6df58dfe90f831",
+        "matches_local_source": true
+      }
+    },
+    "Posture": {
+      "repository": "pham121/studd-posture",
+      "url": "https://huggingface.co/datasets/pham121/studd-posture",
+      "revision": "cfd7b8b678acb60f888901839e2c109e6b5a589f",
+      "private": false,
+      "license": "cc-by-4.0",
+      "files": [
+        {
+          "type": "file",
+          "oid": "bed0738c7eeb449bca98b5d2f33c89a1ee56349a",
+          "size": 2504,
+          "path": ".gitattributes"
+        },
+        {
+          "type": "file",
+          "oid": "2b29db28da38875c1b58ce8a00b29913e2ecf8e5",
+          "size": 1064,
+          "path": "LICENSE"
+        },
+        {
+          "type": "file",
+          "oid": "c249ef6e03d4bf2d7a30bc53808955cde3818015",
+          "size": 10038586,
+          "path": "Posture.data"
+        },
+        {
+          "type": "file",
+          "oid": "29429b097e0fe479dcc25d58dca437f5dc69628b",
+          "size": 2773,
+          "path": "README.md"
+        },
+        {
+          "type": "file",
+          "oid": "c3d647a91aad5ca004cd91f7fae54a1094886a5e",
+          "size": 1567,
+          "path": "provenance.json"
+        }
+      ],
+      "validation": {
+        "data_file": "Posture.data",
+        "bytes": 10038586,
+        "hash_algorithm": "git-blob-sha1",
+        "local_hash": "c249ef6e03d4bf2d7a30bc53808955cde3818015",
+        "remote_hash": "c249ef6e03d4bf2d7a30bc53808955cde3818015",
+        "matches_local_source": true
+      }
+    }
+  }
+}

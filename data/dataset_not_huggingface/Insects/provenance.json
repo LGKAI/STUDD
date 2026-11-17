@@ -1,0 +1,37 @@
+{
+  "dataset": "Insects",
+  "provider": "dos Reis incremental-ks supplemental repository",
+  "source_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Insects.zip",
+  "download_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Insects.zip",
+  "download_sha256": "caca6c37ff630ca2a89c54b8c1c3d72e41124b003b84fddcb22a5522bd438e5d",
+  "download_bytes": 740038,
+  "files": [
+    "data/to_upload_huggingface/Insects/Insects.data"
+  ],
+  "validation": {
+    "dataset": "Insects",
+    "folder": "data/to_upload_huggingface/Insects",
+    "rows": 5325,
+    "column_width_counts": {
+      "50": 5325
+    },
+    "class_counts": {
+      "fruit": 954,
+      "flies": 917,
+      "tarsalis": 1265,
+      "quinx": 1285,
+      "aedes": 904
+    },
+    "missing_feature_values": 0,
+    "nonfinite_feature_values": 0,
+    "nonnumeric_feature_values": 0,
+    "data_file": "Insects.data",
+    "data_bytes": 2485847,
+    "data_sha256": "5c588472b0e8f4ab4149754192d14a5514d27001a2e55cd64c39f41f2e0c374d",
+    "paper_rows": 5325,
+    "paper_total_columns": 50,
+    "paper_classes": 5,
+    "has_header": false
+  },
+  "equivalence": "Downloaded upstream benchmark; not established identical to paper preprocessing."
+}

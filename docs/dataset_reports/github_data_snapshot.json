@@ -1,0 +1,257 @@
+{
+  "repository": "https://github.com/LGKAI/STUDD",
+  "branch": "data",
+  "base_commit": "58085941affdcb00a49a2749cc81b6a2ceec6997",
+  "files": [
+    {
+      "path": "data/hosted_sources.json",
+      "bytes": 3051,
+      "sha256": "c28b38d7b9b86e773ec8b2fb204d1cf4b8bf5b7f5468ed3a06cd012513f21847"
+    },
+    {
+      "path": "data/validation_report.json",
+      "bytes": 1848,
+      "sha256": "80c6cd22b70524ca790524112391ab69f88eec502f231851ccc3ae0d0c436407"
+    },
+    {
+      "path": "data/dataset_not_huggingface/README.md",
+      "bytes": 1646,
+      "sha256": "55074e14c22aba4ff95d3b8c0444cd4b7dd414848b11328f183657e605a9de47"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Sensors/provenance.json",
+      "bytes": 2295,
+      "sha256": "392a7edd4ebf080e977ea0665c3aba82721f0ffba363ee4c6e63a433d191a80c"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Sensors/README.md",
+      "bytes": 2556,
+      "sha256": "a9807262d629cd4e4b04736eccc8b708beffa168271acee378027877df4dc5ae"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Sensors/SensorStream.csv",
+      "bytes": 88697101,
+      "sha256": "51c4047966380c426da71d7344c1f232474986263028f69cf521637d2e1b2dee"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Luxembourg/provenance.json",
+      "bytes": 1322,
+      "sha256": "6c451d09f9ad730ecc5ed33b7132b47ee61a523742eae08b625ba7531c7314b8"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Luxembourg/Luxembourg.csv",
+      "bytes": 222420,
+      "sha256": "cfc6ef67791af901c209c85ae2caa5c69f673941fe31eb4ce12415e0069edc8b"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Luxembourg/README.md",
+      "bytes": 2716,
+      "sha256": "caa266d7d580f91dddcfb16a3e3253ebf39abba7e0bd91eff711bd89d3b4954a"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Gas/provenance.json",
+      "bytes": 1240,
+      "sha256": "06b31524061dc949bd39c1c50080faa514f4d0dab4333219a6afc0bda3ea28a4"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Gas/GasSensorArray.csv",
+      "bytes": 17278995,
+      "sha256": "e0dcfe689c01b6401edf5865f6dcf62b1a5351e00bdbb038cbd93ee3581783f7"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Gas/README.md",
+      "bytes": 3141,
+      "sha256": "9a25d26483ed47433ac25e61004de3dd13bac48db08b75657ac898c19da9b191"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Posture/provenance.json",
+      "bytes": 1567,
+      "sha256": "3654ce0a0904c2b25a7fd2897017e6a415207ecd59b6cea4ab34ac22b20c8196"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Posture/LICENSE",
+      "bytes": 1064,
+      "sha256": "a6596bb5825c3fcb2fcdde9876ac576f3738e9fac4c0af7c8bffc4dcd2f0ddfd"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Posture/Posture.data",
+      "bytes": 10038586,
+      "sha256": "400e552cf8d8386c8319fab0428b266a60e2ad88b4802812af8d7666d5ef4a36"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Posture/README.md",
+      "bytes": 2023,
+      "sha256": "26215f6a1bf6752024ff1d61e94856f441d205d41622a3730f4b92b07b1d2d85"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Rialto/provenance.json",
+      "bytes": 1302,
+      "sha256": "39d0ff87a6812ed8c3401b9ce8ddfc1e2ce622baf426fcd1f21df1d61054cdf0"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Rialto/README.md",
+      "bytes": 2484,
+      "sha256": "4b67e32e15ee038c23cfdc9769c4d0a792a64070528320a2c152bb88bc985f36"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Rialto/Rialto.csv",
+      "bytes": 9738654,
+      "sha256": "43b4949c186dc53f26bad6782aba08a266d3f91cc7199ca1b8cfc7ff874e1034"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Insects/provenance.json",
+      "bytes": 1319,
+      "sha256": "d43d5df241a689fe38ab7694cb5b0a5d58de0162614982521ac66750966177d7"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Insects/LICENSE",
+      "bytes": 1064,
+      "sha256": "a6596bb5825c3fcb2fcdde9876ac576f3738e9fac4c0af7c8bffc4dcd2f0ddfd"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Insects/Insects.data",
+      "bytes": 2485847,
+      "sha256": "5c588472b0e8f4ab4149754192d14a5514d27001a2e55cd64c39f41f2e0c374d"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Insects/README.md",
+      "bytes": 2700,
+      "sha256": "7c194b2308ae7b5189911cc06e5f484ff55e8d3430f67ef1f098689837f8a64e"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Keystroke/provenance.json",
+      "bytes": 1697,
+      "sha256": "4cd795af7127e159572a97161d8057ff5560b5b9019ceb632ec2e09090367fb0"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Keystroke/LICENSE",
+      "bytes": 1064,
+      "sha256": "a6596bb5825c3fcb2fcdde9876ac576f3738e9fac4c0af7c8bffc4dcd2f0ddfd"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Keystroke/README.md",
+      "bytes": 2839,
+      "sha256": "0608aa6360bbc7a885b7dda4831267afa95e8e979818e2b19501fa97c15fc2c2"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Keystroke/Keystroke.data",
+      "bytes": 114833,
+      "sha256": "adb61d7945185ed33f28e29d097a2dbed96c07d95d67f329c6db740d0c0ea845"
+    },
+    {
+      "path": "data/dataset_not_huggingface/NOAA/provenance.json",
+      "bytes": 1150,
+      "sha256": "cbb5cf48a00529b5ce7cd9caf949e5e5b898aab3c28403a38a0af030c6d2e41d"
+    },
+    {
+      "path": "data/dataset_not_huggingface/NOAA/README.md",
+      "bytes": 2536,
+      "sha256": "3c6de3214ada06f6b6120d3b627017b896b034fae5e415f3254789f85aec8f09"
+    },
+    {
+      "path": "data/dataset_not_huggingface/NOAA/NOAA.csv",
+      "bytes": 700956,
+      "sha256": "31e0c1497dc8a34c7cc0316c02ebb602baa3c54946154f8f499f070be2329ac4"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Powersupply/provenance.json",
+      "bytes": 1740,
+      "sha256": "b1c28396051cd321535f78958a9c309ea13db8614c27fb15547ae92cc3518e98"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Powersupply/Powersupply.csv",
+      "bytes": 396873,
+      "sha256": "e1ee08c09d154577ca9f7d2edc079993c32422dc290c722b1560ee83e9f8647f"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Powersupply/README.md",
+      "bytes": 2636,
+      "sha256": "342a3777500b21e46c336566c96af7b6949a303960882c7ca456a21a62d03469"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Outdoor/Outdoor.csv",
+      "bytes": 570673,
+      "sha256": "ba9dbabe5c4f3e15b4b771312fb9f6c88b06f5e251a49e52ccf5498e8febede1"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Outdoor/provenance.json",
+      "bytes": 1803,
+      "sha256": "c3dc546897f45686c55884b49326698041321cfab3ca5520fbfee7f2eeeb18cd"
+    },
+    {
+      "path": "data/dataset_not_huggingface/Outdoor/README.md",
+      "bytes": 2483,
+      "sha256": "94ee131fcc0a99f2ce8e015427664e7e8ae22d5fc6ac3941866b44760ee4cd7d"
+    },
+    {
+      "path": "data/dataset_huggingface/Poker/validation-00000-of-00001-762fb80d68af8863.parquet",
+      "bytes": 2183067,
+      "sha256": "7d0ed1710c5183d59a7269c16290705a3e20783fb19896647b8c73d61bc38cd4"
+    },
+    {
+      "path": "data/dataset_huggingface/Poker/train-00000-of-00001-0c6c83b736c7a121.parquet",
+      "bytes": 4933688,
+      "sha256": "3047c14dd701d21149162761dd158b317b060c88f9119d43f48e84003030e298"
+    },
+    {
+      "path": "data/dataset_huggingface/Bike/Bike.csv",
+      "bytes": 495815,
+      "sha256": "a02364086871f32185b9d501ad72eaebb2b8cd8fdf099d1f78ef6a139fc27daa"
+    },
+    {
+      "path": "data/dataset_huggingface/GMSC/sampleEntry.csv",
+      "bytes": 1907226,
+      "sha256": "578b4b01d0f6ed7f97f1988afff0c41194e72bf4b25707119903d4de3dc1dcea"
+    },
+    {
+      "path": "data/dataset_huggingface/GMSC/cs-test.csv",
+      "bytes": 4983329,
+      "sha256": "bab363a2a807218d32a51f5fc9668b8be7977795065edd386abc8546abaa5b78"
+    },
+    {
+      "path": "data/dataset_huggingface/GMSC/Data Dictionary.xls",
+      "bytes": 14848,
+      "sha256": "d388d6b11ed63fee95432048187c8c064b8ca38e40d7e8aab9edd36af240b092"
+    },
+    {
+      "path": "data/dataset_huggingface/GMSC/cs-training.csv",
+      "bytes": 7564965,
+      "sha256": "1bd46da486a5708c58c7b01a034fae2a13b327f6f7b62ea7ba4fe3b5824b24ac"
+    },
+    {
+      "path": "data/dataset_huggingface/CoverType/covtype.data",
+      "bytes": 75170171,
+      "sha256": "a1825eb1a33610ad72b10ea943f20aed7951f503553ab0b872348ceb116f62c1"
+    },
+    {
+      "path": "data/dataset_huggingface/InsectsAbrupt/InsectsAbrupt.csv",
+      "bytes": 2465110,
+      "sha256": "8151e7895c713fe00fda569566bda8bf753d860512280e1c22eb807a5c99a243"
+    },
+    {
+      "path": "data/dataset_huggingface/Arabic/SpokenArabicDigits_TRAIN.ts",
+      "bytes": 28266699,
+      "sha256": "77c1650c5f72d418e63848cdb456ee3a27a491e95c142e9cc20855c5aa9758c4"
+    },
+    {
+      "path": "data/dataset_huggingface/Arabic/SpokenArabicDigits_TEST.ts",
+      "bytes": 9344215,
+      "sha256": "b4c6c528c0dd3089238c925d3f697889c19013930afd151bd8caf00757292fb8"
+    },
+    {
+      "path": "data/dataset_huggingface/Electricity/Electricity.csv",
+      "bytes": 3231639,
+      "sha256": "01c9e8a71e8bc4e9a08cbe4fcd5ab2952461560071632a76cccbfaf3e44992d8"
+    },
+    {
+      "path": "data/dataset_huggingface/Ozone/1hr/train.csv",
+      "bytes": 637069,
+      "sha256": "984b1a9056f4ca7ad938a8364f9a3e25b889e4a88196567608721528e538eebd"
+    },
+    {
+      "path": "data/dataset_huggingface/Ozone/8hr/train.csv",
+      "bytes": 636725,
+      "sha256": "bfb0c85b5758416489c7e7e018cf503a186ee07a9f13668463c1fa5498e1962d"
+    }
+  ]
+}

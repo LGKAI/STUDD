@@ -1,0 +1,135 @@
+{
+  "files": [
+    {
+      "path": "data/GMSC/sampleEntry.csv",
+      "bytes": 1907226,
+      "sha256": "578b4b01d0f6ed7f97f1988afff0c41194e72bf4b25707119903d4de3dc1dcea"
+    },
+    {
+      "path": "data/GMSC/cs-test.csv",
+      "bytes": 4983329,
+      "sha256": "bab363a2a807218d32a51f5fc9668b8be7977795065edd386abc8546abaa5b78"
+    },
+    {
+      "path": "data/GMSC/Data Dictionary.xls",
+      "bytes": 14848,
+      "sha256": "d388d6b11ed63fee95432048187c8c064b8ca38e40d7e8aab9edd36af240b092"
+    },
+    {
+      "path": "data/GMSC/cs-training.csv",
+      "bytes": 7564965,
+      "sha256": "1bd46da486a5708c58c7b01a034fae2a13b327f6f7b62ea7ba4fe3b5824b24ac"
+    },
+    {
+      "path": "data/CoverType/covtype.data",
+      "bytes": 75170171,
+      "sha256": "a1825eb1a33610ad72b10ea943f20aed7951f503553ab0b872348ceb116f62c1"
+    },
+    {
+      "path": "data/Arabic/SpokenArabicDigits_TRAIN.ts",
+      "bytes": 28266699,
+      "sha256": "77c1650c5f72d418e63848cdb456ee3a27a491e95c142e9cc20855c5aa9758c4"
+    },
+    {
+      "path": "data/Arabic/SpokenArabicDigits_TEST.ts",
+      "bytes": 9344215,
+      "sha256": "b4c6c528c0dd3089238c925d3f697889c19013930afd151bd8caf00757292fb8"
+    },
+    {
+      "path": "data/Poker/validation-00000-of-00001-762fb80d68af8863.parquet",
+      "bytes": 2183067,
+      "sha256": "7d0ed1710c5183d59a7269c16290705a3e20783fb19896647b8c73d61bc38cd4"
+    },
+    {
+      "path": "data/Poker/train-00000-of-00001-0c6c83b736c7a121.parquet",
+      "bytes": 4933688,
+      "sha256": "3047c14dd701d21149162761dd158b317b060c88f9119d43f48e84003030e298"
+    },
+    {
+      "path": "data/Ozone/1hr/train.csv",
+      "bytes": 637069,
+      "sha256": "984b1a9056f4ca7ad938a8364f9a3e25b889e4a88196567608721528e538eebd"
+    },
+    {
+      "path": "data/Ozone/8hr/train.csv",
+      "bytes": 636725,
+      "sha256": "bfb0c85b5758416489c7e7e018cf503a186ee07a9f13668463c1fa5498e1962d"
+    }
+  ],
+  "observed": {
+    "CoverType": [
+      {
+        "path": "data/CoverType/covtype.data",
+        "rows": 581013,
+        "width_counts": {
+          "52": 1,
+          "55": 581012
+        },
+        "class_counts_if_known": {
+          "cover_type": 1,
+          "5": 9493,
+          "2": 283301,
+          "1": 211840,
+          "7": 20510,
+          "3": 35754,
+          "6": 17367,
+          "4": 2747
+        }
+      }
+    ],
+    "Ozone": [
+      {
+        "path": "data/Ozone/1hr/train.csv",
+        "rows": 1848,
+        "width_counts": {
+          "73": 1848
+        },
+        "class_counts_if_known": {}
+      },
+      {
+        "path": "data/Ozone/8hr/train.csv",
+        "rows": 1847,
+        "width_counts": {
+          "73": 1847
+        },
+        "class_counts_if_known": {}
+      }
+    ],
+    "GMSC": [
+      {
+        "path": "data/GMSC/sampleEntry.csv",
+        "rows": 101503,
+        "width_counts": {
+          "2": 101503
+        },
+        "class_counts_if_known": {}
+      },
+      {
+        "path": "data/GMSC/cs-test.csv",
+        "rows": 101503,
+        "width_counts": {
+          "12": 101503
+        },
+        "class_counts_if_known": {}
+      },
+      {
+        "path": "data/GMSC/cs-training.csv",
+        "rows": 150000,
+        "width_counts": {
+          "12": 150000
+        },
+        "class_counts_if_known": {}
+      }
+    ],
+    "Arabic": [
+      {
+        "path": "data/Arabic/SpokenArabicDigits_TRAIN.ts",
+        "series_count": 6599
+      },
+      {
+        "path": "data/Arabic/SpokenArabicDigits_TEST.ts",
+        "series_count": 2199
+      }
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+[
+  {
+    "dataset": "InsectsAbrupt",
+    "archive": "data/raw/AbruptInsects.zip",
+    "extracted_file": "data/extracted/AbruptInsects.data",
+    "source_repository": "https://github.com/denismr/incremental-ks",
+    "source_commit": "c6bc98833db67d9dc90a0f997a11877860966337",
+    "source_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/AbruptInsects.zip",
+    "sha256": "ccae737717a9c2901d974e2e36d3f4f30702986a38b941a9579265ac23d7dca3",
+    "archive_bytes": 748537,
+    "extracted_bytes": 2464907,
+    "rows": 5325,
+    "total_columns": 50,
+    "feature_columns": 49,
+    "target": "last column",
+    "header": false,
+    "class_counts": {
+      "2": 917,
+      "3": 1265,
+      "1": 954,
+      "4": 1285,
+      "5": 904
+    },
+    "missing_or_nonfinite_features": 0
+  },
+  {
+    "dataset": "Electricity",
+    "archive": "data/raw/ELEC.arff.zip",
+    "extracted_file": "data/extracted/elecNormNew.arff",
+    "source_repository": "https://github.com/hmgomes/AdaptiveRandomForest",
+    "source_commit": "d2adaa5c31474d5e15ccbd0490894b25e978738c",
+    "source_url": "https://raw.githubusercontent.com/hmgomes/AdaptiveRandomForest/d2adaa5c31474d5e15ccbd0490894b25e978738c/ELEC.arff.zip",
+    "sha256": "5a7360c98c125a862d1d00080abeaf82efc9d8ab992da4ab78a9649fc3bf2771",
+    "archive_bytes": 714634,
+    "extracted_bytes": 3092013,
+    "rows": 45312,
+    "total_columns": 9,
+    "feature_columns": 8,
+    "target": "last column",
+    "header": "ARFF metadata",
+    "class_counts": {
+      "UP": 19237,
+      "DOWN": 26075
+    },
+    "missing_or_nonfinite_features": 0
+  },
+  {
+    "dataset": "Bike",
+    "archive": "data/raw/Bike.zip",
+    "extracted_file": "data/extracted/Bike.data",
+    "source_repository": "https://github.com/denismr/incremental-ks",
+    "source_commit": "c6bc98833db67d9dc90a0f997a11877860966337",
+    "source_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Bike.zip",
+    "sha256": "df43014f9c0d27dc4e55cbdf23eb7fcb465ee642c1d48b8d9d414ce00d3bc267",
+    "archive_bytes": 56913,
+    "extracted_bytes": 490830,
+    "rows": 17379,
+    "total_columns": 5,
+    "feature_columns": 4,
+    "target": "last column",
+    "header": false,
+    "class_counts": {
+      "low": 8671,
+      "high": 8708
+    },
+    "missing_or_nonfinite_features": 0
+  }
+]

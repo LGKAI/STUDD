@@ -1,0 +1,47 @@
+[
+  {
+    "rows": 5325,
+    "feature_columns": 49,
+    "class_counts": {
+      "2": 917,
+      "3": 1265,
+      "1": 954,
+      "4": 1285,
+      "5": 904
+    },
+    "ordered_sha256": "839bd05b87867866d49c142fcea9df1dece9378b378a714cabdfd38a48f472a8",
+    "dataset": "InsectsAbrupt",
+    "source_url": "https://huggingface.co/datasets/pham121/studd-insects-abrupt/resolve/90238617f8f88f5ae0f99350e65abc1f194bf37a/AbruptInsects.zip",
+    "source_sha256": "ccae737717a9c2901d974e2e36d3f4f30702986a38b941a9579265ac23d7dca3",
+    "csv": "/private/tmp/studd-all-hosted-m4k7jr_q/InsectsAbrupt.csv",
+    "csv_sha256": "8151e7895c713fe00fda569566bda8bf753d860512280e1c22eb807a5c99a243"
+  },
+  {
+    "rows": 45312,
+    "feature_columns": 8,
+    "class_counts": {
+      "UP": 19237,
+      "DOWN": 26075
+    },
+    "ordered_sha256": "1afce06871edc81983934aea20ceb0e1c0c4a53035d11882f06e1bd280aa5ae5",
+    "dataset": "Electricity",
+    "source_url": "https://huggingface.co/datasets/mstz/electricity/resolve/5f26b8dd2ecdd56f56694fe4f260a1adaa6d77a9/electricity/train.csv",
+    "source_sha256": "f5e6b869a3825c2b475d1a91db30129ae850673a17ea7bb9a7163f1ac33e83cd",
+    "csv": "/private/tmp/studd-all-hosted-m4k7jr_q/Electricity.csv",
+    "csv_sha256": "01c9e8a71e8bc4e9a08cbe4fcd5ab2952461560071632a76cccbfaf3e44992d8"
+  },
+  {
+    "rows": 17379,
+    "feature_columns": 4,
+    "class_counts": {
+      "low": 8671,
+      "high": 8708
+    },
+    "ordered_sha256": "b28b590b122a35f08171be9921801c88026f8d01863c56f367b95693456cbaae",
+    "dataset": "Bike",
+    "source_url": "https://huggingface.co/datasets/t22000t/bike-sharing-tabular/resolve/6b645e0cedbc5208fcca11ac94544b088478bf61/hour.csv",
+    "source_sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
+    "csv": "/private/tmp/studd-all-hosted-m4k7jr_q/Bike.csv",
+    "csv_sha256": "a02364086871f32185b9d501ad72eaebb2b8cd8fdf099d1f78ef6a139fc27daa"
+  }
+]

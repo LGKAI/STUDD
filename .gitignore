@@ -29,3 +29,8 @@ data/openml_cache/
 # 7. File rác hệ điều hành
 .DS_Store
 Thumbs.db
+# Dataset snapshot intentionally tracked on the data branch.
+!data/dataset_huggingface/
+!data/dataset_huggingface/**
+!data/dataset_not_huggingface/
+!data/dataset_not_huggingface/**

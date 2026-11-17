@@ -1,0 +1,34 @@
+{
+  "dataset": "NOAA",
+  "provider": "USP Data Stream Repository",
+  "source_url": "https://drive.google.com/file/d/1lfisx3jZsj7Y1UM5HcYaMr9nOzXsTrEX/view",
+  "download_url": "https://drive.usercontent.google.com/download?id=1lfisx3jZsj7Y1UM5HcYaMr9nOzXsTrEX&export=download&confirm=t",
+  "download_sha256": "31e0c1497dc8a34c7cc0316c02ebb602baa3c54946154f8f499f070be2329ac4",
+  "download_bytes": 700956,
+  "files": [
+    "data/to_upload_huggingface/NOAA/NOAA.csv"
+  ],
+  "validation": {
+    "dataset": "NOAA",
+    "folder": "data/to_upload_huggingface/NOAA",
+    "rows": 18159,
+    "column_width_counts": {
+      "9": 18159
+    },
+    "class_counts": {
+      "1": 12461,
+      "2": 5698
+    },
+    "missing_feature_values": 0,
+    "nonfinite_feature_values": 0,
+    "nonnumeric_feature_values": 0,
+    "data_file": "NOAA.csv",
+    "data_bytes": 700956,
+    "data_sha256": "31e0c1497dc8a34c7cc0316c02ebb602baa3c54946154f8f499f070be2329ac4",
+    "paper_rows": 18159,
+    "paper_total_columns": 8,
+    "paper_classes": 2,
+    "has_header": false
+  },
+  "equivalence": "Downloaded upstream benchmark; not established identical to paper preprocessing."
+}

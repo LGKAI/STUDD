@@ -1,0 +1,112 @@
+[
+  {
+    "dataset": "Gas",
+    "provider": "USP Data Stream Repository",
+    "source_url": "https://drive.google.com/file/d/11igK96DPWn8cgIwHfp2_w8JdpmTYsHVz/view",
+    "download_url": "https://drive.usercontent.google.com/download?id=11igK96DPWn8cgIwHfp2_w8JdpmTYsHVz&export=download&confirm=t",
+    "download_sha256": "e0dcfe689c01b6401edf5865f6dcf62b1a5351e00bdbb038cbd93ee3581783f7",
+    "download_bytes": 17278995,
+    "files": [
+      "data/to_upload_huggingface/Gas/GasSensorArray.csv"
+    ]
+  },
+  {
+    "dataset": "Luxembourg",
+    "provider": "USP Data Stream Repository",
+    "source_url": "https://drive.google.com/file/d/1BwiUIE97rZbZbMHGODbWaGpSJ7DmGwMB/view",
+    "download_url": "https://drive.usercontent.google.com/download?id=1BwiUIE97rZbZbMHGODbWaGpSJ7DmGwMB&export=download&confirm=t",
+    "download_sha256": "cfc6ef67791af901c209c85ae2caa5c69f673941fe31eb4ce12415e0069edc8b",
+    "download_bytes": 222420,
+    "files": [
+      "data/to_upload_huggingface/Luxembourg/Luxembourg.csv"
+    ]
+  },
+  {
+    "dataset": "Sensors",
+    "provider": "USP Data Stream Repository",
+    "source_url": "https://drive.google.com/file/d/1T8QhOH4z6gV2yvB4gA7dyisvnotKcy6t/view",
+    "download_url": "https://drive.usercontent.google.com/download?id=1T8QhOH4z6gV2yvB4gA7dyisvnotKcy6t&export=download&confirm=t",
+    "download_sha256": "51c4047966380c426da71d7344c1f232474986263028f69cf521637d2e1b2dee",
+    "download_bytes": 88697101,
+    "files": [
+      "data/to_upload_huggingface/Sensors/SensorStream.csv"
+    ]
+  },
+  {
+    "dataset": "Powersupply",
+    "provider": "USP Data Stream Repository",
+    "source_url": "https://drive.google.com/file/d/1YWncempzW_MDMJcRvyh377449ytOSh9g/view",
+    "download_url": "https://drive.usercontent.google.com/download?id=1YWncempzW_MDMJcRvyh377449ytOSh9g&export=download&confirm=t",
+    "download_sha256": "e1ee08c09d154577ca9f7d2edc079993c32422dc290c722b1560ee83e9f8647f",
+    "download_bytes": 396873,
+    "files": [
+      "data/to_upload_huggingface/Powersupply/Powersupply.csv"
+    ]
+  },
+  {
+    "dataset": "Rialto",
+    "provider": "USP Data Stream Repository",
+    "source_url": "https://drive.google.com/file/d/1TVGYtJ1VnFFhAgrG5oZd1J8Jk6ShRbMi/view",
+    "download_url": "https://drive.usercontent.google.com/download?id=1TVGYtJ1VnFFhAgrG5oZd1J8Jk6ShRbMi&export=download&confirm=t",
+    "download_sha256": "43b4949c186dc53f26bad6782aba08a266d3f91cc7199ca1b8cfc7ff874e1034",
+    "download_bytes": 9738654,
+    "files": [
+      "data/to_upload_huggingface/Rialto/Rialto.csv"
+    ]
+  },
+  {
+    "dataset": "Outdoor",
+    "provider": "USP Data Stream Repository",
+    "source_url": "https://drive.google.com/file/d/1u-5rDllhrsUKzrHnvouD-gQwqDLIeOjt/view",
+    "download_url": "https://drive.usercontent.google.com/download?id=1u-5rDllhrsUKzrHnvouD-gQwqDLIeOjt&export=download&confirm=t",
+    "download_sha256": "ba9dbabe5c4f3e15b4b771312fb9f6c88b06f5e251a49e52ccf5498e8febede1",
+    "download_bytes": 570673,
+    "files": [
+      "data/to_upload_huggingface/Outdoor/Outdoor.csv"
+    ]
+  },
+  {
+    "dataset": "Keystroke",
+    "provider": "dos Reis incremental-ks supplemental repository",
+    "source_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Keystroke.zip",
+    "download_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Keystroke.zip",
+    "download_sha256": "234e571ce70e0a0d53334a96d5a584f11432a9b4ef7bc0658bce1303833e8676",
+    "download_bytes": 36009,
+    "files": [
+      "data/to_upload_huggingface/Keystroke/Keystroke.data"
+    ]
+  },
+  {
+    "dataset": "NOAA",
+    "provider": "USP Data Stream Repository",
+    "source_url": "https://drive.google.com/file/d/1lfisx3jZsj7Y1UM5HcYaMr9nOzXsTrEX/view",
+    "download_url": "https://drive.usercontent.google.com/download?id=1lfisx3jZsj7Y1UM5HcYaMr9nOzXsTrEX&export=download&confirm=t",
+    "download_sha256": "31e0c1497dc8a34c7cc0316c02ebb602baa3c54946154f8f499f070be2329ac4",
+    "download_bytes": 700956,
+    "files": [
+      "data/to_upload_huggingface/NOAA/NOAA.csv"
+    ]
+  },
+  {
+    "dataset": "Insects",
+    "provider": "dos Reis incremental-ks supplemental repository",
+    "source_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Insects.zip",
+    "download_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Insects.zip",
+    "download_sha256": "caca6c37ff630ca2a89c54b8c1c3d72e41124b003b84fddcb22a5522bd438e5d",
+    "download_bytes": 740038,
+    "files": [
+      "data/to_upload_huggingface/Insects/Insects.data"
+    ]
+  },
+  {
+    "dataset": "Posture",
+    "provider": "dos Reis incremental-ks supplemental repository",
+    "source_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Posture.zip",
+    "download_url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Posture.zip",
+    "download_sha256": "e54431d30aa623164ba65416c9658dfe206456f737f5362e3591b6e7eafc1f39",
+    "download_bytes": 3905866,
+    "files": [
+      "data/to_upload_huggingface/Posture/Posture.data"
+    ]
+  }
+]

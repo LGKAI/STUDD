@@ -1,0 +1,65 @@
+[
+  {
+    "dataset": "CoverType",
+    "url": "https://huggingface.co/datasets/mstz/covertype/resolve/72ae206f21f416f3e7981183537e9ab071aff006/covtype.data",
+    "path": "data/CoverType/covtype.data",
+    "bytes": 75170171,
+    "sha256": "a1825eb1a33610ad72b10ea943f20aed7951f503553ab0b872348ceb116f62c1"
+  },
+  {
+    "dataset": "Poker",
+    "url": "https://huggingface.co/datasets/yzhuang/metatree_pokerhand/resolve/1b04c2227c63fdc4dff43d71f81fca4fb894c949/data/train-00000-of-00001-0c6c83b736c7a121.parquet",
+    "path": "data/Poker/train-00000-of-00001-0c6c83b736c7a121.parquet",
+    "bytes": 4933688,
+    "sha256": "3047c14dd701d21149162761dd158b317b060c88f9119d43f48e84003030e298"
+  },
+  {
+    "dataset": "Poker",
+    "url": "https://huggingface.co/datasets/yzhuang/metatree_pokerhand/resolve/1b04c2227c63fdc4dff43d71f81fca4fb894c949/data/validation-00000-of-00001-762fb80d68af8863.parquet",
+    "path": "data/Poker/validation-00000-of-00001-762fb80d68af8863.parquet",
+    "bytes": 2183067,
+    "sha256": "7d0ed1710c5183d59a7269c16290705a3e20783fb19896647b8c73d61bc38cd4"
+  },
+  {
+    "dataset": "Ozone",
+    "url": "https://huggingface.co/datasets/mstz/ozone/resolve/5d212857f5ff830b714abdeb014532aa34c3e659/1hr/train.csv",
+    "path": "data/Ozone/1hr/train.csv",
+    "bytes": 637069,
+    "sha256": "984b1a9056f4ca7ad938a8364f9a3e25b889e4a88196567608721528e538eebd"
+  },
+  {
+    "dataset": "Ozone",
+    "url": "https://huggingface.co/datasets/mstz/ozone/resolve/5d212857f5ff830b714abdeb014532aa34c3e659/8hr/train.csv",
+    "path": "data/Ozone/8hr/train.csv",
+    "bytes": 636725,
+    "sha256": "bfb0c85b5758416489c7e7e018cf503a186ee07a9f13668463c1fa5498e1962d"
+  },
+  {
+    "dataset": "Arabic",
+    "url": "https://huggingface.co/datasets/ailuntz/SpokenArabicDigits/resolve/5f2e9861cfc1dff9caa9e37cd43aa22d38f05ee9/SpokenArabicDigits_TEST.ts",
+    "path": "data/Arabic/SpokenArabicDigits_TEST.ts",
+    "bytes": 9344215,
+    "sha256": "b4c6c528c0dd3089238c925d3f697889c19013930afd151bd8caf00757292fb8"
+  },
+  {
+    "dataset": "Arabic",
+    "url": "https://huggingface.co/datasets/ailuntz/SpokenArabicDigits/resolve/5f2e9861cfc1dff9caa9e37cd43aa22d38f05ee9/SpokenArabicDigits_TRAIN.ts",
+    "path": "data/Arabic/SpokenArabicDigits_TRAIN.ts",
+    "bytes": 28266699,
+    "sha256": "77c1650c5f72d418e63848cdb456ee3a27a491e95c142e9cc20855c5aa9758c4"
+  },
+  {
+    "dataset": "GMSC",
+    "url": "https://huggingface.co/datasets/algcache/GiveMeSomeCredit/resolve/4c2dab0dce91172737cf3413e023bd16834f1fa1/Give-Me-Some-Credit.zip",
+    "path": "data/GMSC/Give-Me-Some-Credit.zip",
+    "bytes": 5408918,
+    "sha256": "e7fab05b971f058cbf73df3839bae2e16ae366de41c142c55064344c0b9ccac8",
+    "extracted_files": [
+      "data/GMSC/Data Dictionary.xls",
+      "data/GMSC/cs-test.csv",
+      "data/GMSC/cs-training.csv",
+      "data/GMSC/sampleEntry.csv"
+    ],
+    "archive_removed_after_extraction": true
+  }
+]
