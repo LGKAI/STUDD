@@ -286,9 +286,11 @@ def run_studd_stream(
     samples_used_online = 0
 
     curr_pos = W
+    pred_chunk_size = max(4096, 2 * W)
     while curr_pos < n_total:
-        preds_T = teacher.predict(X[curr_pos:])
-        preds_S = student.predict(X[curr_pos:])
+        chunk_end = min(n_total, curr_pos + pred_chunk_size)
+        preds_T = teacher.predict(X[curr_pos:chunk_end])
+        preds_S = student.predict(X[curr_pos:chunk_end])
         alarm_triggered = False
 
         for offset in range(len(preds_T)):
@@ -307,24 +309,23 @@ def run_studd_stream(
 
             if drift_alarm:
                 alarm_indices.append(stream_idx)
-                # Huấn luyện lại Teacher trên tối đa W mẫu gần nhất trong pha Online (nhân quả, không nhìn tương lai)
+                # Huấn luyện lại Teacher và Student trên cửa sổ W mẫu gần nhất (Mục 5.3 & Hình 6 bài báo)
                 start_adapt = max(W, stream_idx + 1 - W)
                 samples_used_online += (stream_idx + 1) - start_adapt
 
                 teacher = clone(teacher_template)
                 teacher.fit(X[start_adapt : stream_idx + 1], y[start_adapt : stream_idx + 1])
 
-                # Huấn luyện lại Student bắt chước dự đoán của Teacher mới trên buffer online (theo studd_batch.py)
-                yhat_buf = teacher.predict(X[W : stream_idx + 1])
+                yhat_adapt = teacher.predict(X[start_adapt : stream_idx + 1])
                 student = clone(student_template)
-                student.fit(X[W : stream_idx + 1], yhat_buf)
+                student.fit(X[start_adapt : stream_idx + 1], yhat_adapt)
 
                 curr_pos = stream_idx + 1
                 alarm_triggered = True
                 break
 
         if not alarm_triggered:
-            break
+            curr_pos = chunk_end
 
     elapsed = time.perf_counter() - t0
     return _compute_metrics_and_costs(
@@ -366,8 +367,10 @@ def run_supervised_ss(
     samples_used_online = 0
 
     curr_pos = W
+    pred_chunk_size = max(4096, 2 * W)
     while curr_pos < n_total:
-        preds_chunk = model.predict(X[curr_pos:])
+        chunk_end = min(n_total, curr_pos + pred_chunk_size)
+        preds_chunk = model.predict(X[curr_pos:chunk_end])
         alarm_triggered = False
 
         for offset in range(len(preds_chunk)):
@@ -390,7 +393,7 @@ def run_supervised_ss(
                 break
 
         if not alarm_triggered:
-            break
+            curr_pos = chunk_end
 
     elapsed = time.perf_counter() - t0
     return _compute_metrics_and_costs(

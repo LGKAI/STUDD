@@ -250,6 +250,51 @@ STREAM_CONFIG_REGISTRY: Dict[str, Dict[str, object]] = {
         "student": "RF",
         "max_samples": 150000,
     },
+    "luxembourg": {
+        "canonical_name": "Luxembourg",
+        "hf_repo": "pham121/studd-luxembourg",
+        "hf_revision": "5ccd00c9a23ed7f10123a0903b64d0e3db3f01d8",
+        "hf_url": "https://huggingface.co/datasets/pham121/studd-luxembourg/resolve/5ccd00c9a23ed7f10123a0903b64d0e3db3f01d8/Luxembourg.csv",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_not_huggingface", "Luxembourg", "Luxembourg.csv"),
+        "has_header": True,
+        "paper_rows": 1901,
+        "paper_total_cols": 31,
+        "paper_classes": 2,
+        "window_size": 500,
+        "teacher": "RF",
+        "student": "RF",
+        "max_samples": 150000,
+    },
+    "outdoor": {
+        "canonical_name": "Outdoor",
+        "hf_repo": "pham121/studd-outdoor",
+        "hf_revision": "34d9a05ba9f8b3bf385ab78b66b5eccb0301611f",
+        "hf_url": "https://huggingface.co/datasets/pham121/studd-outdoor/resolve/34d9a05ba9f8b3bf385ab78b66b5eccb0301611f/Outdoor.csv",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_not_huggingface", "Outdoor", "Outdoor.csv"),
+        "has_header": False,
+        "paper_rows": 4000,
+        "paper_total_cols": 21,
+        "paper_classes": 40,
+        "window_size": 500,
+        "teacher": "RF",
+        "student": "RF",
+        "max_samples": 150000,
+    },
+    "rialto": {
+        "canonical_name": "Rialto",
+        "hf_repo": "pham121/studd-rialto",
+        "hf_revision": "9a876990a741fded06b2a6ede80302fe83e12eb1",
+        "hf_url": "https://huggingface.co/datasets/pham121/studd-rialto/resolve/9a876990a741fded06b2a6ede80302fe83e12eb1/Rialto.csv",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_not_huggingface", "Rialto", "Rialto.csv"),
+        "has_header": False,
+        "paper_rows": 82250,
+        "paper_total_cols": 27,
+        "paper_classes": 10,
+        "window_size": 2000,
+        "teacher": "XGB",
+        "student": "XGB",
+        "max_samples": 150000,
+    },
 }
 
 
@@ -331,6 +376,65 @@ def load_stream(
             "low (0)": int(np.sum(y_full == 0)),
             "high (1)": int(np.sum(y_full == 1)),
         }
+    elif key in ("luxembourg", "outdoor", "rialto"):
+        has_header = bool(cfg.get("has_header", False))
+        hdr_arg = 0 if has_header else None
+        df_prepared = None
+
+        if prefer_hf:
+            try:
+                print(
+                    f"[DataLoader] Đang tải '{cfg['canonical_name']}' từ Hugging Face "
+                    f"({cfg['hf_repo']}@{str(cfg['hf_revision'])[:8]})..."
+                )
+                with urllib.request.urlopen(hf_url, timeout=30) as resp:
+                    raw_bytes = resp.read()
+                df_prepared = pd.read_csv(io.BytesIO(raw_bytes), header=hdr_arg, low_memory=False)
+                source_used = f"huggingface:{cfg['hf_repo']}@{str(cfg['hf_revision'])[:10]}"
+            except Exception as exc:
+                print(f"[DataLoader] Cảnh báo tải HF ({exc}), chuyển sang đọc snapshot cục bộ: {local_path}")
+
+        if df_prepared is None:
+            if not os.path.exists(local_path):
+                raise FileNotFoundError(f"Không tìm thấy file dữ liệu tại: {local_path}")
+            df_prepared = pd.read_csv(local_path, header=hdr_arg, low_memory=False)
+            source_used = f"local:{os.path.relpath(local_path, PROJECT_ROOT)}"
+
+        snapshot_verified = False
+        if verify_snapshot and os.path.exists(local_path):
+            df_snap = pd.read_csv(local_path, header=hdr_arg, low_memory=False)
+            same_shape = df_prepared.shape == df_snap.shape
+            same_feats = np.allclose(
+                df_prepared.iloc[:, :-1].to_numpy(dtype=np.float64),
+                df_snap.iloc[:, :-1].to_numpy(dtype=np.float64),
+                atol=1e-7,
+            )
+            same_labels = np.array_equal(
+                df_prepared.iloc[:, -1].to_numpy(),
+                df_snap.iloc[:, -1].to_numpy(),
+            )
+            snapshot_verified = bool(same_shape and same_feats and same_labels)
+            if not snapshot_verified:
+                raise AssertionError(
+                    f"Dữ liệu '{cfg['canonical_name']}' từ Hugging Face KHÔNG KHỚP với snapshot {local_path}!"
+                )
+
+        X_full = df_prepared.iloc[:, :-1].to_numpy(dtype=np.float32)
+        raw_labels = df_prepared.iloc[:, -1].to_numpy()
+        unique_orig, y_encoded = np.unique(raw_labels, return_inverse=True)
+        y_full = y_encoded.astype(np.int64)
+        if len(unique_orig) <= 10:
+            class_counts = {
+                f"{orig} ({idx})": int(np.sum(y_full == idx))
+                for idx, orig in enumerate(unique_orig)
+            }
+        else:
+            counts = np.bincount(y_full)
+            class_counts = {
+                "n_unique_classes": int(len(unique_orig)),
+                "min_class_count": int(counts.min()),
+                "max_class_count": int(counts.max()),
+            }
     else:
         raise NotImplementedError(f"Chưa cài đặt bộ đọc chi tiết cho '{key}'.")
 

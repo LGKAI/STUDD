@@ -1,0 +1,6 @@
+﻿Dataset,Method,Teacher,Student,W,Our_Kappa,Paper_Kappa,Kappa_Diff,Our_Cost_W,Our_Cost_1000,Paper_Cost,Alarms,Accuracy,Time_s
+Rialto,BL-st,XGB,-,2000,0.2967,0.3,-0.0033,0.0243,0.0122,0.01,0,0.3671,4.906
+Rialto,BL-ret,XGB,-,2000,0.3407,0.34,0.0007,0.997,0.997,1.0,40,0.4067,166.982
+Rialto,STUDD,XGB,XGB,2000,0.3953,0.38,0.0153,0.0434,0.0243,0.21,1,0.4558,15.62
+Rialto,SS,XGB,-,2000,0.4318,0.47,-0.0382,2.3461,1.1915,1.23,97,0.4886,136.964
+Rialto,OS,XGB,-,2000,0.3973,0.4,-0.0027,0.5106,0.2553,0.5,20,0.4575,8.069
