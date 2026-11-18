@@ -52,21 +52,24 @@ Bài báo nghiên cứu đề xuất phương pháp **STUDD** (*A Student-Teache
 
 ```text
 Project1_STUDD/
-├── data/             # Dữ liệu chuẩn (OpenML cache) và dữ liệu giả lập (synthetic)
-├── src/              # Mã nguồn cài đặt mô hình STUDD, Page-Hinkley và bộ nạp dữ liệu
-│   ├── __init__.py   # Đóng gói package src
-│   ├── detector.py   # Module 1: Thuật toán kiểm định tuần tự Page-Hinkley
-│   ├── studd.py      # Module 2: Kiến trúc Teacher - Student phát hiện Concept Drift
-│   └── data_loader.py# Module 3: Bộ nạp dữ liệu luồng tự động (OpenML & Synthetic)
-├── experiments/      # Kịch bản chạy thực nghiệm (Reproduction & Stress Testing)
-│   ├── reproduce.py  # Chạy thực nghiệm tái hiện so sánh đối đầu với bài báo
-│   └── stress_test.py# Kịch bản kiểm thử chịu tải và phản biện lý thuyết
-├── notebooks/        # Jupyter Notebooks phân tích và trực quan hóa kết quả
-├── results/          # Biểu đồ trượt xuất ra (figures) và bảng số liệu (tables)
-├── docs/             # Bài báo gốc STUDD, Slide báo cáo giữa kỳ và Poster cuối kỳ
-├── .gitignore        # Cấu hình bỏ qua file rác, môi trường ảo và dữ liệu nặng
-├── requirements.txt  # Danh sách các thư viện phụ thuộc chuẩn Python 3.9+
-└── README.md         # Tài liệu giới thiệu đề tài, các cột mốc và cấu trúc dự án
+├── data/                             # Dữ liệu chuẩn (hosted HF/USP cache) và manifest nguồn
+│   └── hosted_sources.json           # Cấu hình nguồn tải tự động & SHA-256
+├── src/                              # Mã nguồn tự cài đặt STUDD, Page-Hinkley, baselines & data loader
+│   ├── __init__.py                   # Đóng gói package src
+│   ├── detector.py                   # Module 1: Thuật toán kiểm định tuần tự Page-Hinkley
+│   ├── studd.py                      # Module 2: Kiến trúc Teacher - Student & mô hình Bảng 2
+│   ├── data_loader.py                # Module 3: Bộ nạp luồng tự động từ HF/USP/OpenML
+│   └── baselines.py                  # Module 4: 10 phương pháp đối sánh (Mục 5.5) & độ đo cảnh báo
+├── experiments/                      # Kịch bản chạy thực nghiệm (Reproduction & Stress Testing)
+│   ├── reproduce.py                  # Kịch bản tái hiện cơ bản (3 luồng)
+│   ├── reproduce_dat_6datasets.py    # Kịch bản tái hiện đầy đủ 10 phương pháp trên 6 bộ (cap 150k)
+│   └── stress_test.py                # Kịch bản kiểm thử chịu tải và phản biện lý thuyết
+├── notebooks/                        # Jupyter Notebooks phân tích và trực quan hóa kết quả
+├── results/                          # Bảng CSV kết quả và biểu đồ 300 DPI
+├── docs/                             # Bài báo gốc STUDD và báo cáo kiểm tra 19 bộ dữ liệu
+├── .gitignore                        # Cấu hình bỏ qua môi trường ảo, cache nặng và tài liệu nháp
+├── requirements.txt                  # Danh sách thư viện phụ thuộc Python 3.9+
+└── README.md                         # Tài liệu giới thiệu đề tài, hướng dẫn và bảng ánh xạ W&B
 ```
 
 ---
@@ -74,7 +77,7 @@ Project1_STUDD/
 ## 4. Hướng dẫn Cài đặt & Chạy Thực nghiệm
 
 ### Bước 1: Khởi tạo và kích hoạt môi trường ảo
-Khuyến nghị sử dụng Python 3.9 đến 3.11:
+Khuyến nghị sử dụng Python 3.9 trở lên (đã kiểm thử trên Python 3.13):
 
 * **Trên Windows (PowerShell):**
   ```powershell
@@ -100,87 +103,60 @@ python -m wandb login
 *(Lấy API key tại [https://wandb.ai/authorize](https://wandb.ai/authorize) và dán vào terminal khi được nhắc)*
 
 ### Bước 4: Kiểm thử các module độc lập (Unit Test)
-Chạy kiểm tra từng thành phần cốt lõi của hệ thống:
 ```powershell
 # 1. Kiểm thử thuật toán kiểm định tuần tự Page-Hinkley (Module 1)
 python src/detector.py
 
-# 2. Kiểm thử khung làm việc Teacher - Student và phát hiện trôi dạt (Module 2)
+# 2. Kiểm thử khung làm việc Teacher - Student & mô hình Bảng 2 (Module 2)
 python src/studd.py
 
-# 3. Kiểm thử bộ nạp dữ liệu luồng tổng hợp và benchmark OpenML (Module 3)
+# 3. Kiểm thử bộ nạp tự động 6 bộ dữ liệu (Module 3)
 python src/data_loader.py
+
+# 4. Kiểm thử đầy đủ 10 phương pháp đối sánh & độ đo cảnh báo (Module 4)
+python src/baselines.py
 ```
 
 ### Bước 5: Chạy thực nghiệm tái hiện (Reproduction Experiments)
-Chạy toàn bộ quy trình so sánh 4 chiến lược (`BL-st`, `STUDD`, `SS`, `OS`) trên cả 3 luồng dữ liệu (`abrupt_drift`, `electricity`, `ozone`):
-```powershell
-python experiments/reproduce.py
-```
 
-Sau khi chạy xong:
-* Toàn bộ chỉ số, tham số và biểu đồ phân tích được đẩy trực tiếp lên dashboard: [W&B lgkai-hcmus/STUDD](https://wandb.ai/lgkai-hcmus/STUDD).
-* Các file trực quan hóa và bảng kết quả chất lượng cao (300 DPI) được lưu tại thư mục `results/`:
-  * `results/fig1_rolling_kappa_abrupt_drift.png`: Biểu đồ Kappa score trượt theo thời gian.
-  * `results/fig2_performance_vs_cost_comparison.png`: Biểu đồ so sánh hiệu năng (Kappa) và chi phí gán nhãn giữa 4 phương pháp.
-  * `results/reproduction_comparison_table.csv`: Bảng tổng hợp số liệu chi tiết.
+* **Chạy thử nghiệm cơ bản (3 luồng):**
+  ```powershell
+  python experiments/reproduce.py
+  ```
+* **Chạy tái hiện đầy đủ 10 phương pháp trên 6 bộ dữ liệu (tuần tự, giới hạn 150.000 mẫu/luồng):**
+  ```powershell
+  # Chạy offline toàn bộ 6 bộ (hoặc chọn riêng với --datasets electricity)
+  python experiments/reproduce_dat_6datasets.py --no-wandb --aggregate
 
+  # Chạy và đẩy trực tiếp lên W&B (sau khi đã wandb login)
+  python experiments/reproduce_dat_6datasets.py --aggregate
+
+  # Hoặc đồng bộ các kết quả CSV/PNG đã chạy từ results/ lên W&B
+  python experiments/reproduce_dat_6datasets.py --sync-wandb
+  ```
 
 ---
 
-## 4. Hướng dẫn Cài đặt & Chạy Thực nghiệm
+## 5. Thư viện ngoài Stack chuẩn & Bảng Ánh xạ Thực nghiệm (6 Bộ dữ liệu)
 
-### Bước 1: Khởi tạo và kích hoạt môi trường ảo
-Khuyến nghị sử dụng Python 3.9 đến 3.11:
+### 5.1. Giải trình thư viện ngoài stack `numpy` / `scipy` / `scikit-learn`
+* `xgboost`: Bắt buộc để tái hiện đúng bộ phân lớp `XGB` (Extreme Gradient Boosting) được bài báo dùng làm Student/Teacher trong Bảng 2 (ví dụ trên `Electricity`).
+* `requests`, `huggingface-hub`, `pyarrow`, `openml`: Hỗ trợ nạp dữ liệu tự động qua mã nguồn từ Hugging Face, USP repository và OpenML kèm kiểm tra định dạng CSV/Parquet.
+* `pandas`, `matplotlib`, `seaborn`: Xử lý dữ liệu bảng luồng và xuất biểu đồ phân tích chuẩn 300 DPI.
+* `wandb`: Theo dõi và lưu trữ tập trung cấu hình, chỉ số, bảng biểu và đồ thị tại [W&B lgkai-hcmus/STUDD](https://wandb.ai/lgkai-hcmus/STUDD).
 
-* **Trên Windows (PowerShell):**
-  ```powershell
-  python -m venv venv
-  .\venv\Scripts\Activate.ps1
-  ```
-* **Trên Linux / macOS:**
-  ```bash
-  python3 -m venv venv
-  source venv/bin/activate
-  ```
+### 5.2. Tổng hợp kết quả tái hiện 10 phương pháp trên 6 bộ dữ liệu (Đạt, $W = 2000$, cap $150,000$)
 
-### Bước 2: Cài đặt các thư viện phụ thuộc
-```powershell
-pip install -r requirements.txt
-```
+| Bộ dữ liệu | Số mẫu ($N$) | Cặp T / S | STUDD Kappa (Ours / Paper) | STUDD Cost (Ours / Paper) | Script tạo kết quả | Kết quả lưu trữ & W&B |
+|---|---|---|---|---|---|---|
+| **Electricity** | 45,312 | `NB` / `XGB` | `0.4166` / `0.29` | `0.5738` / `0.43` | `experiments/reproduce_dat_6datasets.py --datasets electricity` | [electricity_reproduction.csv](results/electricity_reproduction.csv) |
+| **Powersupply** | 29,928 | `SVC` / `RF` | `0.1067` / `0.10` | `0.2005` / `0.07` | `experiments/reproduce_dat_6datasets.py --datasets powersupply` | [powersupply_reproduction.csv](results/powersupply_reproduction.csv) |
+| **NOAA** | 18,159 | `RF` / `RF` | `0.4036` / `0.39` | `0.2203` / `0.06` | `experiments/reproduce_dat_6datasets.py --datasets noaa` | [noaa_reproduction.csv](results/noaa_reproduction.csv) |
+| **CoverType** | 150,000 | `LR` / `LR` | `0.5046` / `0.52` | `0.2800` / `0.09` | `experiments/reproduce_dat_6datasets.py --datasets covertype` | [covertype_reproduction.csv](results/covertype_reproduction.csv) |
+| **Poker** | 150,000 | `DT` / `DT` | `0.2960` / `0.48` | `0.0133` / `0.01` | `experiments/reproduce_dat_6datasets.py --datasets poker` | [poker_reproduction.csv](results/poker_reproduction.csv) |
+| **Sensors** | 150,000 | `DT` / `DT` | `0.2684` / `0.59` | `0.4800` / `0.16` | `experiments/reproduce_dat_6datasets.py --datasets sensors` | [sensors_reproduction.csv](results/sensors_reproduction.csv) |
 
-### Bước 3: Đăng nhập tài khoản Weights & Biases (W&B)
-Để đồng bộ kết quả thực nghiệm lên dashboard của nhóm:
-```powershell
-python -m wandb login
-```
-*(Lấy API key tại [https://wandb.ai/authorize](https://wandb.ai/authorize) và dán vào terminal khi được nhắc)*
-
-### Bước 4: Kiểm thử các module độc lập (Unit Test)
-Chạy kiểm tra từng thành phần cốt lõi của hệ thống:
-```powershell
-# 1. Kiểm thử thuật toán kiểm định tuần tự Page-Hinkley (Module 1)
-python src/detector.py
-
-# 2. Kiểm thử khung làm việc Teacher - Student và phát hiện trôi dạt (Module 2)
-python src/studd.py
-
-# 3. Kiểm thử bộ nạp dữ liệu luồng tổng hợp và benchmark OpenML (Module 3)
-python src/data_loader.py
-```
-
-### Bước 5: Chạy thực nghiệm tái hiện (Reproduction Experiments)
-Chạy toàn bộ quy trình so sánh 4 chiến lược (`BL-st`, `STUDD`, `SS`, `OS`) trên cả 3 luồng dữ liệu (`abrupt_drift`, `electricity`, `ozone`):
-```powershell
-python experiments/reproduce.py
-```
-
-Sau khi chạy xong:
-* Toàn bộ chỉ số, tham số và biểu đồ phân tích được đẩy trực tiếp lên dashboard: [W&B lgkai-hcmus/STUDD](https://wandb.ai/lgkai-hcmus/STUDD).
-* Các file trực quan hóa và bảng kết quả chất lượng cao (300 DPI) được lưu tại thư mục `results/`:
-  * `results/fig1_rolling_kappa_abrupt_drift.png`: Biểu đồ Kappa score trượt theo thời gian.
-  * `results/fig2_performance_vs_cost_comparison.png`: Biểu đồ so sánh hiệu năng (Kappa) và chi phí gán nhãn giữa 4 phương pháp.
-  * `results/reproduction_comparison_table.csv`: Bảng tổng hợp số liệu chi tiết.
+> **Lưu ý về độ lệch chính (Deviation Analysis):** Một số khác biệt giữa bản tái hiện (`W = 2000` theo Mục 5.7 văn bản bài báo) và Bảng 3–4 của bài báo bắt nguồn từ: (1) mã nguồn gốc `vcerqueira/studd` sử dụng `W = 1000` cho các luồng lớn (khớp tỷ lệ `BL-st = 1000 / N` trong Bảng 4); (2) trên `Poker` (`DT/DT`), do `DT` ghi nhớ tốt cửa sổ $W=2000$, thống kê Page-Hinkley cực đại chưa vượt ngưỡng mặc định $\lambda=50$ nên không kích hoạt báo động; (3) khác biệt xử lý reset cửa sổ của `OF`/`FF` và phiên bản `scikit-learn` / `xgboost` mới. Chi tiết đầy đủ được lưu trong [results/dat_6datasets_summary.csv](results/dat_6datasets_summary.csv) và [results/dat_6datasets_alarm_summary.csv](results/dat_6datasets_alarm_summary.csv).
 
 ## Dataset branch snapshot
 
