@@ -451,6 +451,7 @@ class STUDD:
             "labeling_cost": labeling_cost,
             "online_labeling_cost": online_labeling_cost,
             "num_alarms": len(alarm_indices),
+            "num_retrains": len(alarm_indices),
             "alarm_indices": alarm_indices,
             "y_true_online": y_true_online,
             "y_pred_online": y_pred_online,
