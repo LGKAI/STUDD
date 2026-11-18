@@ -23,12 +23,21 @@ data/*.csv
 data/*.arff
 data/*.parquet
 data/*.npz
+data/cache/
 data/openml_cache/
 !data/.gitkeep
 
 # 7. File rác hệ điều hành
 .DS_Store
 Thumbs.db
+# 8. Tài liệu nội bộ & kế hoạch cá nhân (không push lên GitHub)
+docs/bao_cao_va_ke_hoach_thuc_nghiem_Dat.md
+docs/index.md
+docs/reading.md
+docs/reproduction.md
+docs/selection.md
+docs/reading_vi.md
+docs/reproduction_vi.md
 # Dataset snapshot intentionally tracked on the data branch.
 !data/dataset_huggingface/
 !data/dataset_huggingface/**
