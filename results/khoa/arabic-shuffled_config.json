@@ -1,0 +1,23 @@
+{
+  "dataset": "ArabicShuffled",
+  "teacher": "RF",
+  "student": "RF",
+  "seed": 42,
+  "samples": 8800,
+  "stream_size": 6800,
+  "window_size": 2000,
+  "source_url": "https://www.kaggle.com/datasets/phmchnkhoa/studd-arabic-benchmark-inputs",
+  "source_sha256": "bc710ef7a0ba3884951435e2ad31c1e0228bbcc897f2c237fd0ee0c30eca51aa",
+  "detector": "dat-6datasets PageHinkley",
+  "delta": 0.001,
+  "ph_threshold": 50.0,
+  "ks_alpha": 0.001,
+  "baseline_revision": "00834c380c32ff41ed7746d41e949babe3aca658",
+  "versions": {
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "scikit-learn": "1.6.1",
+    "xgboost": "3.1.3"
+  }
+}

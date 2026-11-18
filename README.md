@@ -1,5 +1,16 @@
 # STUDD
 
+## Thực nghiệm của Khoa
+
+Khoa chạy **10 phương pháp trên 6 bộ dữ liệu** bằng Kaggle CLI. Trình chạy dùng cùng phiên bản Page–Hinkley và baseline với nhánh `dat-6datasets`.
+
+- [Notebook và hướng dẫn Kaggle](notebooks/README.md) · [Script chạy thực nghiệm](experiments/reproduce_khoa_6datasets.py)
+- [Report đối chiếu với Bảng 3–4 và link từng run](results/khoa/README.md) · [CSV tổng hợp 60 kết quả](results/khoa/khoa_6datasets_summary.csv)
+- [W&B Testing](https://wandb.ai/lgkai-hcmus/Testing). Mỗi run tổng hợp 10 phương pháp của một dataset.
+
+Arabic và ArabicShuffled dùng input Kaggle riêng tư. Các file cấu hình trong `results/khoa/` lưu nguồn và checksum của các bộ đã chạy.
+
+
 Đồ án Nhập môn học máy
 
 Nghiên cứu, thực nghiệm và cài đặt lại (reproduce) mô hình **STUDD** dựa trên bài báo khoa học:
