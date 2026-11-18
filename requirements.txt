@@ -6,6 +6,11 @@ pandas>=2.0.0
 matplotlib>=3.7.0
 seaborn>=0.12.0
 
+# XGBoost (Teacher/Student theo Bảng 2 bài báo)
+# Windows/Linux x86_64: bản CPU-only nhẹ (~2 MB); macOS: bản đầy đủ (xgboost-cpu không hỗ trợ macOS)
+xgboost-cpu>=3.0.0; sys_platform != "darwin"
+xgboost>=3.0.0; sys_platform == "darwin"
+
 # Experiment Tracking
 wandb>=0.16.0
 
