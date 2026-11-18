@@ -735,6 +735,98 @@ def run_single_dataset(
     return df_table
 
 
+def summarize_khanh_7datasets(
+    use_wandb: bool = True,
+    entity: str = "lgkai-hcmus",
+    project: str = "STUDD",
+) -> pd.DataFrame:
+    """Tổng hợp kết quả của cả 7 bộ dữ liệu do Khánh phụ trách thành 1 bảng lớn + biểu đồ tổng quan."""
+    sys.stdout.reconfigure(encoding="utf-8")
+    khanh_keys = ["bike", "luxembourg", "outdoor", "rialto", "gas", "ozone", "gmsc"]
+    dfs = []
+    for k in khanh_keys:
+        p = os.path.join(RESULTS_KHANH_DIR, f"{k}_comparison_table.csv")
+        if os.path.exists(p):
+            dfs.append(pd.read_csv(p))
+
+    if not dfs:
+        raise RuntimeError("Chưa có file kết quả nào trong results/khanh/!")
+
+    df_all = pd.concat(dfs, ignore_index=True)
+    summary_csv = os.path.join(RESULTS_KHANH_DIR, "khanh_7datasets_summary.csv")
+    df_all.to_csv(summary_csv, index=False, encoding="utf-8-sig")
+
+    # Vẽ biểu đồ đối chiếu STUDD (Our_Kappa vs Paper_Kappa) và (Our_Cost vs Paper_Cost) trên 7 bộ
+    sub_studd = df_all[df_all["Method"] == "STUDD"].reset_index(drop=True)
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(13.5, 5.2))
+    x = np.arange(len(sub_studd))
+    width = 0.36
+
+    b1 = ax1.bar(x - width / 2, sub_studd["Our_Kappa"], width, label="Our STUDD Kappa", color="#2ca02c")
+    b2 = ax1.bar(x + width / 2, sub_studd["Paper_Kappa"], width, label="Paper STUDD Kappa (Bảng 3)", color="#4c72b0")
+    ax1.set_title("Đối chiếu Cohen's Kappa của STUDD (7 bộ của Khánh)", fontsize=11.5, fontweight="bold")
+    ax1.set_xticks(x)
+    ax1.set_xticklabels(sub_studd["Dataset"], fontweight="bold", rotation=15)
+    ax1.set_ylim(0, 1.15)
+    ax1.grid(True, axis="y", linestyle="--", alpha=0.4)
+    ax1.legend(loc="upper right", fontsize=9)
+    for bar in list(b1) + list(b2):
+        h = bar.get_height()
+        ax1.annotate(f"{h:.2f}", xy=(bar.get_x() + bar.get_width() / 2, h),
+                     xytext=(0, 3), textcoords="offset points", ha="center", fontsize=8)
+
+    b3 = ax2.bar(x - width / 2, sub_studd["Our_Cost_W"], width, label="Our STUDD Cost (W)", color="#ff7f0e")
+    b4 = ax2.bar(x + width / 2, sub_studd["Paper_Cost"], width, label="Paper STUDD Cost (Bảng 4)", color="#dd8452")
+    ax2.set_title("Đối chiếu Chi phí Nhãn của STUDD (7 bộ của Khánh)", fontsize=11.5, fontweight="bold")
+    ax2.set_xticks(x)
+    ax2.set_xticklabels(sub_studd["Dataset"], fontweight="bold", rotation=15)
+    ax2.set_ylim(0, 1.05)
+    ax2.grid(True, axis="y", linestyle="--", alpha=0.4)
+    ax2.legend(loc="upper right", fontsize=9)
+    for bar in list(b3) + list(b4):
+        h = bar.get_height()
+        ax2.annotate(f"{h:.2f}", xy=(bar.get_x() + bar.get_width() / 2, h),
+                     xytext=(0, 3), textcoords="offset points", ha="center", fontsize=8)
+
+    plt.suptitle("Tổng hợp Thực nghiệm Tái hiện 7 Bộ Dữ liệu Phụ trách bởi Khánh (STUDD)", fontsize=13, fontweight="bold")
+    plt.tight_layout()
+    overview_fig = os.path.join(RESULTS_KHANH_DIR, "khanh_7datasets_overview.png")
+    plt.savefig(overview_fig, dpi=300)
+    plt.close(fig)
+
+    print("\n" + "=" * 88)
+    print("BẢNG TỔNG HỢP TOÀN BỘ 7 BỘ DỮ LIỆU CỦA KHÁNH (35 RUNS = 7 DATASETS × 5 METHODS)")
+    print("=" * 88)
+    print(df_all.to_string(index=False))
+    print("-" * 88)
+    print(f" [+] Đã lưu bảng tổng hợp 7 bộ tại : {summary_csv}")
+    print(f" [+] Đã lưu biểu đồ tổng hợp tại   : {overview_fig}")
+
+    if use_wandb:
+        import wandb
+        run = wandb.init(
+            entity=entity,
+            project=project,
+            name="khanh-all-7datasets-summary",
+            tags=["khanh", "summary-7datasets", "benchmark-19"],
+            config={
+                "owner": "Khanh",
+                "datasets": list(sub_studd["Dataset"]),
+                "total_datasets": len(sub_studd),
+                "methods": ["BL-st", "BL-ret", "STUDD", "SS", "OS"],
+            },
+        )
+        wandb.log({
+            "Khanh_7Datasets_Full_Table": wandb.Table(dataframe=df_all),
+            "Khanh_7Datasets_STUDD_Table": wandb.Table(dataframe=sub_studd),
+            "Khanh_7Datasets_Overview_Plot": wandb.Image(overview_fig),
+        })
+        print(f" [W&B] Đã đồng bộ bảng tổng hợp 7 bộ lên: {run.url}")
+        wandb.finish()
+
+    return df_all
+
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Chạy thực nghiệm STUDD trên từng bộ dữ liệu chuẩn.")
     parser.add_argument("--dataset", type=str, default="bike", help="Tên bộ dữ liệu cần chạy (mặc định: bike).")
@@ -742,14 +834,18 @@ if __name__ == "__main__":
     parser.add_argument("--delta", type=float, default=0.001, help="Tham số delta của Page-Hinkley (mặc định: 0.001).")
     parser.add_argument("--threshold", type=float, default=50.0, help="Ngưỡng lambda của Page-Hinkley (mặc định: 50.0).")
     parser.add_argument("--auto-select", action="store_true", help="Tự động chọn Teacher/Student theo Mục 5.6.2 thay vì lấy cố định Bảng 2.")
+    parser.add_argument("--summarize-khanh", action="store_true", help="Tổng hợp kết quả cả 7 bộ của Khánh và đẩy lên W&B.")
     parser.add_argument("--no-wandb", action="store_true", help="Chạy ngoại tuyến không đẩy lên W&B.")
     args = parser.parse_args()
 
-    run_single_dataset(
-        dataset_name=args.dataset,
-        window_size=args.window_size,
-        delta=args.delta,
-        threshold=args.threshold,
-        auto_select_models=args.auto_select,
-        use_wandb=not args.no_wandb,
-    )
+    if args.summarize_khanh:
+        summarize_khanh_7datasets(use_wandb=not args.no_wandb)
+    else:
+        run_single_dataset(
+            dataset_name=args.dataset,
+            window_size=args.window_size,
+            delta=args.delta,
+            threshold=args.threshold,
+            auto_select_models=args.auto_select,
+            use_wandb=not args.no_wandb,
+        )
