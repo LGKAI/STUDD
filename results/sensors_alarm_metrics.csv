@@ -1,0 +1,8 @@
+﻿Dataset,Method,SS_First_Alarm,MDR,FAR,MTD,MTFA
+Sensors,STUDD,3110,0.0,0.0,0.0192,
+Sensors,DSS,3110,0.0,0.0,0.02,
+Sensors,WS,3110,0.0,0.0,0.0165,
+Sensors,DWS,3110,0.0,0.0,0.0232,
+Sensors,OS,3110,0.0,0.0,0.0493,
+Sensors,OF,3110,0.0,0.0,0.0193,
+Sensors,FF,3110,0.0,0.0,0.0193,
