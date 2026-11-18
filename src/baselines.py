@@ -181,37 +181,46 @@ def evaluate_supervised_pht(
     y_pred_online = np.zeros_like(y_true_online)
     alarm_indices: List[int] = []
 
+    chunk_size = max(W, 2000)
     curr_pos = W
     last_reset_online_idx = 0
     while curr_pos < n_total:
-        preds_chunk = _predict_safe(model, single_cls, X_stream[curr_pos:])
+        scan_pos = curr_pos
         alarm_triggered = False
 
-        for offset in range(len(preds_chunk)):
-            stream_idx = curr_pos + offset
-            online_idx = stream_idx - W
-            y_pred_online[online_idx] = preds_chunk[offset]
+        while scan_pos < n_total:
+            chunk_end = min(n_total, scan_pos + chunk_size)
+            preds_chunk = _predict_safe(model, single_cls, X_stream[scan_pos:chunk_end])
 
-            # Nhãn của mẫu `online_idx - l_delay` chỉ khả dụng sau `l_delay` bước và với xác suất `l_access`
-            obs_online_idx = online_idx - l_delay
-            if obs_online_idx >= last_reset_online_idx:
-                label_available = l_access >= 1.0 or (rng.random() < l_access)
-                if label_available:
-                    err = 1.0 if y_pred_online[obs_online_idx] != y_true_online[obs_online_idx] else 0.0
-                    drift_alarm, _ = detector.update(err)
-                    if drift_alarm:
-                        alarm_indices.append(stream_idx)
-                        start_adapt = max(0, stream_idx - W + 1)
-                        model, single_cls = _fit_safe(
-                            template,
-                            X_stream[start_adapt : stream_idx + 1],
-                            y_stream[start_adapt : stream_idx + 1],
-                        )
-                        detector.reset()
-                        last_reset_online_idx = online_idx + 1
-                        curr_pos = stream_idx + 1
-                        alarm_triggered = True
-                        break
+            for offset in range(len(preds_chunk)):
+                stream_idx = scan_pos + offset
+                online_idx = stream_idx - W
+                y_pred_online[online_idx] = preds_chunk[offset]
+
+                # Nhãn của mẫu `online_idx - l_delay` chỉ khả dụng sau `l_delay` bước và với xác suất `l_access`
+                obs_online_idx = online_idx - l_delay
+                if obs_online_idx >= last_reset_online_idx:
+                    label_available = l_access >= 1.0 or (rng.random() < l_access)
+                    if label_available:
+                        err = 1.0 if y_pred_online[obs_online_idx] != y_true_online[obs_online_idx] else 0.0
+                        drift_alarm, _ = detector.update(err)
+                        if drift_alarm:
+                            alarm_indices.append(stream_idx)
+                            start_adapt = max(0, stream_idx - W + 1)
+                            model, single_cls = _fit_safe(
+                                template,
+                                X_stream[start_adapt : stream_idx + 1],
+                                y_stream[start_adapt : stream_idx + 1],
+                            )
+                            detector.reset()
+                            last_reset_online_idx = online_idx + 1
+                            curr_pos = stream_idx + 1
+                            alarm_triggered = True
+                            break
+
+            if alarm_triggered:
+                break
+            scan_pos = chunk_end
 
         if not alarm_triggered:
             break
@@ -258,24 +267,38 @@ def evaluate_output_ks(
         return np.max(probs, axis=1).astype(np.float64)
 
     ref_signal = _signal_from_model(X_stream[:W], _predict_safe(model, single_cls, X_stream[:W]))
+    sig_buffer = np.empty(n_total, dtype=np.float64)
+    chunk_size = max(W, 2000)
 
     curr_pos = W
     while curr_pos < n_total:
-        preds_chunk = _predict_safe(model, single_cls, X_stream[curr_pos:])
-        sig_chunk = _signal_from_model(X_stream[curr_pos:], preds_chunk)
-        n_chunk = len(preds_chunk)
-        y_pred_online[curr_pos - W : curr_pos - W + n_chunk] = preds_chunk
-
+        predicted_until = curr_pos
+        n_rem = n_total - curr_pos
         min_offset = (2 * W - 1) if mode == "sliding" else (W - 1)
+
+        if min_offset >= n_rem:
+            y_pred_online[curr_pos - W :] = _predict_safe(model, single_cls, X_stream[curr_pos:])
+            break
+
         offset = min_offset
         alarm_triggered = False
 
-        while offset < n_chunk:
-            det_win = sig_chunk[offset - W + 1 : offset + 1]
-            ref_win = sig_chunk[offset - 2 * W + 1 : offset - W + 1] if mode == "sliding" else ref_signal
+        while offset < n_rem:
+            needed_end = curr_pos + offset + 1
+            if needed_end > predicted_until:
+                batch_end = min(n_total, max(needed_end, predicted_until + chunk_size))
+                batch_preds = _predict_safe(model, single_cls, X_stream[predicted_until:batch_end])
+                y_pred_online[predicted_until - W : batch_end - W] = batch_preds
+                sig_buffer[predicted_until:batch_end] = _signal_from_model(
+                    X_stream[predicted_until:batch_end], batch_preds
+                )
+                predicted_until = batch_end
+
+            stream_idx = curr_pos + offset
+            det_win = sig_buffer[stream_idx - W + 1 : stream_idx + 1]
+            ref_win = sig_buffer[stream_idx - 2 * W + 1 : stream_idx - W + 1] if mode == "sliding" else ref_signal
             stat, p_val = ks_2samp(ref_win, det_win, method="asymp")
             if p_val < ks_alpha:
-                stream_idx = curr_pos + offset
                 alarm_indices.append(stream_idx)
                 start_adapt = max(0, stream_idx - W + 1)
                 X_adapt = X_stream[start_adapt : stream_idx + 1]
@@ -292,6 +315,10 @@ def evaluate_output_ks(
             offset += skip
 
         if not alarm_triggered:
+            if predicted_until < n_total:
+                y_pred_online[predicted_until - W :] = _predict_safe(
+                    model, single_cls, X_stream[predicted_until:]
+                )
             break
 
     return _build_result(method_name, y_true_online, y_pred_online, alarm_indices, W, n_total)
@@ -308,8 +335,8 @@ def evaluate_feature_fixed_ks(
     """Phương pháp `FF` (Feature Fixed KS-Test, dos Reis et al. 2016) theo Mục 5.5.
 
     Giám sát phân phối của từng đặc trưng đầu vào giữa cửa sổ tham chiếu cố định (kích thước W)
-    và cửa sổ phát hiện trượt (kích thước W). Sử dụng bound-skipping độc lập trên từng đặc trưng
-    để đạt tốc độ cao trên dữ liệu nhiều chiều mà vẫn chính xác tuyệt đối.
+    và cửa sổ phát hiện trượt (kích thước W). Phát hiện điểm báo động trước trên đặc trưng
+    rồi mới dự đoán đúng đoạn luồng tương ứng để tránh dự đoán dư thừa sau báo động.
     """
     n_total, n_features = X_stream.shape
     W = window_size
@@ -327,19 +354,17 @@ def evaluate_feature_fixed_ks(
     curr_pos = W
 
     while curr_pos < n_total:
-        preds_chunk = _predict_safe(model, single_cls, X_stream[curr_pos:])
-        n_chunk = len(preds_chunk)
-        y_pred_online[curr_pos - W : curr_pos - W + n_chunk] = preds_chunk
-
-        if n_chunk < W:
+        n_rem = n_total - curr_pos
+        if n_rem < W:
+            y_pred_online[curr_pos - W :] = _predict_safe(model, single_cls, X_stream[curr_pos:])
             break
 
         next_check = np.full(n_features, fill_value=W - 1, dtype=np.int64)
-        alarm_triggered = False
+        alarm_stream_idx: Optional[int] = None
 
         while True:
             min_offset = int(np.min(next_check))
-            if min_offset >= n_chunk:
+            if min_offset >= n_rem:
                 break
 
             due_features = np.flatnonzero(next_check == min_offset)
@@ -347,23 +372,27 @@ def evaluate_feature_fixed_ks(
                 det_col = X_stream[curr_pos + min_offset - W + 1 : curr_pos + min_offset + 1, feat_idx]
                 stat, p_val = ks_2samp(ref_X[:, feat_idx], det_col, method="asymp")
                 if p_val < ks_alpha:
-                    stream_idx = curr_pos + min_offset
-                    alarm_indices.append(stream_idx)
-                    start_adapt = max(0, stream_idx - W + 1)
-                    ref_X = X_stream[start_adapt : stream_idx + 1]
-                    model, single_cls = _fit_safe(template, ref_X, y_stream[start_adapt : stream_idx + 1])
-                    curr_pos = stream_idx + 1
-                    alarm_triggered = True
+                    alarm_stream_idx = curr_pos + min_offset
                     break
 
                 gap = d_crit_safe - float(stat)
                 skip = max(1, int(np.floor(gap / change_per_step))) if gap > 0 else 1
                 next_check[feat_idx] = min_offset + skip
 
-            if alarm_triggered:
+            if alarm_stream_idx is not None:
                 break
 
-        if not alarm_triggered:
+        if alarm_stream_idx is not None:
+            y_pred_online[curr_pos - W : alarm_stream_idx - W + 1] = _predict_safe(
+                model, single_cls, X_stream[curr_pos : alarm_stream_idx + 1]
+            )
+            alarm_indices.append(alarm_stream_idx)
+            start_adapt = max(0, alarm_stream_idx - W + 1)
+            ref_X = X_stream[start_adapt : alarm_stream_idx + 1]
+            model, single_cls = _fit_safe(template, ref_X, y_stream[start_adapt : alarm_stream_idx + 1])
+            curr_pos = alarm_stream_idx + 1
+        else:
+            y_pred_online[curr_pos - W :] = _predict_safe(model, single_cls, X_stream[curr_pos:])
             break
 
     return _build_result("FF", y_true_online, y_pred_online, alarm_indices, W, n_total)

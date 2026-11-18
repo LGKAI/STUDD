@@ -402,38 +402,47 @@ class STUDD:
         ph_statistics = np.zeros(n_online, dtype=np.float32)
         alarm_indices: List[int] = []
 
+        chunk_size = max(W, 2000)
         curr_pos = W
         while curr_pos < n_total:
-            preds_T_chunk = self._predict_teacher_batch(X_stream[curr_pos:])
-            preds_S_chunk = self._predict_student_batch(X_stream[curr_pos:])
-
+            scan_pos = curr_pos
             alarm_triggered = False
-            for offset in range(len(preds_T_chunk)):
-                stream_idx = curr_pos + offset
-                online_idx = stream_idx - W
 
-                pred_T = preds_T_chunk[offset]
-                pred_S = preds_S_chunk[offset]
+            while scan_pos < n_total:
+                chunk_end = min(n_total, scan_pos + chunk_size)
+                preds_T_chunk = self._predict_teacher_batch(X_stream[scan_pos:chunk_end])
+                preds_S_chunk = self._predict_student_batch(X_stream[scan_pos:chunk_end])
 
-                y_pred_online[online_idx] = pred_T
-                loss_t = 1.0 if pred_T != pred_S else 0.0
-                mimic_losses[online_idx] = loss_t
+                for offset in range(len(preds_T_chunk)):
+                    stream_idx = scan_pos + offset
+                    online_idx = stream_idx - W
 
-                drift_alarm, ph_stat = self.detector.update(loss_t)
-                ph_statistics[online_idx] = ph_stat
+                    pred_T = preds_T_chunk[offset]
+                    pred_S = preds_S_chunk[offset]
 
-                if drift_alarm:
-                    alarm_indices.append(stream_idx)
-                    # Bám sát Hình 6 & Mục 5.3: tái huấn luyện bằng đúng W mẫu quá khứ gần nhất
-                    end_adapt = stream_idx + 1
-                    start_adapt = max(0, end_adapt - W)
-                    self.adapt(
-                        X_stream[start_adapt:end_adapt],
-                        y_stream[start_adapt:end_adapt],
-                    )
-                    curr_pos = stream_idx + 1
-                    alarm_triggered = True
+                    y_pred_online[online_idx] = pred_T
+                    loss_t = 1.0 if pred_T != pred_S else 0.0
+                    mimic_losses[online_idx] = loss_t
+
+                    drift_alarm, ph_stat = self.detector.update(loss_t)
+                    ph_statistics[online_idx] = ph_stat
+
+                    if drift_alarm:
+                        alarm_indices.append(stream_idx)
+                        # Bám sát Hình 6 & Mục 5.3: tái huấn luyện bằng đúng W mẫu quá khứ gần nhất
+                        end_adapt = stream_idx + 1
+                        start_adapt = max(0, end_adapt - W)
+                        self.adapt(
+                            X_stream[start_adapt:end_adapt],
+                            y_stream[start_adapt:end_adapt],
+                        )
+                        curr_pos = stream_idx + 1
+                        alarm_triggered = True
+                        break
+
+                if alarm_triggered:
                     break
+                scan_pos = chunk_end
 
             if not alarm_triggered:
                 break
