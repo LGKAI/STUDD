@@ -4,7 +4,7 @@ Bảng tổng hợp có **190 kết quả**, gồm **19 bộ dữ liệu × 10 p
 
 - **Khoa:** [Report và 60 kết quả](khoa/README.md), W&B `lgkai-hcmus/Testing`.
 - **Khánh:** [Report và 70 kết quả](khanh/khanh-7datasets.md), [run tổng hợp](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/tekuwx8d).
-- **Đạt:** [60 kết quả](dat_6datasets_summary.csv), [thống kê cảnh báo](dat_6datasets_alarm_summary.csv). Nhánh nguồn dẫn tới CSV theo bộ. Bảng này chỉ điền URL run đã được ghi nhận.
+- **Đạt:** [60 kết quả](dat_6datasets_summary.csv), [thống kê cảnh báo](dat_6datasets_alarm_summary.csv) và [run tổng hợp](https://wandb.ai/lgkai-hcmus/STUDD/runs/iuigzb01).
 
 ## Đối chiếu phương pháp STUDD
 
@@ -23,12 +23,12 @@ Bảng tổng hợp có **190 kết quả**, gồm **19 bộ dữ liệu × 10 p
 | Outdoor | Khánh | 4000 | 500 | 0.3736 / 0.36 | 0.2500 / 0.25 | 1 | [CSV](khanh/outdoor_comparison_table.csv) · [W&B](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/0putgi2v) |
 | Ozone | Khánh | 1847 | 500 | 0.2202 / 0.13 | 0.2707 / 0.39 | 0 | [CSV](khanh/ozone_comparison_table.csv) · [W&B](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/lngaqacb) |
 | Rialto | Khánh | 82250 | 2000 | 0.3953 / 0.38 | 0.0434 / 0.21 | 1 | [CSV](khanh/rialto_comparison_table.csv) · [W&B](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/sufuaw3n) |
-| CoverType | Đạt | 150000 | 2000 | 0.5046 / 0.52 | 0.2800 / 0.09 | 20 | [CSV](covertype_reproduction.csv) |
-| Electricity | Đạt | 45312 | 2000 | 0.4166 / 0.29 | 0.5738 / 0.43 | 12 | [CSV](electricity_reproduction.csv) |
-| NOAA | Đạt | 18159 | 2000 | 0.4036 / 0.39 | 0.2203 / 0.06 | 1 | [CSV](noaa_reproduction.csv) |
-| Poker | Đạt | 150000 | 2000 | 0.2960 / 0.48 | 0.0133 / 0.01 | 0 | [CSV](poker_reproduction.csv) |
-| Powersupply | Đạt | 29928 | 2000 | 0.1067 / 0.10 | 0.2005 / 0.07 | 2 | [CSV](powersupply_reproduction.csv) |
-| Sensors | Đạt | 150000 | 2000 | 0.2684 / 0.59 | 0.4800 / 0.16 | 35 | [CSV](sensors_reproduction.csv) |
+| CoverType | Đạt | 150000 | 2000 | 0.5046 / 0.52 | 0.2800 / 0.09 | 20 | [CSV](covertype_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/r6s8kd07) |
+| Electricity | Đạt | 45312 | 2000 | 0.4166 / 0.29 | 0.5738 / 0.43 | 12 | [CSV](electricity_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/vlj7zc8h) |
+| NOAA | Đạt | 18159 | 2000 | 0.4036 / 0.39 | 0.2203 / 0.06 | 1 | [CSV](noaa_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/lyhf11v9) |
+| Poker | Đạt | 150000 | 2000 | 0.2960 / 0.48 | 0.0133 / 0.01 | 0 | [CSV](poker_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/pub91li5) |
+| Powersupply | Đạt | 29928 | 2000 | 0.1067 / 0.10 | 0.2005 / 0.07 | 2 | [CSV](powersupply_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/pkbdf0np) |
+| Sensors | Đạt | 150000 | 2000 | 0.2684 / 0.59 | 0.4800 / 0.16 | 35 | [CSV](sensors_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/kd3shf5o) |
 
 ## Cách đọc số liệu
 

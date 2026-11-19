@@ -58,6 +58,19 @@ DATASETS = {
 }
 
 
+# Run URLs are documented in the Dat branch README at e6b7dbd.
+DAT_WANDB_ROOT = "https://wandb.ai/lgkai-hcmus/STUDD/runs"
+DAT_RUN_IDS = {
+    "Electricity": "vlj7zc8h",
+    "Powersupply": "pkbdf0np",
+    "NOAA": "lyhf11v9",
+    "CoverType": "r6s8kd07",
+    "Poker": "pub91li5",
+    "Sensors": "kd3shf5o",
+}
+DAT_SUMMARY_RUN_ID = "iuigzb01"
+
+
 def read_results():
     khanh_report = (RESULTS / "khanh/khanh-7datasets.md").read_text(encoding="utf-8")
     khanh_links = dict(re.findall(
@@ -67,6 +80,9 @@ def read_results():
     ))
     if khanh_links.keys() != DATASETS["Khánh"].keys():
         raise ValueError("Các link run theo dataset của Khánh không đầy đủ.")
+
+    if DAT_RUN_IDS.keys() != DATASETS["Đạt"].keys():
+        raise ValueError("Các link run theo dataset của Đạt không đầy đủ.")
 
     records = []
     for owner, (source, revision, protocol, cost_basis) in SOURCES.items():
@@ -80,7 +96,6 @@ def read_results():
 
         for row in sorted(data, key=lambda r: (r["Dataset"].casefold(), METHODS.index(r["Method"]))):
             dataset = row["Dataset"]
-            link = ""
             if owner == "Khoa":
                 slug = DATASETS[owner][dataset]
                 link = json.loads((RESULTS / f"khoa/{slug}_wandb.json").read_text())["url"]
@@ -89,6 +104,7 @@ def read_results():
                 link = khanh_links[dataset]
                 details = f"khanh/{dataset.lower()}_comparison_table.csv"
             else:
+                link = f"{DAT_WANDB_ROOT}/{DAT_RUN_IDS[dataset]}"
                 details = f"{DATASETS[owner][dataset]}_reproduction.csv"
             if not (RESULTS / details).is_file():
                 raise FileNotFoundError(RESULTS / details)
@@ -134,8 +150,8 @@ def write_report(records):
         "- **Khánh:** [Report và 70 kết quả](khanh/khanh-7datasets.md), "
         "[run tổng hợp](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/tekuwx8d).",
         "- **Đạt:** [60 kết quả](dat_6datasets_summary.csv), "
-        "[thống kê cảnh báo](dat_6datasets_alarm_summary.csv). "
-        "Nhánh nguồn dẫn tới CSV theo bộ. Bảng này chỉ điền URL run đã được ghi nhận.",
+        "[thống kê cảnh báo](dat_6datasets_alarm_summary.csv) và "
+        f"[run tổng hợp]({DAT_WANDB_ROOT}/{DAT_SUMMARY_RUN_ID}).",
         "",
         "## Đối chiếu phương pháp STUDD",
         "",
