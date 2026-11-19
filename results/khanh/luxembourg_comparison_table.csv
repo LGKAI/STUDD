@@ -1,0 +1,11 @@
+﻿Dataset,Method,Teacher,Student,W,Our_Kappa,Paper_Kappa,Kappa_Diff,Our_Cost_W,Our_Cost_1000,Paper_Cost,Alarms,Accuracy,Time_s
+Luxembourg,BL-st,RF,-,500,1.0,1.0,0.0,0.263,0.263,0.53,0,1.0,0.121
+Luxembourg,BL-ret,RF,-,500,1.0,1.0,0.0,0.7891,0.7891,1.05,2,1.0,0.398
+Luxembourg,STUDD,RF,RF,500,1.0,1.0,0.0,0.263,0.263,0.53,0,1.0,0.263
+Luxembourg,SS,RF,-,500,1.0,1.0,0.0,0.263,0.263,0.53,0,1.0,0.105
+Luxembourg,DSS,RF,-,500,1.0,1.0,0.0,0.263,0.263,0.53,0,1.0,0.118
+Luxembourg,WS,RF,-,500,1.0,1.0,0.0,0.263,0.263,0.53,0,1.0,0.109
+Luxembourg,DWS,RF,-,500,1.0,1.0,0.0,0.263,0.263,0.53,0,1.0,0.116
+Luxembourg,OS,RF,-,500,1.0,1.0,0.0,0.263,0.263,0.53,0,1.0,0.236
+Luxembourg,OF,RF,-,500,1.0,1.0,0.0,0.263,0.263,0.53,0,1.0,0.379
+Luxembourg,FF,RF,-,500,1.0,1.0,0.0,0.7891,0.7891,1.05,2,1.0,0.375

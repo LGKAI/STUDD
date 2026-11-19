@@ -442,6 +442,339 @@ def generate_pure_real_drift_stream(
     return X, y, meta
 
 
+STREAM_CONFIG_REGISTRY: Dict[str, Dict[str, object]] = {
+    "bike": {
+        "canonical_name": "Bike",
+        "hf_repo": "t22000t/bike-sharing-tabular",
+        "hf_revision": "6b645e0cedbc5208fcca11ac94544b088478bf61",
+        "hf_url": "https://huggingface.co/datasets/t22000t/bike-sharing-tabular/resolve/6b645e0cedbc5208fcca11ac94544b088478bf61/hour.csv",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_huggingface", "Bike", "Bike.csv"),
+        "paper_rows": 17378,
+        "paper_total_cols": 5,
+        "paper_classes": 2,
+        "window_size": 2000,
+        "teacher": "XGB",
+        "student": "RF",
+        "max_samples": 150000,
+    },
+    "luxembourg": {
+        "canonical_name": "Luxembourg",
+        "hf_repo": "pham121/studd-luxembourg",
+        "hf_revision": "5ccd00c9a23ed7f10123a0903b64d0e3db3f01d8",
+        "hf_url": "https://huggingface.co/datasets/pham121/studd-luxembourg/resolve/5ccd00c9a23ed7f10123a0903b64d0e3db3f01d8/Luxembourg.csv",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_not_huggingface", "Luxembourg", "Luxembourg.csv"),
+        "has_header": True,
+        "paper_rows": 1901,
+        "paper_total_cols": 31,
+        "paper_classes": 2,
+        "window_size": 500,
+        "teacher": "RF",
+        "student": "RF",
+        "max_samples": 150000,
+    },
+    "outdoor": {
+        "canonical_name": "Outdoor",
+        "hf_repo": "pham121/studd-outdoor",
+        "hf_revision": "34d9a05ba9f8b3bf385ab78b66b5eccb0301611f",
+        "hf_url": "https://huggingface.co/datasets/pham121/studd-outdoor/resolve/34d9a05ba9f8b3bf385ab78b66b5eccb0301611f/Outdoor.csv",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_not_huggingface", "Outdoor", "Outdoor.csv"),
+        "has_header": False,
+        "paper_rows": 4000,
+        "paper_total_cols": 21,
+        "paper_classes": 40,
+        "window_size": 500,
+        "teacher": "RF",
+        "student": "RF",
+        "max_samples": 150000,
+    },
+    "rialto": {
+        "canonical_name": "Rialto",
+        "hf_repo": "pham121/studd-rialto",
+        "hf_revision": "9a876990a741fded06b2a6ede80302fe83e12eb1",
+        "hf_url": "https://huggingface.co/datasets/pham121/studd-rialto/resolve/9a876990a741fded06b2a6ede80302fe83e12eb1/Rialto.csv",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_not_huggingface", "Rialto", "Rialto.csv"),
+        "has_header": False,
+        "paper_rows": 82250,
+        "paper_total_cols": 27,
+        "paper_classes": 10,
+        "window_size": 2000,
+        "teacher": "XGB",
+        "student": "XGB",
+        "max_samples": 150000,
+    },
+    "gas": {
+        "canonical_name": "Gas",
+        "hf_repo": "pham121/studd-gas",
+        "hf_revision": "9a73335cbe0368e5ae0a57245b1c9dabcbed5e6b",
+        "hf_url": "https://huggingface.co/datasets/pham121/studd-gas/resolve/9a73335cbe0368e5ae0a57245b1c9dabcbed5e6b/GasSensorArray.csv",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_not_huggingface", "Gas", "GasSensorArray.csv"),
+        "has_header": False,
+        "paper_rows": 13910,
+        "paper_total_cols": 17,
+        "paper_classes": 6,
+        "window_size": 2000,
+        "teacher": "RC",
+        "student": "RC",
+        "max_samples": 150000,
+    },
+    "ozone": {
+        "canonical_name": "Ozone",
+        "hf_repo": "mstz/ozone",
+        "hf_revision": "5d212857f5ff830b714abdeb014532aa34c3e659",
+        "hf_url": "https://huggingface.co/datasets/mstz/ozone/resolve/5d212857f5ff830b714abdeb014532aa34c3e659/8hr/train.csv",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_huggingface", "Ozone", "8hr", "train.csv"),
+        "has_header": True,
+        "paper_rows": 2574,
+        "paper_total_cols": 32,
+        "paper_classes": 2,
+        "window_size": 500,
+        "teacher": "XGB",
+        "student": "XGB",
+        "max_samples": 150000,
+    },
+    "gmsc": {
+        "canonical_name": "GMSC",
+        "hf_repo": "algcache/GiveMeSomeCredit",
+        "hf_revision": "4c2dab0dce91172737cf3413e023bd16834f1fa1",
+        "hf_url": "https://huggingface.co/datasets/algcache/GiveMeSomeCredit/resolve/4c2dab0dce91172737cf3413e023bd16834f1fa1/Give-Me-Some-Credit.zip",
+        "local_snapshot": os.path.join(DATA_DIR, "dataset_huggingface", "GMSC", "cs-training.csv"),
+        "has_header": True,
+        "paper_rows": 150000,
+        "paper_total_cols": 11,
+        "paper_classes": 2,
+        "window_size": 2000,
+        "teacher": "XGB",
+        "student": "XGB",
+        "max_samples": 150000,
+    },
+}
+
+
+def load_stream(
+    dataset_name: str,
+    max_samples: Optional[int] = 150000,
+    prefer_hf: bool = True,
+    verify_snapshot: bool = True,
+) -> Tuple[np.ndarray, np.ndarray, Dict[str, object]]:
+    """Tải luồng dữ liệu chuẩn từ Hugging Face (pinned commit) và đối chiếu snapshot local.
+
+    Đảm bảo:
+        - Tải tự động qua HTTP/Hugging Face theo đúng commit cố định trong báo cáo dữ liệu.
+        - Không bao giờ xáo trộn thứ tự dòng (`shuffle=False`), giữ nguyên 100% trục thời gian.
+        - Đối chiếu giá trị đặc trưng và nhãn với bản snapshot trong `data/` để đảm bảo tính toàn vẹn.
+    """
+    import urllib.request
+    import io
+
+    key = dataset_name.lower().strip()
+    if key not in STREAM_CONFIG_REGISTRY:
+        raise ValueError(
+            f"Bộ dữ liệu '{dataset_name}' chưa được đăng ký trong STREAM_CONFIG_REGISTRY: "
+            f"{list(STREAM_CONFIG_REGISTRY.keys())}"
+        )
+
+    cfg = STREAM_CONFIG_REGISTRY[key]
+    hf_url = str(cfg["hf_url"])
+    local_path = str(cfg["local_snapshot"])
+    source_used = "local_snapshot"
+
+    if key == "bike":
+        df_prepared = None
+        if prefer_hf:
+            try:
+                print(f"[DataLoader] Đang tải '{cfg['canonical_name']}' từ Hugging Face ({cfg['hf_repo']}@{ str(cfg['hf_revision'])[:8] })...")
+                with urllib.request.urlopen(hf_url, timeout=20) as resp:
+                    raw_bytes = resp.read()
+                df_raw = pd.read_csv(io.BytesIO(raw_bytes))
+                # Tái tạo đúng 4 đặc trưng thời tiết và nhãn nhị phân cnt >= 142 theo báo cáo dữ liệu
+                feature_cols = ["temp", "atemp", "hum", "windspeed"]
+                df_prepared = df_raw[feature_cols].copy()
+                df_prepared["target"] = np.where(df_raw["cnt"] >= 142, "high", "low")
+                source_used = f"huggingface:{cfg['hf_repo']}@{str(cfg['hf_revision'])[:10]}"
+            except Exception as exc:
+                print(f"[DataLoader] Cảnh báo tải HF ({exc}), chuyển sang đọc snapshot cục bộ: {local_path}")
+
+        if df_prepared is None:
+            if not os.path.exists(local_path):
+                raise FileNotFoundError(f"Không tìm thấy file dữ liệu tại: {local_path}")
+            df_prepared = pd.read_csv(local_path)
+            source_used = f"local:{os.path.relpath(local_path, PROJECT_ROOT)}"
+
+        # Đối chiếu 100% với snapshot local Bike.csv nếu tồn tại
+        snapshot_verified = False
+        if verify_snapshot and os.path.exists(local_path):
+            df_snap = pd.read_csv(local_path)
+            feat_cols = ["temp", "atemp", "hum", "windspeed"]
+            same_shape = df_prepared.shape == df_snap.shape
+            same_feats = np.allclose(
+                df_prepared[feat_cols].to_numpy(dtype=np.float64),
+                df_snap[feat_cols].to_numpy(dtype=np.float64),
+                atol=1e-7,
+            )
+            same_labels = np.array_equal(
+                df_prepared["target"].to_numpy(), df_snap["target"].to_numpy()
+            )
+            snapshot_verified = bool(same_shape and same_feats and same_labels)
+            if not snapshot_verified:
+                raise AssertionError(
+                    "Dữ liệu Bike tải từ Hugging Face KHÔNG KHỚP với snapshot data/dataset_huggingface/Bike/Bike.csv!"
+                )
+
+        feature_names = ["temp", "atemp", "hum", "windspeed"]
+        X_full = df_prepared[feature_names].to_numpy(dtype=np.float32)
+        # Mã hóa nhãn: low -> 0, high -> 1 (giữ nguyên thứ tự xuất hiện và quy ước nhị phân)
+        y_full = np.where(df_prepared["target"].to_numpy() == "high", 1, 0).astype(np.int64)
+        class_counts = {
+            "low (0)": int(np.sum(y_full == 0)),
+            "high (1)": int(np.sum(y_full == 1)),
+        }
+    elif key in ("luxembourg", "outdoor", "rialto", "gas", "ozone"):
+        has_header = bool(cfg.get("has_header", False))
+        hdr_arg = 0 if has_header else None
+        df_prepared = None
+
+        if prefer_hf:
+            try:
+                print(
+                    f"[DataLoader] Đang tải '{cfg['canonical_name']}' từ Hugging Face "
+                    f"({cfg['hf_repo']}@{str(cfg['hf_revision'])[:8]})..."
+                )
+                with urllib.request.urlopen(hf_url, timeout=30) as resp:
+                    raw_bytes = resp.read()
+                df_prepared = pd.read_csv(io.BytesIO(raw_bytes), header=hdr_arg, low_memory=False)
+                source_used = f"huggingface:{cfg['hf_repo']}@{str(cfg['hf_revision'])[:10]}"
+            except Exception as exc:
+                print(f"[DataLoader] Cảnh báo tải HF ({exc}), chuyển sang đọc snapshot cục bộ: {local_path}")
+
+        if df_prepared is None:
+            if not os.path.exists(local_path):
+                raise FileNotFoundError(f"Không tìm thấy file dữ liệu tại: {local_path}")
+            df_prepared = pd.read_csv(local_path, header=hdr_arg, low_memory=False)
+            source_used = f"local:{os.path.relpath(local_path, PROJECT_ROOT)}"
+
+        snapshot_verified = False
+        if verify_snapshot and os.path.exists(local_path):
+            df_snap = pd.read_csv(local_path, header=hdr_arg, low_memory=False)
+            same_shape = df_prepared.shape == df_snap.shape
+            same_feats = np.allclose(
+                df_prepared.iloc[:, :-1].to_numpy(dtype=np.float64),
+                df_snap.iloc[:, :-1].to_numpy(dtype=np.float64),
+                atol=1e-7,
+                equal_nan=True,
+            )
+            same_labels = np.array_equal(
+                df_prepared.iloc[:, -1].to_numpy(),
+                df_snap.iloc[:, -1].to_numpy(),
+            )
+            snapshot_verified = bool(same_shape and same_feats and same_labels)
+            if not snapshot_verified:
+                raise AssertionError(
+                    f"Dữ liệu '{cfg['canonical_name']}' từ Hugging Face KHÔNG KHỚP với snapshot {local_path}!"
+                )
+
+        X_full = df_prepared.iloc[:, :-1].to_numpy(dtype=np.float32)
+        raw_labels = df_prepared.iloc[:, -1].to_numpy()
+        unique_orig, y_encoded = np.unique(raw_labels, return_inverse=True)
+        y_full = y_encoded.astype(np.int64)
+        if len(unique_orig) <= 10:
+            class_counts = {
+                f"{orig} ({idx})": int(np.sum(y_full == idx))
+                for idx, orig in enumerate(unique_orig)
+            }
+        else:
+            counts = np.bincount(y_full)
+            class_counts = {
+                "n_unique_classes": int(len(unique_orig)),
+                "min_class_count": int(counts.min()),
+                "max_class_count": int(counts.max()),
+            }
+    elif key == "gmsc":
+        import zipfile
+
+        df_prepared = None
+        if prefer_hf:
+            try:
+                print(
+                    f"[DataLoader] Đang tải '{cfg['canonical_name']}' (ZIP) từ Hugging Face "
+                    f"({cfg['hf_repo']}@{str(cfg['hf_revision'])[:8]})..."
+                )
+                with urllib.request.urlopen(hf_url, timeout=45) as resp:
+                    raw_zip_bytes = resp.read()
+                with zipfile.ZipFile(io.BytesIO(raw_zip_bytes)) as zf:
+                    train_member = [m for m in zf.namelist() if m.endswith("cs-training.csv")][0]
+                    with zf.open(train_member) as csv_fp:
+                        df_prepared = pd.read_csv(csv_fp, low_memory=False)
+                source_used = f"huggingface:{cfg['hf_repo']}@{str(cfg['hf_revision'])[:10]}"
+            except Exception as exc:
+                print(f"[DataLoader] Cảnh báo tải HF ({exc}), chuyển sang đọc snapshot cục bộ: {local_path}")
+
+        if df_prepared is None:
+            if not os.path.exists(local_path):
+                raise FileNotFoundError(f"Không tìm thấy file dữ liệu tại: {local_path}")
+            df_prepared = pd.read_csv(local_path, low_memory=False)
+            source_used = f"local:{os.path.relpath(local_path, PROJECT_ROOT)}"
+
+        snapshot_verified = False
+        if verify_snapshot and os.path.exists(local_path):
+            df_snap = pd.read_csv(local_path, low_memory=False)
+            same_shape = df_prepared.shape == df_snap.shape
+            same_vals = np.allclose(
+                df_prepared.iloc[:, 1:].to_numpy(dtype=np.float64),
+                df_snap.iloc[:, 1:].to_numpy(dtype=np.float64),
+                atol=1e-7,
+                equal_nan=True,
+            )
+            snapshot_verified = bool(same_shape and same_vals)
+            if not snapshot_verified:
+                raise AssertionError(
+                    f"Dữ liệu GMSC từ Hugging Face KHÔNG KHỚP với snapshot {local_path}!"
+                )
+
+        # Cột 0 là ID ('Unnamed: 0') -> loại bỏ; Cột 1 là nhãn 'SeriousDlqin2yrs'; 10 cột còn lại là đặc trưng
+        target_col = "SeriousDlqin2yrs" if "SeriousDlqin2yrs" in df_prepared.columns else df_prepared.columns[1]
+        id_col = df_prepared.columns[0]
+        feat_cols = [c for c in df_prepared.columns if c not in (id_col, target_col)]
+
+        X_full = df_prepared[feat_cols].to_numpy(dtype=np.float32)
+        y_full = df_prepared[target_col].to_numpy(dtype=np.int64)
+        class_counts = {
+            "0": int(np.sum(y_full == 0)),
+            "1": int(np.sum(y_full == 1)),
+            "missing_cells_imputed_per_window": int(np.isnan(X_full).sum()),
+        }
+    else:
+        raise NotImplementedError(f"Chưa cài đặt bộ đọc chi tiết cho '{key}'.")
+
+    total_raw_rows = len(X_full)
+    limit = max_samples if max_samples is not None else cfg.get("max_samples")
+    if limit is not None and len(X_full) > int(limit):
+        X = X_full[: int(limit)].copy()
+        y = y_full[: int(limit)].copy()
+    else:
+        X = X_full.copy()
+        y = y_full.copy()
+
+    meta = {
+        "name": str(cfg["canonical_name"]),
+        "key": key,
+        "source_used": source_used,
+        "hf_url": hf_url,
+        "snapshot_verified": snapshot_verified,
+        "n_samples_raw": total_raw_rows,
+        "n_samples": len(X),
+        "n_features": int(X.shape[1]),
+        "n_classes": int(len(np.unique(y))),
+        "class_counts": class_counts,
+        "paper_rows": int(cfg["paper_rows"]),
+        "paper_total_cols": int(cfg["paper_total_cols"]),
+        "paper_classes": int(cfg["paper_classes"]),
+        "recommended_window_size": int(cfg["window_size"]),
+        "teacher_code": str(cfg["teacher"]),
+        "student_code": str(cfg["student"]),
+    }
+    return X, y, meta
+
+
 if __name__ == "__main__":
     import sys
 
