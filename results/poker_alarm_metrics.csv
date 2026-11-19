@@ -1,0 +1,8 @@
+﻿Dataset,Method,SS_First_Alarm,MDR,FAR,MTD,MTFA
+Poker,STUDD,6400,1.0,0.0,,
+Poker,DSS,6400,0.0,0.0,0.02,
+Poker,WS,6400,0.0,0.0,0.0137,
+Poker,DWS,6400,0.0,0.0,0.0204,
+Poker,OS,6400,0.0,0.0,0.0124,
+Poker,OF,6400,0.0,1.0,0.0129,0.0267
+Poker,FF,6400,0.0,1.0,0.0107,0.0267

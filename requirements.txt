@@ -3,13 +3,17 @@ numpy>=1.24.0
 scipy>=1.10.0
 scikit-learn>=1.3.0
 pandas>=2.0.0
+xgboost>=2.0.0
 matplotlib>=3.7.0
 seaborn>=0.12.0
 
 # Experiment Tracking
 wandb>=0.16.0
 
-# Stream Datasets & Online Learning
+# Stream Datasets, Hosted Loading & Online Learning
 openml>=0.14.0
 river>=0.21.0
+pyarrow>=14.0.0
+requests>=2.31.0
+huggingface-hub>=0.20.0
 tqdm>=4.66.0
