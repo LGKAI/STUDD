@@ -1,11 +1,11 @@
 # Báo cáo Thực nghiệm Tái hiện 7 Bộ Dữ liệu của Khánh (`STUDD` — Đủ 10 Phương pháp)
 
-* **Người thực hiện:** Khánh  
-* **Nhánh thực nghiệm:** `khanh-7datasets`  
-* **7 bộ dữ liệu phụ trách:** `Bike` (chạy trước), `Luxembourg`, `Outdoor`, `Rialto`, `Gas`, `Ozone`, `GMSC`  
-* **Tổng số lượt chạy mô hình:** **70 runs** (7 bộ dữ liệu × đầy đủ 10 phương pháp chuẩn bài báo: `BL-st`, `BL-ret`, `STUDD`, `SS`, `DSS`, `WS`, `DWS`, `OS`, `OF`, `FF`)  
-* **Dashboard Weights & Biases (W&B) chung của nhóm:** https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD  
-* **W&B Run Tổng hợp cả 70 runs của Khánh:** https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/tekuwx8d  
+* **Người thực hiện:** Khánh
+* **Nhánh thực nghiệm:** `khanh-7datasets`
+* **7 bộ dữ liệu phụ trách:** `Bike` (chạy trước), `Luxembourg`, `Outdoor`, `Rialto`, `Gas`, `Ozone`, `GMSC`
+* **Tổng số lượt chạy mô hình:** **70 runs** (7 bộ dữ liệu × đầy đủ 10 phương pháp chuẩn bài báo: `BL-st`, `BL-ret`, `STUDD`, `SS`, `DSS`, `WS`, `DWS`, `OS`, `OF`, `FF`)
+* **Dashboard Weights & Biases (W&B) chung của nhóm:** https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD
+* **W&B Run Tổng hợp cả 70 runs của Khánh:** https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/tekuwx8d
 
 ---
 

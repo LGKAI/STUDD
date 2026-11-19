@@ -11,6 +11,8 @@ Nghiên cứu, thực nghiệm và cài đặt lại (reproduce) mô hình **STU
 
 ---
 
+**Kết quả tích hợp:** 19 bộ dữ liệu × 10 phương pháp, gồm 60 kết quả của Khoa, 70 của Khánh và 60 của Đạt. [Report đối chiếu](results/README.md) · [CSV 190 kết quả](results/studd_19datasets_summary.csv)
+
 ## 1. Tổng quan về Bài nghiên cứu STUDD
 
 ### 1.1. Bối cảnh & Bài toán Concept Drift
@@ -66,6 +68,7 @@ Project1_STUDD/
 │   ├── reproduce.py                  # Kịch bản tái hiện cơ bản (3 luồng)
 │   ├── reproduce_dat_6datasets.py    # Kịch bản tái hiện đầy đủ 10 phương pháp trên 6 bộ (cap 150k)
 │   ├── run_dataset.py                # Chạy 7 bộ của Khánh
+│   ├── aggregate_studd_results.py    # Tạo CSV và report chung
 │   ├── build_khoa_kaggle_notebooks.py # Đóng gói notebook Kaggle của Khoa
 │   ├── reproduce_khoa_6datasets.py   # Chạy và đồng bộ 6 bộ của Khoa
 │   └── stress_test.py                # Kịch bản kiểm thử chịu tải và phản biện lý thuyết
@@ -155,7 +158,7 @@ python src/baselines.py
 
 ---
 
-## 5. Thư viện ngoài Stack chuẩn & Bảng Ánh xạ Thực nghiệm (6 Bộ dữ liệu)
+## 5. Thư viện và đối chiếu kết quả
 
 ### 5.1. Giải trình thư viện ngoài stack `numpy` / `scipy` / `scikit-learn`
 * `xgboost`: Bắt buộc để tái hiện đúng bộ phân lớp `XGB` (Extreme Gradient Boosting) được bài báo dùng làm Student/Teacher trong Bảng 2 (ví dụ trên `Electricity`).
@@ -163,16 +166,9 @@ python src/baselines.py
 * `pandas`, `matplotlib`, `seaborn`: Xử lý dữ liệu bảng luồng và xuất biểu đồ phân tích chuẩn 300 DPI.
 * `wandb`: Theo dõi và lưu trữ tập trung cấu hình, chỉ số, bảng biểu và đồ thị tại [W&B lgkai-hcmus/STUDD](https://wandb.ai/lgkai-hcmus/STUDD).
 
-### 5.2. Tổng hợp kết quả tái hiện 10 phương pháp trên 6 bộ dữ liệu (Đạt, $W = 2000$, cap $150,000$)
+### 5.2. Kết quả theo dataset
 
-| Bộ dữ liệu | Số mẫu ($N$) | Cặp T / S | STUDD Kappa (Ours / Paper) | STUDD Cost (Ours / Paper) | Script tạo kết quả | Kết quả lưu trữ & W&B |
-|---|---|---|---|---|---|---|
-| **Electricity** | 45,312 | `NB` / `XGB` | `0.4166` / `0.29` | `0.5738` / `0.43` | `experiments/reproduce_dat_6datasets.py --datasets electricity` | [electricity_reproduction.csv](results/electricity_reproduction.csv) |
-| **Powersupply** | 29,928 | `SVC` / `RF` | `0.1067` / `0.10` | `0.2005` / `0.07` | `experiments/reproduce_dat_6datasets.py --datasets powersupply` | [powersupply_reproduction.csv](results/powersupply_reproduction.csv) |
-| **NOAA** | 18,159 | `RF` / `RF` | `0.4036` / `0.39` | `0.2203` / `0.06` | `experiments/reproduce_dat_6datasets.py --datasets noaa` | [noaa_reproduction.csv](results/noaa_reproduction.csv) |
-| **CoverType** | 150,000 | `LR` / `LR` | `0.5046` / `0.52` | `0.2800` / `0.09` | `experiments/reproduce_dat_6datasets.py --datasets covertype` | [covertype_reproduction.csv](results/covertype_reproduction.csv) |
-| **Poker** | 150,000 | `DT` / `DT` | `0.2960` / `0.48` | `0.0133` / `0.01` | `experiments/reproduce_dat_6datasets.py --datasets poker` | [poker_reproduction.csv](results/poker_reproduction.csv) |
-| **Sensors** | 150,000 | `DT` / `DT` | `0.2684` / `0.59` | `0.4800` / `0.16` | `experiments/reproduce_dat_6datasets.py --datasets sensors` | [sensors_reproduction.csv](results/sensors_reproduction.csv) |
+[Report chung](results/README.md) đối chiếu Kappa và chi phí nhãn của STUDD trên 19 bộ với Bảng 3–4. [CSV tổng hợp](results/studd_19datasets_summary.csv) lưu đủ 10 phương pháp mỗi bộ cùng nguồn và cấu hình tương ứng. Tái tạo hai tệp từ các kết quả đã ghi nhận bằng `python experiments/aggregate_studd_results.py`.
 
 > **Lưu ý về độ lệch chính (Deviation Analysis):** Một số khác biệt giữa bản tái hiện (`W = 2000` theo Mục 5.7 văn bản bài báo) và Bảng 3–4 của bài báo bắt nguồn từ: (1) mã nguồn gốc `vcerqueira/studd` sử dụng `W = 1000` cho các luồng lớn (khớp tỷ lệ `BL-st = 1000 / N` trong Bảng 4); (2) trên `Poker` (`DT/DT`), do `DT` ghi nhớ tốt cửa sổ $W=2000$, thống kê Page-Hinkley cực đại chưa vượt ngưỡng mặc định $\lambda=50$ nên không kích hoạt báo động; (3) khác biệt xử lý reset cửa sổ của `OF`/`FF` và phiên bản `scikit-learn` / `xgboost` mới. Chi tiết đầy đủ được lưu trong [results/dat_6datasets_summary.csv](results/dat_6datasets_summary.csv) và [results/dat_6datasets_alarm_summary.csv](results/dat_6datasets_alarm_summary.csv).
 
