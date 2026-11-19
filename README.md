@@ -1,16 +1,5 @@
 # STUDD
 
-## Thực nghiệm của Khoa
-
-Khoa chạy **10 phương pháp trên 6 bộ dữ liệu** bằng Kaggle CLI. Trình chạy dùng cùng phiên bản Page–Hinkley và baseline với nhánh `dat-6datasets`.
-
-- [Notebook và hướng dẫn Kaggle](notebooks/README.md) · [Script chạy thực nghiệm](experiments/reproduce_khoa_6datasets.py)
-- [Report đối chiếu với Bảng 3–4 và link từng run](results/khoa/README.md) · [CSV tổng hợp 60 kết quả](results/khoa/khoa_6datasets_summary.csv)
-- [W&B Testing](https://wandb.ai/lgkai-hcmus/Testing). Mỗi run tổng hợp 10 phương pháp của một dataset.
-
-Arabic và ArabicShuffled dùng input Kaggle riêng tư. Các file cấu hình trong `results/khoa/` lưu nguồn và checksum của các bộ đã chạy.
-
-
 Đồ án Nhập môn học máy
 
 Nghiên cứu, thực nghiệm và cài đặt lại (reproduce) mô hình **STUDD** dựa trên bài báo khoa học:
@@ -55,7 +44,7 @@ Bài báo nghiên cứu đề xuất phương pháp **STUDD** (*A Student-Teache
 * **Giai đoạn 3:** Milestone 3 (Phản biện lý thuyết) + Lab 2 (Stress test thực nghiệm) ──► Nộp **POSTER CUỐI KỲ (50% điểm)**
   * **Sản phẩm nộp:** File `ID.pptx` (Poster workshop)
 * **Kỷ luật thực nghiệm (5% điểm):** Chất lượng repository GitHub và theo dõi thực nghiệm đầy đủ trên Weights & Biases (W&B)
-  * **W&B Project Dashboard:** [https://wandb.ai/lgkai-hcmus/STUDD](https://wandb.ai/lgkai-hcmus/STUDD)
+  * **W&B:** [STUDD](https://wandb.ai/lgkai-hcmus/STUDD) và [Testing](https://wandb.ai/lgkai-hcmus/Testing)
 
 ---
 
@@ -70,16 +59,21 @@ Project1_STUDD/
 │   ├── detector.py                   # Module 1: Thuật toán kiểm định tuần tự Page-Hinkley
 │   ├── studd.py                      # Module 2: Kiến trúc Teacher - Student & mô hình Bảng 2
 │   ├── data_loader.py                # Module 3: Bộ nạp luồng tự động từ HF/USP/OpenML
-│   └── baselines.py                  # Module 4: 10 phương pháp đối sánh (Mục 5.5) & độ đo cảnh báo
+│   ├── baselines.py                  # 10 phương pháp đối sánh và độ đo cảnh báo
+│   ├── models.py                     # Mô hình và cấu hình của Khánh
+│   └── khoa/                         # Phiên bản mã chạy đã dùng cho kết quả của Khoa
 ├── experiments/                      # Kịch bản chạy thực nghiệm (Reproduction & Stress Testing)
 │   ├── reproduce.py                  # Kịch bản tái hiện cơ bản (3 luồng)
 │   ├── reproduce_dat_6datasets.py    # Kịch bản tái hiện đầy đủ 10 phương pháp trên 6 bộ (cap 150k)
+│   ├── run_dataset.py                # Chạy 7 bộ của Khánh
+│   ├── build_khoa_kaggle_notebooks.py # Đóng gói notebook Kaggle của Khoa
+│   ├── reproduce_khoa_6datasets.py   # Chạy và đồng bộ 6 bộ của Khoa
 │   └── stress_test.py                # Kịch bản kiểm thử chịu tải và phản biện lý thuyết
-├── notebooks/                        # Jupyter Notebooks phân tích và trực quan hóa kết quả
+├── notebooks/                        # Notebook thực nghiệm của Khoa và hướng dẫn
 ├── results/                          # Bảng CSV kết quả và biểu đồ 300 DPI
 ├── docs/                             # Bài báo gốc STUDD và báo cáo kiểm tra 19 bộ dữ liệu
 ├── .gitignore                        # Cấu hình bỏ qua môi trường ảo, cache nặng và tài liệu nháp
-├── requirements.txt                  # Danh sách thư viện phụ thuộc Python 3.9+
+├── requirements.txt                  # Thư viện cho các script thực nghiệm
 └── README.md                         # Tài liệu giới thiệu đề tài, hướng dẫn và bảng ánh xạ W&B
 ```
 
@@ -88,7 +82,7 @@ Project1_STUDD/
 ## 4. Hướng dẫn Cài đặt & Chạy Thực nghiệm
 
 ### Bước 1: Khởi tạo và kích hoạt môi trường ảo
-Khuyến nghị sử dụng Python 3.9 trở lên (đã kiểm thử trên Python 3.13):
+Khuyến nghị dùng Python 3.13:
 
 * **Trên Windows (PowerShell):**
   ```powershell
@@ -145,6 +139,19 @@ python src/baselines.py
   # Hoặc đồng bộ các kết quả CSV/PNG đã chạy từ results/ lên W&B
   python experiments/reproduce_dat_6datasets.py --sync-wandb
   ```
+
+* **Chạy từng bộ của Khánh:**
+  ```bash
+  python experiments/run_dataset.py --dataset bike --no-wandb
+  ```
+  [Report của Khánh](results/khanh/khanh-7datasets.md) ghi cấu hình, sai khác và các link W&B.
+
+* **Đóng gói 6 bộ của Khoa để chạy trên Kaggle:**
+  ```bash
+  python experiments/build_khoa_kaggle_notebooks.py --output /tmp/khoa-kaggle-ten
+  kaggle kernels push -p /tmp/khoa-kaggle-ten/insects-abrupt
+  ```
+  Xem [hướng dẫn Kaggle](notebooks/README.md), [đồng bộ W&B](experiments/README.md) và [report của Khoa](results/khoa/README.md). Arabic và ArabicShuffled cần quyền truy cập Kaggle Dataset riêng tư.
 
 ---
 

@@ -7,10 +7,12 @@ from pathlib import Path
 
 
 paths = [
-    'src/__init__.py', 'src/khoa/__init__.py', 'src/khoa/baselines.py', 'src/khoa/detector.py', 'src/khoa/studd.py',
+    'src/khoa/__init__.py', 'src/khoa/baselines.py', 'src/khoa/detector.py', 'src/khoa/studd.py',
     'experiments/reproduce_khoa_6datasets.py',
 ]
 bundle = {path: Path(path).read_text() for path in paths}
+# The standalone Kaggle package contains only src.khoa.
+bundle["src/__init__.py"] = '"""Standalone package for the Khoa Kaggle runner."""\n'
 parser = argparse.ArgumentParser(description=__doc__)
 parser.add_argument("--output", type=Path, required=True)
 base = parser.parse_args().output
