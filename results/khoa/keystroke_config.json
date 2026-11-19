@@ -1,0 +1,23 @@
+{
+  "dataset": "Keystroke",
+  "teacher": "XGB",
+  "student": "RF",
+  "seed": 42,
+  "samples": 1600,
+  "stream_size": 1100,
+  "window_size": 500,
+  "source_url": "https://huggingface.co/datasets/pham121/studd-keystroke/resolve/38da3e5d1a59471dee117d9e7dfe83e3a8e9d0c0/Keystroke.data",
+  "source_sha256": "adb61d7945185ed33f28e29d097a2dbed96c07d95d67f329c6db740d0c0ea845",
+  "detector": "dat-6datasets PageHinkley",
+  "delta": 0.001,
+  "ph_threshold": 50.0,
+  "ks_alpha": 0.001,
+  "baseline_revision": "00834c380c32ff41ed7746d41e949babe3aca658",
+  "versions": {
+    "numpy": "2.1.3",
+    "pandas": "2.3.3",
+    "scipy": "1.16.3",
+    "scikit-learn": "1.6.1",
+    "xgboost": "3.1.3"
+  }
+}
