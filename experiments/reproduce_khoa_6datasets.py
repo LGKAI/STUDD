@@ -56,9 +56,13 @@ def evaluate_dataset(X, y, *, dataset, slug, teacher, student, window, seed, sou
     # OS/OF in the shared runner may compare numeric class codes. The
     # mapping is used only as a representation of labels, never as a feature.
     _, labels = np.unique(y, return_inverse=True)
-    models = [create_learner(code, random_state=seed, n_jobs=2) for code in (teacher, student)]
+    # Use distinct random_state (seed vs seed + 100) so RF/RF avoids identical
+    # bootstrap trees; deterministic XGB/XGB (subsample=1.0) still exhibits the
+    # Idempotent Mimicry Trap documented in the deviation analysis.
+    teacher_model = create_learner(teacher, random_state=seed, n_jobs=2)
+    student_model = create_learner(student, random_state=seed + 100, n_jobs=2)
     results = evaluate_all_10_methods(
-        X, labels, *models, window_size=window, random_state=seed,
+        X, labels, teacher_model, student_model, window_size=window, random_state=seed,
         delta=DELTA, ph_threshold=PH_THRESHOLD, ks_alpha=KS_ALPHA,
     )
     paper_kappa, paper_cost = (dict(zip(PAPER_ORDER, values)) for values in PAPER_TABLES[dataset])
@@ -97,7 +101,8 @@ def evaluate_dataset(X, y, *, dataset, slug, teacher, student, window, seed, sou
         output / f"{slug}_alarms.csv", index=False,
     )
     config = {
-        "dataset": dataset, "teacher": teacher, "student": student, "seed": seed,
+        "dataset": dataset, "teacher": teacher, "student": student,
+        "seed": seed, "student_seed": seed + 100,
         "samples": len(X), "stream_size": n_eval, "window_size": window,
         "source_url": source, "source_sha256": checksum,
         "detector": "dat-6datasets PageHinkley", "delta": DELTA, "ph_threshold": PH_THRESHOLD,
@@ -178,7 +183,7 @@ def publish_dataset(slug, output, *, entity, project, existing_run=None):
         api.flush()
         remote = api.run(f"{entity}/{project}/{run_id}")
     assert all(np.isclose(remote.summary[key], value) for key, value in desired.items())
-    url = remote.url
+    url = remote.url.replace("https://forge.coreweave.com/wandb/", "https://wandb.ai/")
     (output / f"{slug}_wandb.json").write_text(json.dumps({"run_id": run_id, "url": url}) + "\n")
     print(f"Verified {slug}: {url}")
     return url

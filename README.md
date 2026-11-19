@@ -26,8 +26,10 @@ Phần lớn các thuật toán phát hiện Concept Drift kinh điển (như DD
 ### 1.3. Giải pháp của STUDD (Student-Teacher Drift Detection)
 Bài báo nghiên cứu đề xuất phương pháp **STUDD** (*A Student-Teacher Method for Unsupervised Concept Drift Detection* - Cerqueira et al., *Machine Learning* 2023 Springer) nhằm phát hiện trôi dạt mà **không cần nhãn thực tế** theo cơ chế sau:
 1. **Kiến trúc Thầy - Trò (Teacher - Student Paradigm):**
-   * **Teacher ($T$):** Mô hình tĩnh ban đầu, đóng vai trò chuyên gia tham chiếu đưa ra nhãn dự đoán $\hat{y}_{t, T}$.
-   * **Student ($S$):** Mô hình học trực tuyến (online learner), được huấn luyện để **học bắt chước** hành vi của Teacher. Nhãn mà Student học theo chính là dự đoán của Teacher $\hat{y}_{t, T}$, hoàn toàn không cần nhãn thật $y_t$.
+   * Theo Cerqueira et al. (2023, Mục 4.1, 5.3 và 6.4), STUDD sử dụng các bộ phân lớp học theo lô (**batch classifiers** như `RF`, `XGB`, `DT`, `LR`, `RC`, ...):
+   * **Teacher ($T$):** Được huấn luyện theo lô trên tập dữ liệu khởi tạo $(X_{\text{tr}}, y_{\text{tr}})$, đóng vai trò mô hình tham chiếu đưa ra dự đoán $\hat{y}_{t, T}$.
+   * **Student ($S$):** Được huấn luyện ngoại tuyến theo lô (**batch learner**) trên tập $(X_{\text{tr}}, \hat{y}_T)$ để **học bắt chước** hành vi dự đoán của Teacher mà không cần nhãn thật $y_t$ ở bước bắt chước.
+   * Trong suốt giai đoạn giám sát trực tuyến trên luồng dữ liệu, cả Teacher ($T$) và Student ($S$) đều được **giữ cố định** để đo độ bất đồng dự đoán $L_t = \mathbb{I}(\hat{y}_{t, T} \neq \hat{y}_{t, S})$; cả hai chỉ được tái huấn luyện theo lô trên cửa sổ $W$ quan sát gần nhất khi kiểm định Page-Hinkley kích hoạt cảnh báo trôi dạt.
 2. **Cơ chế Phát hiện Trôi dạt (Unsupervised Detection):**
    * Với mỗi mẫu dữ liệu mới $x_t$, cả Teacher và Student cùng đưa ra dự đoán. Sai số bắt chước (Mimicry Loss / Discrepancy) $L_t = \mathbb{I}(\hat{y}_{t, T} \neq \hat{y}_{t, S})$ được theo dõi liên tục thông qua thuật toán kiểm định tuần tự **Page-Hinkley (PH)**.
    * Khi dữ liệu ổn định, Student bắt chước Teacher rất tốt ($L_t \approx 0$). Khi Concept Drift xảy ra, phân phối dữ liệu biến đổi khiến Student và Teacher phát sinh bất đồng lớn $\rightarrow$ Giá trị tích lũy Page-Hinkley tăng vọt vượt ngưỡng cho phép ($\lambda$), kích hoạt cảnh báo phát hiện Concept Drift.
@@ -69,11 +71,17 @@ Project1_STUDD/
 │   ├── reproduce_dat_6datasets.py    # Kịch bản tái hiện đầy đủ 10 phương pháp trên 6 bộ (cap 150k)
 │   ├── run_dataset.py                # Chạy 7 bộ của Khánh
 │   ├── aggregate_studd_results.py    # Tạo CSV và report chung
+│   ├── plot_19datasets_rank.py       # Vẽ biểu đồ Average Rank (Hình 10) trên 19 bộ dữ liệu
 │   ├── build_khoa_kaggle_notebooks.py # Đóng gói notebook Kaggle của Khoa
 │   ├── reproduce_khoa_6datasets.py   # Chạy và đồng bộ 6 bộ của Khoa
 │   └── stress_test.py                # Kịch bản kiểm thử chịu tải và phản biện lý thuyết
 ├── notebooks/                        # Notebook thực nghiệm của Khoa và hướng dẫn
-├── results/                          # Bảng CSV kết quả và biểu đồ 300 DPI
+├── results/                          # Bảng CSV kết quả, report chung và biểu đồ 300 DPI
+│   ├── README.md                     # Report tổng hợp & phân tích độ lệch 19 bộ dữ liệu
+│   ├── studd_19datasets_summary.csv  # Bảng tổng hợp 190 kết quả (19 bộ × 10 phương pháp)
+│   └── fig_19datasets_rank_plot.png  # Biểu đồ Average Rank (Hình 10) trên 19 bộ dữ liệu
+├── tests/                            # Kiểm thử tự động xác minh các bản vá cốt lõi
+│   └── test_studd_main_fixes.py      # Bộ kiểm thử tích hợp cho nhánh main
 ├── docs/                             # Bài báo gốc STUDD và báo cáo kiểm tra 19 bộ dữ liệu
 ├── .gitignore                        # Cấu hình bỏ qua môi trường ảo, cache nặng và tài liệu nháp
 ├── requirements.txt                  # Thư viện cho các script thực nghiệm
@@ -168,9 +176,9 @@ python src/baselines.py
 
 ### 5.2. Kết quả theo dataset
 
-[Report chung](results/README.md) đối chiếu Kappa và chi phí nhãn của STUDD trên 19 bộ với Bảng 3–4. [CSV tổng hợp](results/studd_19datasets_summary.csv) lưu đủ 10 phương pháp mỗi bộ cùng nguồn và cấu hình tương ứng. Tái tạo hai tệp từ các kết quả đã ghi nhận bằng `python experiments/aggregate_studd_results.py`.
+[Report chung](results/README.md) đối chiếu Kappa và chi phí nhãn của STUDD trên 19 bộ với Bảng 3–4. [CSV tổng hợp](results/studd_19datasets_summary.csv) lưu đủ 10 phương pháp mỗi bộ cùng nguồn và cấu hình tương ứng, đi kèm [Biểu đồ Average Rank 19 bộ](results/fig_19datasets_rank_plot.png) tái hiện Hình 10 của bài báo. Tái tạo báo cáo tích hợp và biểu đồ Hình 10 từ các kết quả đã ghi nhận bằng `python experiments/aggregate_studd_results.py` và `python experiments/plot_19datasets_rank.py`.
 
-> **Lưu ý về độ lệch chính (Deviation Analysis):** Một số khác biệt giữa bản tái hiện (`W = 2000` theo Mục 5.7 văn bản bài báo) và Bảng 3–4 của bài báo bắt nguồn từ: (1) mã nguồn gốc `vcerqueira/studd` sử dụng `W = 1000` cho các luồng lớn (khớp tỷ lệ `BL-st = 1000 / N` trong Bảng 4); (2) trên `Poker` (`DT/DT`), do `DT` ghi nhớ tốt cửa sổ $W=2000$, thống kê Page-Hinkley cực đại chưa vượt ngưỡng mặc định $\lambda=50$ nên không kích hoạt báo động; (3) khác biệt xử lý reset cửa sổ của `OF`/`FF` và phiên bản `scikit-learn` / `xgboost` mới. Chi tiết đầy đủ được lưu trong [results/dat_6datasets_summary.csv](results/dat_6datasets_summary.csv) và [results/dat_6datasets_alarm_summary.csv](results/dat_6datasets_alarm_summary.csv).
+> **Lưu ý về độ lệch chính (Deviation Analysis):** Phân tích độ lệch chi tiết trên cả 19 bộ dữ liệu của cả 3 thành viên (**Khoa, Khánh, Đạt**) được tổng hợp đầy đủ tại [results/README.md](results/README.md) (cùng báo cáo chi tiết của [Khoa](results/khoa/README.md) và [Khánh](results/khanh/khanh-7datasets.md)). Một số nguyên nhân sai khác tiêu biểu so với Bảng 3–4 của bài báo gồm: (1) khác biệt cỡ cửa sổ giữa văn bản Mục 5.7 (`W = 2000`) và mã nguồn gốc `vcerqueira/studd` (`W = 1000` cho các luồng lớn, khớp tỷ lệ `BL-st = 1000 / N` trong Bảng 4); (2) trên `Poker` (`DT/DT`), do `DT` ghi nhớ tốt cửa sổ $W=2000$, thống kê Page-Hinkley cực đại chưa vượt ngưỡng mặc định $\lambda=50$ nên không kích hoạt báo động; (3) khác biệt số đặc trưng upstream (như `Keystroke`, `Arabic`), xử lý reset cửa sổ của `OF`/`FF` và phiên bản `scikit-learn` / `xgboost` mới. Dữ liệu riêng 6 bộ của Đạt cũng được lưu trong [results/dat_6datasets_summary.csv](results/dat_6datasets_summary.csv) và [results/dat_6datasets_alarm_summary.csv](results/dat_6datasets_alarm_summary.csv).
 
 ## Dataset branch snapshot
 

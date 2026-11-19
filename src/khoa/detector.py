@@ -29,10 +29,10 @@ class PageHinkley:
         Theo Mục 5.7 của bài báo STUDD, tác giả cố định delta = 0.001.
     threshold : float, default=50.0
         Ngưỡng kích hoạt báo động lambda (detection threshold).
-        Khi thống kê kiểm định (m_t - M_t) > threshold, còi báo động Drift sẽ bật.
+        Khi thống kê kiểm định PH_t = m_t > threshold, còi báo động Drift sẽ bật.
     alpha : float, default=0.9999
         Hệ số quên (forgetting factor) giúp giảm nhẹ trọng số của các quan sát quá cũ.
-        Giá trị mặc định chuẩn là 1 - 0.0001 = 0.9999 (hoặc 1.0 nếu giữ nguyên toàn bộ lịch sử).
+        Giá trị mặc định chuẩn theo scikit-multiflow 0.5.3 là 1 - 0.0001 = 0.9999.
     min_instances : int, default=30
         Số lượng mẫu tối thiểu cần quan sát để trung bình lịch sử ổn định trước khi
         cho phép phát báo động (tránh báo động giả ở những mẫu đầu tiên).
@@ -64,21 +64,22 @@ class PageHinkley:
         """
         self.sample_count = 0
         self.running_mean = 0.0      # Trung bình lịch sử: L_bar_t
-        self.sum_deviation = 0.0     # Tổng độ lệch tích lũy: m_t
-        self.min_sum_deviation = 0.0 # Giá trị cực tiểu của tổng độ lệch: M_t = min(m_t)
+        self.sum_deviation = 0.0     # Tổng độ lệch tích lũy một phía: m_t >= 0
+        self.min_sum_deviation = 0.0 # Đáy tham chiếu cố định M_t = 0.0 (tương thích ngược)
 
     def update(self, loss_val: float) -> Tuple[bool, float]:
         """Cập nhật trạng thái bộ kiểm định với một giá trị lỗi mới trên luồng dữ liệu.
 
-        Công thức toán học tại mỗi bước thời gian t:
+        Cài đặt công thức Page-Hinkley một phía khớp chuẩn `scikit-multiflow 0.5.3`
+        (Cerqueira et al., 2023, Mục 5.7) tại mỗi bước thời gian t:
             1. Cập nhật trung bình cộng dồn:
                L_bar_t = L_bar_{t-1} + (L_t - L_bar_{t-1}) / t
-            2. Cập nhật tổng độ lệch tích lũy:
-               m_t = alpha * m_{t-1} + (L_t - L_bar_t - delta)
-            3. Cập nhật mức đáy lịch sử:
-               M_t = min(M_{t-1}, m_t)
-            4. Tính đại lượng thống kê Page-Hinkley:
-               PH_t = m_t - M_t
+            2. Cập nhật tổng độ lệch tích lũy (cắt dưới tại 0.0):
+               m_t = max(0.0, alpha * m_{t-1} + (L_t - L_bar_t - delta))
+            3. Giữ mức đáy tham chiếu M_t = 0.0 (tránh việc alpha < 1 kéo m_t âm
+               dần về 0 gây báo động giả trên luồng ổn định kéo dài).
+            4. Đại lượng thống kê Page-Hinkley:
+               PH_t = m_t  (tương đương m_t - M_t với M_t = 0.0)
             5. Kiểm tra điều kiện báo động:
                Nếu t >= min_instances và PH_t > threshold -> Báo động Drift!
 
@@ -92,25 +93,26 @@ class PageHinkley:
         Tuple[bool, float]
             Trả về bộ 2 giá trị `(drift_detected, ph_statistic)`:
             - `drift_detected` (bool): `True` nếu phát hiện có Concept Drift, ngược lại `False`.
-            - `ph_statistic` (float): Giá trị thống kê hiện tại (PH_t = m_t - M_t), dùng để vẽ biểu đồ.
+            - `ph_statistic` (float): Giá trị thống kê hiện tại (PH_t = m_t), dùng để vẽ biểu đồ.
         """
         self.sample_count += 1
 
         # Bước 1: Cập nhật trung bình lịch sử L_bar_t theo công thức đệ quy
         self.running_mean += (loss_val - self.running_mean) / self.sample_count
 
-        # Bước 2: Cộng dồn độ lệch m_t (có áp dụng hệ số quên alpha và dung sai delta)
-        self.sum_deviation = (
+        # Bước 2: Cộng dồn độ lệch một phía m_t theo chuẩn scikit-multiflow 0.5.3
+        # Phép cắt dưới max(0.0, ...) ngăn alpha < 1 làm suy giảm giá trị âm về 0 gây báo động giả
+        self.sum_deviation = max(
+            0.0,
             self.alpha * self.sum_deviation
-            + (loss_val - self.running_mean - self.delta)
+            + (loss_val - self.running_mean - self.delta),
         )
 
-        # Bước 3: Theo dõi mức cực tiểu lịch sử M_t
-        if self.sum_deviation < self.min_sum_deviation:
-            self.min_sum_deviation = self.sum_deviation
+        # Bước 3: Giữ đáy min_sum_deviation = 0.0 để bảo toàn thuộc tính tương thích ngược
+        self.min_sum_deviation = 0.0
 
-        # Bước 4: Tính điểm thống kê kiểm định PH_t = m_t - M_t
-        ph_statistic = self.sum_deviation - self.min_sum_deviation
+        # Bước 4: Tính điểm thống kê kiểm định PH_t = m_t
+        ph_statistic = self.sum_deviation
 
         # Bước 5: Kiểm tra xem đã đủ mẫu khởi động và vượt ngưỡng báo động chưa
         drift_detected = (

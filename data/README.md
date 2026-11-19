@@ -4,7 +4,7 @@ This branch stores downloaded source data and reports. No STUDD model runs were 
 
 - `dataset_huggingface/`: Electricity, Bike and InsectsAbrupt prepared data, plus CoverType, Poker, Ozone, Arabic and GMSC candidates downloaded from Hugging Face.
 - `dataset_not_huggingface/`: ten original upstream datasets downloaded outside HF. These have now been mirrored to HF; the folder name records where they were originally obtained. Each folder includes source attribution and provenance.
-- `hosted_sources.json`: pinned hosted configuration for the original three prepared datasets only. It is not a complete 19-dataset runner configuration.
+- `hosted_sources.json`: pinned hosted source metadata for 8 datasets (`InsectsAbrupt`, `Electricity`, `CoverType`, `Poker`, `Powersupply`, `NOAA`, `Sensors`, `Bike`). Khánh's 7 datasets are also registered in `src/data_loader.py` (`STREAM_CONFIG_REGISTRY`), and Khoa's 6 datasets are pinned in `notebooks/khoa/*.ipynb`.
 - `validation_report.json`: validation metadata from the original data preparation.
 
 See [the 19-dataset report](../docs/dataset_reports/STUDD_19_DATASETS_REPORT.md) for HF links, original external links, sizes, verification status and unresolved differences from the paper. Further evidence is in `docs/dataset_reports/` and `docs/data_provenance/`.

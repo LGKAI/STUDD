@@ -17,10 +17,12 @@ Mỗi notebook chạy **BL-st** và **STUDD** trên một bộ dữ liệu. Cặ
 
 1. Tạo Kaggle Notebook rồi dùng **File → Import Notebook** để mở file `.ipynb`. Bật **Internet** và để **Accelerator = None**.
 2. Chạy cell cài thư viện đầu tiên trong một phiên mới. Notebook có sẵn lớp Page–Hinkley từ scikit-multiflow 0.5.3, nên không cần cài toàn bộ gói scikit-multiflow trên Kaggle.
-3. Cấp quyền cho secret `WANDB_API_KEY` và đặt `LOG_TO_WANDB = True` ở cell 2 nếu muốn gửi kết quả vào [Testing](https://forge.coreweave.com/wandb/lgkai-hcmus/Testing).
+3. Cấp quyền cho secret `WANDB_API_KEY` và đặt `LOG_TO_WANDB = True` ở cell 2 nếu muốn gửi kết quả vào [Testing](https://wandb.ai/lgkai-hcmus/Testing).
 4. Chạy các cell theo thứ tự. Cell 5 in bảng Kappa và lưu CSV. Cell 6 in URL của hai run. Chép URL đã xác nhận **Finished** vào README chính. Chạy lại cell 6 sẽ tạo run mới.
 
 Chạy lại **01 InsectsAbrupt** để lấy kết quả với cấu hình detector trong paper. Các run mới có hậu tố `paper-seed42`. Với Arabic và ArabicShuffled, gắn [dataset Kaggle riêng tư của Khoa](https://www.kaggle.com/datasets/phmchnkhoa/studd-arabic-benchmark-inputs). Kaggle giải nén hai ZIP upstream khi nhập. Cell 3 kiểm tra SHA-256 của tệp đã giải nén và giữ nguyên thứ tự luồng.
+
+> **Lưu ý trước khi nộp bài / chấm điểm:** Trước khi nộp bản cuối cùng để giảng viên đánh giá, cần chuyển dataset Kaggle `phmchnkhoa/studd-arabic-benchmark-inputs` sang chế độ **Public** trên Kaggle (hoặc mirror công khai lên Hugging Face) để người đánh giá có thể tái hiện trực tiếp `04-arabic.ipynb` và `05-arabic-shuffled.ipynb`.
 
 **Sai khác cần ghi trong báo cáo.** Keystroke có 10 đặc trưng và Arabic có 26 đặc trưng ở bản upstream. Bảng 1 tương ứng với 9 và 27 đặc trưng. Posture có 164.860 dòng ở nguồn và notebook dùng 150.000 dòng đầu theo giới hạn trong paper. Page–Hinkley có `delta=0.001` và các tham số còn lại theo mặc định của scikit-multiflow. Notebook dùng trực tiếp cặp mô hình Bảng 2. Lượt chạy toàn bộ mã tác giả là phần đối chiếu riêng, vì script công khai dùng các giá trị khác mục 5.7.
 

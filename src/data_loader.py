@@ -13,6 +13,7 @@ Tuân thủ quy định của Course Lab Book (Mục Experimental Reproduction):
 
 import json
 import os
+import zipfile
 from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
 import pandas as pd
@@ -179,12 +180,47 @@ def _parse_hosted_dataframe(
             y = LabelEncoder().fit_transform(y_raw.astype(str).str.strip()).astype(np.int64)
         return X, y
 
-    if fmt in {"insects_zip", "bike_hourly_csv"}:
-        df = pd.read_csv(file_path, nrows=nrows)
-        target_col = df.columns[-1]
+    if fmt == "insects_zip":
+        if str(file_path).lower().endswith(".zip"):
+            with zipfile.ZipFile(file_path) as zf:
+                member = (
+                    "AbruptInsects.data"
+                    if "AbruptInsects.data" in zf.namelist()
+                    else next(
+                        (m for m in zf.namelist() if m.endswith("AbruptInsects.data")),
+                        zf.namelist()[0],
+                    )
+                )
+                with zf.open(member) as fp:
+                    df = pd.read_csv(fp, header=None, nrows=nrows)
+        else:
+            df = pd.read_csv(file_path, header=None, nrows=nrows)
         X = df.iloc[:, :-1].apply(pd.to_numeric, errors="coerce").fillna(0.0).to_numpy(dtype=np.float32)
-        y = LabelEncoder().fit_transform(df[target_col].astype(str).str.strip()).astype(np.int64)
+        y = LabelEncoder().fit_transform(df.iloc[:, -1].astype(str).str.strip()).astype(np.int64)
         return X, y
+
+    if fmt == "bike_hourly_csv":
+        df = pd.read_csv(file_path, nrows=nrows)
+        feature_cols = ["temp", "atemp", "hum", "windspeed"]
+        if "cnt" in df.columns:
+            # Raw hour.csv: chỉ chọn 4 đặc trưng thời tiết, tránh rò rỉ nhãn từ cnt/casual/registered
+            X = df[feature_cols].apply(pd.to_numeric, errors="coerce").fillna(0.0).to_numpy(dtype=np.float32)
+            y = (pd.to_numeric(df["cnt"], errors="coerce").to_numpy() >= 142).astype(np.int64)
+            return X, y
+        if "target" in df.columns and all(col in df.columns for col in feature_cols):
+            # Bản đã tiền xử lý gồm 4 đặc trưng thời tiết và cột target ('high'/'low')
+            X = df[feature_cols].apply(pd.to_numeric, errors="coerce").fillna(0.0).to_numpy(dtype=np.float32)
+            y_raw = df["target"].astype(str).str.strip().str.lower()
+            mapping = {"low": 0, "high": 1, "0": 0, "1": 1}
+            if set(y_raw.unique()).issubset(mapping.keys()):
+                y = y_raw.map(mapping).to_numpy(dtype=np.int64)
+            else:
+                y = LabelEncoder().fit_transform(y_raw).astype(np.int64)
+            return X, y
+        raise ValueError(
+            "Định dạng bike_hourly_csv không hợp lệ: thiếu cột 'cnt' hoặc bộ cột "
+            "['temp', 'atemp', 'hum', 'windspeed', 'target']."
+        )
 
     raise ValueError(f"Định dạng dataset chưa được hỗ trợ: '{fmt}'")
 
