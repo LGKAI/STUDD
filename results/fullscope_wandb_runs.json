@@ -1,0 +1,37 @@
+{
+  "entity": "lgkai-hcmus",
+  "project": "STUDD",
+  "runs": {
+    "table2_selection": {
+      "run_name": "fullscope-table2-selection-verification",
+      "run_id": "5t33q8ec",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/5t33q8ec",
+      "job_type": "table2_selection_verification",
+      "config": {
+        "scope": "19_datasets_table2_selection",
+        "split": "70_30_chronological",
+        "candidate_pool": [
+          "RF",
+          "XGB",
+          "RC",
+          "DT",
+          "LR",
+          "NB",
+          "SVC"
+        ],
+        "seed_teacher": 42,
+        "seed_student": 142
+      },
+      "summary": {
+        "datasets_count": 19,
+        "teacher_exact_match_count": 7,
+        "student_exact_match_count": 7,
+        "student_match_given_paper_teacher_count": 14,
+        "mean_teacher_kappa_gap": 0.0728,
+        "median_teacher_kappa_gap": 0.0511,
+        "seed_teacher": 42,
+        "seed_student": 142
+      }
+    }
+  }
+}
