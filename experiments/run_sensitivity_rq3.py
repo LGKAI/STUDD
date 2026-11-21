@@ -374,8 +374,101 @@ def aggregate_sensitivity_summary(per_ds_df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(summary_rows)
 
 
-def plot_sensitivity_fig14(summary_df: pd.DataFrame, out_path: Path) -> None:
-    """Vẽ Fig. 14 (RQ3): Độ nhạy Mean Kappa và Bayesian P(STUDD >= Supervised) theo l_access × l_delay."""
+def compute_rq3_average_ranks(per_ds_df: pd.DataFrame) -> pd.DataFrame:
+    """Tính Average Rank chuẩn Mục 5.8.5 / Fig. 14 (8 phương pháp trong mỗi ô l_access)."""
+    rank_rows: List[Dict[str, object]] = []
+    for pct in (1, 10, 25, 50):
+        sub = per_ds_df[
+            per_ds_df["Kind"].isin(["STUDD", "SS_Ideal"])
+            | ((per_ds_df["Kind"] == "Grid") & (per_ds_df["l_access_pct"] == pct))
+        ].copy()
+        sub["Label"] = sub.apply(
+            lambda r: "STUDD"
+            if r["Kind"] == "STUDD"
+            else ("SS" if r["Kind"] == "SS_Ideal" else f"S_W{int(r['l_delay'])}"),
+            axis=1,
+        )
+        piv = sub.pivot(index="Dataset", columns="Label", values="Kappa")
+        ranks = piv.rank(axis=1, ascending=False, method="average")
+        mean_ranks = ranks.mean(axis=0).sort_values()
+        mean_k = piv.mean(axis=0)
+        for pos, (label, avg_r) in enumerate(mean_ranks.items(), start=1):
+            rank_rows.append(
+                {
+                    "l_access_pct": pct,
+                    "Position": pos,
+                    "Method_Label": str(label),
+                    "Average_Rank": round(float(avg_r), 2),
+                    "Mean_Kappa": round(float(mean_k[label]), 4),
+                    "Datasets": len(piv),
+                }
+            )
+    return pd.DataFrame(rank_rows)
+
+
+def plot_sensitivity_ranks_fig14(rank_df: pd.DataFrame, out_path: Path) -> None:
+    """Vẽ Fig. 14 chuẩn bài báo: Lưới 2×2 Barplot Average Rank (nhỏ hơn = tốt hơn)."""
+    fig, axes = plt.subplots(2, 2, figsize=(12.2, 8.2), dpi=200, sharey=True)
+    panels = [(0, 0, 1), (0, 1, 10), (1, 0, 25), (1, 1, 50)]
+
+    for r_i, c_i, pct in panels:
+        ax = axes[r_i, c_i]
+        sub = rank_df[rank_df["l_access_pct"] == pct].sort_values("Average_Rank")
+        labels = list(sub["Method_Label"])
+        vals = sub["Average_Rank"].to_numpy(dtype=float)
+
+        colors = [
+            "#dc2626" if lb == "STUDD" else ("#16a34a" if lb == "SS" else "#475569")
+            for lb in labels
+        ]
+        bars = ax.bar(np.arange(len(labels)), vals, color=colors, width=0.62, edgecolor="white", linewidth=0.8)
+
+        for bar, lb, v in zip(bars, labels, vals):
+            ax.text(
+                bar.get_x() + bar.get_width() / 2.0,
+                v + 0.12,
+                f"{v:.2f}",
+                ha="center",
+                va="bottom",
+                fontsize=8.6,
+                fontweight="bold" if lb in ("STUDD", "SS") else "normal",
+                color="#b91c1c" if lb == "STUDD" else ("#15803d" if lb == "SS" else "#1f2937"),
+            )
+
+        ax.set_xticks(np.arange(len(labels)))
+        ax.set_xticklabels(labels, rotation=22, ha="right", fontsize=9.2, fontweight="bold")
+        for tick, lb in zip(ax.get_xticklabels(), labels):
+            if lb == "STUDD":
+                tick.set_color("#b91c1c")
+            elif lb == "SS":
+                tick.set_color("#15803d")
+
+        ax.set_ylim(0.0, 6.6)
+        ax.set_title(f"Observation Perc.: {pct}%", fontsize=11, fontweight="bold", pad=8)
+        if c_i == 0:
+            ax.set_ylabel("Average Rank (lower is better)", fontsize=9.8, fontweight="bold")
+        ax.grid(True, axis="y", linestyle=":", alpha=0.55)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+
+    studd_seq = " -> ".join(
+        f"{pct}%: {float(rank_df[(rank_df['l_access_pct']==pct) & (rank_df['Method_Label']=='STUDD')]['Average_Rank'].iloc[0]):.2f}"
+        for pct in (1, 10, 25, 50)
+    )
+    fig.suptitle(
+        f"Section 5.8.5 / Fig. 14: Average Rank by Online Label Access & Delay Across 19 Datasets\n"
+        f"(STUDD Average Rank progression: {studd_seq})",
+        fontsize=12.0,
+        fontweight="bold",
+        y=0.99,
+    )
+    plt.tight_layout(rect=[0, 0, 1, 0.93])
+    fig.savefig(out_path, bbox_inches="tight")
+    plt.close(fig)
+
+
+def plot_sensitivity_heatmap_fig14b(summary_df: pd.DataFrame, out_path: Path) -> None:
+    """Vẽ Fig. 14b (phụ trợ): Độ nhạy Mean Kappa và Bayesian P(STUDD >= Supervised)."""
     grid = summary_df[summary_df["Kind"] == "Grid"].copy()
     studd_k = float(summary_df[summary_df["Kind"] == "STUDD"]["Mean_Kappa"].iloc[0])
     ss_k = float(summary_df[summary_df["Kind"] == "SS_Ideal"]["Mean_Kappa"].iloc[0])
@@ -430,10 +523,10 @@ def plot_sensitivity_fig14(summary_df: pd.DataFrame, out_path: Path) -> None:
     cbar.set_label("Mean Kappa Advantage (STUDD - S)", fontsize=8.5)
     ax2.set_xlabel("Label Delay l_delay (instances)", fontsize=9.5, fontweight="bold")
     ax2.set_ylabel("Online Label Access l_access", fontsize=9.5, fontweight="bold")
-    ax2.set_title("Fig. 14B · Delta Kappa (STUDD - S) & P(STUDD >= S in Bayes)", fontsize=10.5, fontweight="bold")
+    ax2.set_title("Delta Kappa (STUDD - S) & P(STUDD >= S in Bayes)", fontsize=10.5, fontweight="bold")
 
     fig.suptitle(
-        f"Section 5.8.5 / RQ3 Sensitivity Analysis Across 19 Datasets (Seed T={SEED_TEACHER}/S={SEED_STUDENT})",
+        f"Supplementary (Fig. 14b): Sensitivity Curves & Delta Heatmap Across 19 Datasets (T={SEED_TEACHER}/S={SEED_STUDENT})",
         fontsize=12,
         fontweight="bold",
         y=0.99,
@@ -447,36 +540,50 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--no-wandb", action="store_true", help="Tắt đồng bộ W&B.")
     parser.add_argument("--resume", action="store_true", help="Tiếp tục từ checkpoint per-dataset đã lưu.")
+    parser.add_argument("--plot-only", action="store_true", help="Chỉ tính bảng Rank & vẽ lại biểu đồ từ CSV đã chạy.")
     args = parser.parse_args()
 
     per_ds_csv = RESULTS_DIR / "sensitivity_rq3_per_dataset.csv"
     summary_csv = RESULTS_DIR / "sensitivity_rq3_summary.csv"
+    ranks_csv = RESULTS_DIR / "sensitivity_rq3_ranks_fig14.csv"
     fig_path = RESULTS_DIR / "fig14_sensitivity_rq3.png"
+    fig14b_path = RESULTS_DIR / "fig14b_sensitivity_kappa_heatmap.png"
 
-    all_rows: List[Dict[str, object]] = []
-    done_datasets: set = set()
-    if args.resume and per_ds_csv.exists():
-        existing_df = pd.read_csv(per_ds_csv)
-        all_rows = existing_df.to_dict("records")
-        done_datasets = set(existing_df["Dataset"].unique())
+    if args.plot_only:
+        if not per_ds_csv.exists():
+            raise FileNotFoundError(f"Chưa có {per_ds_csv} để chạy --plot-only.")
+        per_ds_df = pd.read_csv(per_ds_csv)
+    else:
+        all_rows: List[Dict[str, object]] = []
+        done_datasets: set = set()
+        if args.resume and per_ds_csv.exists():
+            existing_df = pd.read_csv(per_ds_csv)
+            all_rows = existing_df.to_dict("records")
+            done_datasets = set(existing_df["Dataset"].unique())
 
-    for ds_name in ALL_19_DATASETS:
-        _, _, meta = load_all_19_stream(ds_name)
-        canon = str(meta["canonical_name"])
-        if canon in done_datasets:
-            print(f"[SKIP] {canon} đã có trong checkpoint.")
-            continue
-        ds_rows = run_dataset_sensitivity(ds_name)
-        all_rows.extend(ds_rows)
-        pd.DataFrame(all_rows).to_csv(per_ds_csv, index=False)
+        for ds_name in ALL_19_DATASETS:
+            _, _, meta = load_all_19_stream(ds_name)
+            canon = str(meta["canonical_name"])
+            if canon in done_datasets:
+                print(f"[SKIP] {canon} đã có trong checkpoint.")
+                continue
+            ds_rows = run_dataset_sensitivity(ds_name)
+            all_rows.extend(ds_rows)
+            pd.DataFrame(all_rows).to_csv(per_ds_csv, index=False)
 
-    per_ds_df = pd.DataFrame(all_rows)
+        per_ds_df = pd.DataFrame(all_rows)
+
     summary_df = aggregate_sensitivity_summary(per_ds_df)
+    rank_df = compute_rq3_average_ranks(per_ds_df)
     summary_df.to_csv(summary_csv, index=False)
-    plot_sensitivity_fig14(summary_df, fig_path)
+    rank_df.to_csv(ranks_csv, index=False)
+    plot_sensitivity_ranks_fig14(rank_df, fig_path)
+    plot_sensitivity_heatmap_fig14b(summary_df, fig14b_path)
 
-    print("\n=== TỔNG HỢP RQ3 SENSITIVITY (19 DATASETS) ===")
-    print(summary_df[["Config", "Mean_Kappa", "Mean_Diff_STUDD_Minus_Cfg", "STUDD_Win_Count", "STUDD_ROPE_Count", "STUDD_Lose_Count", "Bayes_P_STUDD_Win_Or_ROPE"]].to_string(index=False))
+    print("\n=== TỔNG HỢP RQ3 AVERAGE RANKS FIG. 14 (19 DATASETS) ===")
+    for pct in (1, 10, 25, 50):
+        sub_r = rank_df[rank_df["l_access_pct"] == pct].sort_values("Average_Rank")
+        print(f"Obs={pct:2d}% -> " + " | ".join(f"{r.Method_Label}:{r.Average_Rank:.2f}" for r in sub_r.itertuples()))
 
     grid = summary_df[summary_df["Kind"] == "Grid"]
     studd_wins_or_ties_cells = int((grid["Mean_Diff_STUDD_Minus_Cfg"] >= 0.0).sum())
@@ -497,14 +604,22 @@ def main() -> None:
             "studd_mean_kappa": float(summary_df[summary_df["Kind"] == "STUDD"]["Mean_Kappa"].iloc[0]),
             "ss_mean_kappa": float(summary_df[summary_df["Kind"] == "SS_Ideal"]["Mean_Kappa"].iloc[0]),
             "studd_outperforms_mean_cells": studd_wins_or_ties_cells,
+            "studd_rank_obs_1pct": float(rank_df[(rank_df["l_access_pct"] == 1) & (rank_df["Method_Label"] == "STUDD")]["Average_Rank"].iloc[0]),
+            "studd_rank_obs_10pct": float(rank_df[(rank_df["l_access_pct"] == 10) & (rank_df["Method_Label"] == "STUDD")]["Average_Rank"].iloc[0]),
+            "studd_rank_obs_25pct": float(rank_df[(rank_df["l_access_pct"] == 25) & (rank_df["Method_Label"] == "STUDD")]["Average_Rank"].iloc[0]),
+            "studd_rank_obs_50pct": float(rank_df[(rank_df["l_access_pct"] == 50) & (rank_df["Method_Label"] == "STUDD")]["Average_Rank"].iloc[0]),
             "seed_teacher": SEED_TEACHER,
             "seed_student": SEED_STUDENT,
         },
         tables={
             "sensitivity_rq3_summary": summary_df,
+            "sensitivity_rq3_ranks_fig14": rank_df,
             "sensitivity_rq3_per_dataset": per_ds_df,
         },
-        images={"fig14_sensitivity_rq3": fig_path},
+        images={
+            "fig14_sensitivity_rq3": fig_path,
+            "fig14b_sensitivity_kappa_heatmap": fig14b_path,
+        },
         enabled=not args.no_wandb,
     )
 

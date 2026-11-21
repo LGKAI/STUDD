@@ -203,76 +203,209 @@ def analyze_bayesian_and_efficiency(summary_csv: Path) -> Tuple[pd.DataFrame, pd
     eff_df["Paper_Pareto_Optimal"] = compute_pareto_flags(
         eff_df["Paper_Mean_Kappa"].to_numpy(), eff_df["Paper_Mean_Cost"].to_numpy()
     )
+
+    # Eq. (1)-(3) Section 5.8.4 Normalized Labeling Efficiency per dataset: (K_m / K_BLst) / (C_m / C_BLst)
+    eff_per_ds_rows: List[Dict[str, object]] = []
+    our_eq_stats: Dict[str, Tuple[float, float, float]] = {}
+    paper_eq_stats: Dict[str, Tuple[float, float, float]] = {}
+    for method in METHOD_ORDER:
+        if method == "BL-st":
+            our_eq_stats[method] = (1.0, 1.0, 0.0)
+            paper_eq_stats[method] = (1.0, 1.0, 0.0)
+            continue
+        valid_our = (piv_our_k["BL-st"] > 0) & (piv_our_c["BL-st"] > 0) & (piv_our_c[method] > 0)
+        vals_our = (piv_our_k.loc[valid_our, method] / piv_our_k.loc[valid_our, "BL-st"]) / (
+            piv_our_c.loc[valid_our, method] / piv_our_c.loc[valid_our, "BL-st"]
+        )
+        valid_pap = (piv_paper_k["BL-st"] > 0) & (piv_paper_c["BL-st"] > 0) & (piv_paper_c[method] > 0)
+        vals_pap = (piv_paper_k.loc[valid_pap, method] / piv_paper_k.loc[valid_pap, "BL-st"]) / (
+            piv_paper_c.loc[valid_pap, method] / piv_paper_c.loc[valid_pap, "BL-st"]
+        )
+        our_eq_stats[method] = (
+            round(float(vals_our.median()), 4),
+            round(float(vals_our.mean()), 4),
+            round(float(vals_our.quantile(0.75) - vals_our.quantile(0.25)), 4),
+        )
+        paper_eq_stats[method] = (
+            round(float(vals_pap.median()), 4),
+            round(float(vals_pap.mean()), 4),
+            round(float(vals_pap.quantile(0.75) - vals_pap.quantile(0.25)), 4),
+        )
+        for ds in piv_our_k.index:
+            o_val = float(vals_our[ds]) if ds in vals_our.index else np.nan
+            p_val = float(vals_pap[ds]) if ds in vals_pap.index else np.nan
+            eff_per_ds_rows.append(
+                {
+                    "Dataset": ds,
+                    "Method": method,
+                    "Our_Norm_Eff": round(o_val, 4) if not np.isnan(o_val) else np.nan,
+                    "Paper_Norm_Eff": round(p_val, 4) if not np.isnan(p_val) else np.nan,
+                }
+            )
+
+    eff_df["Our_Median_Eq1_3_Eff"] = [our_eq_stats[m][0] for m in eff_df["Method"]]
+    eff_df["Our_Mean_Eq1_3_Eff"] = [our_eq_stats[m][1] for m in eff_df["Method"]]
+    eff_df["Our_IQR_Eq1_3_Eff"] = [our_eq_stats[m][2] for m in eff_df["Method"]]
+    eff_df["Paper_Median_Eq1_3_Eff"] = [paper_eq_stats[m][0] for m in eff_df["Method"]]
+    eff_df["Paper_Mean_Eq1_3_Eff"] = [paper_eq_stats[m][1] for m in eff_df["Method"]]
+
+    # Lưu kèm thuộc tính trên return qua DataFrame attribute hoặc trả về 2 DF như cũ (giữ tương thích API)
+    eff_df.attrs["per_dataset_eq1_3"] = pd.DataFrame(eff_per_ds_rows)
     return bayes_df, eff_df
 
 
-def plot_bayesian_figs_11_12(bayes_df: pd.DataFrame, out_path: Path) -> None:
-    """Vẽ Fig. 11 (Kappa) & Fig. 12 (Labeling Cost) so sánh Bayesian posterior Our vs Paper."""
-    fig, axes = plt.subplots(2, 2, figsize=(13.5, 9.5), dpi=160, sharex=True)
-    panels = [
-        (0, 0, "Our", "Kappa", "Fig. 11A · Our Reproduction: Predictive Kappa (ROPE=5%)"),
-        (0, 1, "Paper", "Kappa", "Fig. 11B · Paper Reference: Predictive Kappa (ROPE=5%)"),
-        (1, 0, "Our", "Cost", "Fig. 12A · Our Reproduction: Labeling Cost Reduction (ROPE=5%)"),
-        (1, 1, "Paper", "Cost", "Fig. 12B · Paper Reference: Labeling Cost Reduction (ROPE=5%)"),
-    ]
+def plot_single_bayesian_panel(
+    bayes_df: pd.DataFrame,
+    metric: str,
+    title: str,
+    xlabel: str,
+    out_path: Path,
+) -> None:
+    """Vẽ biểu đồ Bayesian Sign Test đứng độc lập cho phần tái hiện 19 bộ (Fig. 11 hoặc Fig. 12)."""
+    sub = bayes_df[(bayes_df["Source"] == "Our") & (bayes_df["Metric"] == metric)].set_index("Baseline")
+    sub = sub.loc[list(BASELINES)]
 
-    for r_idx, c_idx, src, metric, title in panels:
-        ax = axes[r_idx, c_idx]
-        sub = bayes_df[(bayes_df["Source"] == src) & (bayes_df["Metric"] == metric)].set_index("Baseline")
-        sub = sub.loc[list(BASELINES)]
+    fig, ax = plt.subplots(figsize=(8.8, 5.2), dpi=200)
+    y_pos = np.arange(len(BASELINES))
+    p_win = sub["Simplex_P_Win"].to_numpy()
+    p_rope = sub["Simplex_P_ROPE"].to_numpy()
+    p_lose = sub["Simplex_P_Lose"].to_numpy()
 
-        y_pos = np.arange(len(BASELINES))
-        p_win = sub["Simplex_P_Win"].to_numpy()
-        p_rope = sub["Simplex_P_ROPE"].to_numpy()
-        p_lose = sub["Simplex_P_Lose"].to_numpy()
+    ax.barh(y_pos, p_win, height=0.64, color="#16a34a", alpha=0.90, label="P(STUDD > Baseline)")
+    ax.barh(y_pos, p_rope, left=p_win, height=0.64, color="#cbd5e1", alpha=0.96, label="P(ROPE |diff| <= 5%)")
+    ax.barh(y_pos, p_lose, left=p_win + p_rope, height=0.64, color="#dc2626", alpha=0.88, label="P(STUDD < Baseline)")
 
-        ax.barh(y_pos, p_win, color="#16a34a", alpha=0.88, label="P(STUDD > Baseline)")
-        ax.barh(y_pos, p_rope, left=p_win, color="#cbd5e1", alpha=0.95, label="P(ROPE |diff|<=5%)")
-        ax.barh(y_pos, p_lose, left=p_win + p_rope, color="#dc2626", alpha=0.85, label="P(STUDD < Baseline)")
+    for i, base in enumerate(BASELINES):
+        for val, left, txt_col in (
+            (p_win[i], 0.0, "white"),
+            (p_rope[i], p_win[i], "#1e293b"),
+            (p_lose[i], p_win[i] + p_rope[i], "white"),
+        ):
+            if val >= 0.13:
+                ax.text(
+                    left + val / 2.0,
+                    i,
+                    f"{100.0 * val:.0f}%",
+                    va="center",
+                    ha="center",
+                    fontsize=8.5,
+                    fontweight="bold",
+                    color=txt_col,
+                )
+        w_cnt = int(sub.loc[base, "n_win"])
+        r_cnt = int(sub.loc[base, "n_rope"])
+        l_cnt = int(sub.loc[base, "n_lose"])
+        ax.text(
+            1.02,
+            i,
+            f"W/T/L = {w_cnt}/{r_cnt}/{l_cnt}  (P_win={p_win[i]:.2f})",
+            va="center",
+            ha="left",
+            fontsize=8.8,
+            color="#111827",
+        )
 
-        for i, base in enumerate(BASELINES):
-            w_cnt = int(sub.loc[base, "n_win"])
-            r_cnt = int(sub.loc[base, "n_rope"])
-            l_cnt = int(sub.loc[base, "n_lose"])
-            ax.text(
-                1.02,
-                i,
-                f"W/T/L={w_cnt}/{r_cnt}/{l_cnt} ({p_win[i]:.2f})",
-                va="center",
-                ha="left",
-                fontsize=8.0,
-                color="#1f2937",
-            )
+    ax.set_yticks(y_pos)
+    ax.set_yticklabels([f"STUDD vs {b}" for b in BASELINES], fontsize=9.8, fontweight="bold")
+    ax.invert_yaxis()
+    ax.set_xlim(0.0, 1.42)
+    ax.set_xticks([0.0, 0.25, 0.50, 0.75, 1.00])
+    ax.set_xticklabels(["0%", "25%", "50%", "75%", "100%"], fontsize=9.2)
+    ax.axvline(0.5, color="#334155", linestyle="--", linewidth=1.0, alpha=0.75)
+    ax.set_xlabel(xlabel, fontsize=9.8, fontweight="bold")
+    ax.set_title(title, fontsize=11.5, fontweight="bold", pad=10)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.legend(loc="lower center", bbox_to_anchor=(0.45, -0.22), ncol=3, frameon=False, fontsize=9.2)
 
-        ax.set_yticks(y_pos)
-        ax.set_yticklabels([f"vs {b}" for b in BASELINES], fontsize=9)
-        ax.invert_yaxis()
-        ax.set_xlim(0.0, 1.38)
-        ax.set_xticks([0.0, 0.25, 0.5, 0.75, 1.0])
-        ax.axvline(0.5, color="#334155", linestyle="--", linewidth=0.9, alpha=0.7)
-        ax.set_title(title, fontsize=10.5, fontweight="bold")
-        if r_idx == 1:
-            ax.set_xlabel("Bayesian Sign Test Simplex Probability (50,000 Dirichlet draws)", fontsize=9)
-
-    handles, labels = axes[0, 0].get_legend_handles_labels()
-    fig.legend(handles, labels, loc="lower center", ncol=3, frameon=False, fontsize=9.5, bbox_to_anchor=(0.5, -0.01))
-    fig.suptitle(
-        f"Bayesian Sign Test Across 19 Datasets (Benavoli et al. ROPE=+/-5%, RNG Seed={SEED_RNG})",
-        fontsize=12.5,
-        fontweight="bold",
-        y=0.99,
-    )
-    plt.tight_layout(rect=[0, 0.03, 1, 0.96])
+    plt.tight_layout()
     fig.savefig(out_path, bbox_inches="tight")
     plt.close(fig)
 
 
-def plot_label_efficiency_fig13(eff_df: pd.DataFrame, out_path: Path) -> None:
-    """Vẽ Fig. 13: Hiệu suất sử dụng nhãn (Mean Labeling Cost vs Mean Kappa) + đường biên Pareto."""
+def plot_label_efficiency_boxplot_fig13(eff_per_ds: pd.DataFrame, out_path: Path) -> None:
+    """Vẽ Fig. 13 đúng chuẩn bài báo: Boxplot phân phối Labeling Efficiency (Eq. 1-3) trên 19 bộ."""
+    medians = eff_per_ds.groupby("Method")["Our_Norm_Eff"].median().sort_values(ascending=False)
+    ordered_methods = list(medians.index)
+    data_list = [eff_per_ds.loc[eff_per_ds["Method"] == m, "Our_Norm_Eff"].dropna().to_numpy() for m in ordered_methods]
+
+    fig, ax = plt.subplots(figsize=(9.6, 5.4), dpi=200)
+    bp = ax.boxplot(
+        data_list,
+        positions=np.arange(len(ordered_methods)),
+        widths=0.52,
+        patch_artist=True,
+        showfliers=False,
+        medianprops={"linewidth": 2.2},
+        whiskerprops={"linewidth": 1.2, "color": "#475569"},
+        capprops={"linewidth": 1.2, "color": "#475569"},
+    )
+
+    rng = np.random.default_rng(SEED_RNG)
+    for idx, m in enumerate(ordered_methods):
+        box = bp["boxes"][idx]
+        med_line = bp["medians"][idx]
+        is_studd = m == "STUDD"
+        box.set_facecolor("#fecaca" if is_studd else "#dbeafe")
+        box.set_edgecolor("#dc2626" if is_studd else "#2563eb")
+        box.set_linewidth(2.0 if is_studd else 1.2)
+        med_line.set_color("#991b1b" if is_studd else "#1e3a8a")
+
+        pts = data_list[idx]
+        jitter = rng.uniform(-0.14, 0.14, size=len(pts))
+        ax.scatter(
+            np.full(len(pts), idx) + jitter,
+            pts,
+            s=20,
+            alpha=0.62,
+            color="#b91c1c" if is_studd else "#1d4ed8",
+            zorder=4,
+            edgecolors="none",
+        )
+        med_val = float(np.median(pts))
+        q75 = float(np.percentile(pts, 75))
+        ax.text(
+            idx,
+            max(q75, float(np.max(pts))) + 0.045,
+            f"med={med_val:.2f}",
+            ha="center",
+            va="bottom",
+            fontsize=7.8,
+            fontweight="bold" if is_studd else "normal",
+            color="#991b1b" if is_studd else "#1e293b",
+        )
+
+    ax.axhline(1.0, color="#64748b", linestyle="--", linewidth=1.2, alpha=0.8, label="BL-st Baseline Ratio (1.0)")
+    ax.set_xticks(np.arange(len(ordered_methods)))
+    ax.set_xticklabels(ordered_methods, fontsize=10, fontweight="bold")
+    for tick, m in zip(ax.get_xticklabels(), ordered_methods):
+        if m == "STUDD":
+            tick.set_color("#b91c1c")
+    ax.set_ylim(-0.04, max(float(eff_per_ds["Our_Norm_Eff"].max()) + 0.18, 1.65))
+    ax.set_ylabel("Normalized Labeling Efficiency (Eq. 1–3)", fontsize=10, fontweight="bold")
+    ax.set_xlabel("Method (sorted descending by 19-dataset median)", fontsize=9.8, fontweight="bold")
+    ax.set_title(
+        "Section 5.8.4 / Fig. 13: Distribution of Labeling Efficiency Across 19 Datasets",
+        fontsize=11.5,
+        fontweight="bold",
+        pad=10,
+    )
+    ax.grid(True, axis="y", linestyle=":", alpha=0.55)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
+    ax.legend(loc="upper right", fontsize=8.8)
+
+    plt.tight_layout()
+    fig.savefig(out_path, bbox_inches="tight")
+    plt.close(fig)
+
+
+def plot_pareto_efficiency_fig13b(eff_df: pd.DataFrame, out_path: Path) -> None:
+    """Vẽ Fig. 13b (phụ trợ): Mean Labeling Cost vs Mean Kappa + đường biên Pareto."""
     fig, axes = plt.subplots(1, 2, figsize=(13.2, 5.8), dpi=160, sharex=True, sharey=True)
     specs = [
-        (0, "Our_Mean_Cost", "Our_Mean_Kappa", "Our_Pareto_Optimal", "Fig. 13A · Our 19-Dataset Reproduction"),
-        (1, "Paper_Mean_Cost", "Paper_Mean_Kappa", "Paper_Pareto_Optimal", "Fig. 13B · Paper Reference (Tables 3-4)"),
+        (0, "Our_Mean_Cost", "Our_Mean_Kappa", "Our_Pareto_Optimal", "Our 19-Dataset Reproduction"),
+        (1, "Paper_Mean_Cost", "Paper_Mean_Kappa", "Paper_Pareto_Optimal", "Paper Reference (Tables 3-4)"),
     ]
 
     for idx, cost_col, kappa_col, pareto_col, title in specs:
@@ -317,7 +450,7 @@ def plot_label_efficiency_fig13(eff_df: pd.DataFrame, out_path: Path) -> None:
         ax.set_ylim(0.45, 0.72)
 
     fig.suptitle(
-        "Section 5.7.1 / Fig. 13: Labeling Efficiency Across All 19 Benchmarks (Top-Left = Pareto Ideal)",
+        "Supplementary (Fig. 13b): Kappa–Cost Pareto Frontier Across 19 Benchmarks",
         fontsize=12.5,
         fontweight="bold",
         y=0.99,
@@ -337,13 +470,33 @@ def main() -> None:
 
     bayes_csv = RESULTS_DIR / "bayesian_sign_test_summary.csv"
     eff_csv = RESULTS_DIR / "label_efficiency_19datasets.csv"
-    fig_bayes = RESULTS_DIR / "fig11_12_bayesian_sign_test.png"
-    fig_eff = RESULTS_DIR / "fig13_label_efficiency.png"
+    eff_per_ds_csv = RESULTS_DIR / "label_efficiency_per_dataset_eq1_3.csv"
+    fig11_path = RESULTS_DIR / "fig11_bayesian_kappa.png"
+    fig12_path = RESULTS_DIR / "fig12_bayesian_cost.png"
+    fig13_path = RESULTS_DIR / "fig13_label_efficiency.png"
+    fig13b_path = RESULTS_DIR / "fig13b_pareto_efficiency.png"
 
+    eff_per_ds = eff_df.attrs["per_dataset_eq1_3"]
     bayes_df.to_csv(bayes_csv, index=False)
     eff_df.to_csv(eff_csv, index=False)
-    plot_bayesian_figs_11_12(bayes_df, fig_bayes)
-    plot_label_efficiency_fig13(eff_df, fig_eff)
+    eff_per_ds.to_csv(eff_per_ds_csv, index=False)
+
+    plot_single_bayesian_panel(
+        bayes_df,
+        "Kappa",
+        f"Fig. 11 · Bayesian Sign Test: Predictive Kappa Across 19 Datasets (ROPE = ±5%, RNG = {SEED_RNG})",
+        "Bayesian Sign Test Simplex Probability (50,000 Dirichlet draws)",
+        fig11_path,
+    )
+    plot_single_bayesian_panel(
+        bayes_df,
+        "Cost",
+        f"Fig. 12 · Bayesian Sign Test: Labeling Cost Reduction Across 19 Datasets (ROPE = ±5%, RNG = {SEED_RNG})",
+        "Bayesian Sign Test Simplex Probability (50,000 Dirichlet draws)",
+        fig12_path,
+    )
+    plot_label_efficiency_boxplot_fig13(eff_per_ds, fig13_path)
+    plot_pareto_efficiency_fig13b(eff_df, fig13b_path)
 
     print("=== LABELING EFFICIENCY (19 DATASETS) ===")
     print(
@@ -351,11 +504,10 @@ def main() -> None:
             [
                 "Method",
                 "Our_Mean_Kappa",
-                "Paper_Mean_Kappa",
                 "Our_Mean_Cost",
-                "Paper_Mean_Cost",
                 "Our_Kappa_per_Cost",
-                "Paper_Kappa_per_Cost",
+                "Our_Median_Eq1_3_Eff",
+                "Our_Mean_Eq1_3_Eff",
                 "Our_Pareto_Optimal",
             ]
         ].to_string(index=False)
@@ -394,6 +546,8 @@ def main() -> None:
             "studd_paper_mean_cost": float(studd_row["Paper_Mean_Cost"]),
             "studd_our_kappa_per_cost": float(studd_row["Our_Kappa_per_Cost"]),
             "studd_paper_kappa_per_cost": float(studd_row["Paper_Kappa_per_Cost"]),
+            "studd_our_median_eq1_3_eff": float(studd_row["Our_Median_Eq1_3_Eff"]),
+            "studd_our_mean_eq1_3_eff": float(studd_row["Our_Mean_Eq1_3_Eff"]),
             "bayes_our_kappa_p_win_vs_ss": round(ss_k_our, 4),
             "bayes_our_cost_p_win_vs_ss": round(ss_c_our, 4),
             "seed_rng": SEED_RNG,
@@ -401,10 +555,13 @@ def main() -> None:
         tables={
             "bayesian_sign_test_summary": bayes_df,
             "label_efficiency_19datasets": eff_df,
+            "label_efficiency_per_dataset_eq1_3": eff_per_ds,
         },
         images={
-            "fig11_12_bayesian_sign_test": fig_bayes,
-            "fig13_label_efficiency": fig_eff,
+            "fig11_bayesian_kappa": fig11_path,
+            "fig12_bayesian_cost": fig12_path,
+            "fig13_label_efficiency": fig13_path,
+            "fig13b_pareto_efficiency": fig13b_path,
         },
         enabled=not args.no_wandb,
     )
