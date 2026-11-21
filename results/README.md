@@ -76,11 +76,21 @@ Bảng sau minh bạch hóa các khác biệt kỹ thuật giữa 3 nhánh thự
   - Tái lập đầy đủ **19 bộ dữ liệu × 10 phương pháp = 190 kết quả** đối chiếu Bảng 3 (Cohen's Kappa) và Bảng 4 (Labeling Cost), đồng bộ log thực nghiệm trên W&B.
   - Tái hiện **Hình 10** (biểu đồ Average Rank đánh đổi Hiệu năng vs. Chi phí nhãn trên toàn bộ 19 bộ dữ liệu).
   - Đánh giá các độ đo cảnh báo (`MDR`, `FAR`, `MTD`, `MTFA`) và `Labeling_Efficiency` cho 6 bộ dữ liệu của Đạt (`dat_6datasets_alarm_summary.csv`), cùng chuỗi đồ thị Rolling Kappa (đối chiếu Hình 7–9) cho 7 bộ của Khánh.
-- **Kế hoạch mở rộng cho Giai đoạn 3 (Báo cáo cuối kỳ / Poster phản biện):**
-  - Tính đầy đủ **Bảng 5 (`MDR`, `FAR`, `MTD`, `MTFA`)** và **Labeling Efficiency** thống nhất trên toàn bộ cả 19 bộ dữ liệu.
-  - Thực hiện kiểm định thống kê **Bayesian Sign Test** (tái hiện Hình 11–12 của bài báo) trên cả 19 bộ dữ liệu.
-  - Thực hiện **Sensitivity Analysis** theo lưới tham số `l_access × l_delay` cho câu hỏi nghiên cứu **RQ3**.
-  - Chạy đa hạt giống (**multi-seed runs**) và tái chạy đồng nhất cả 19 bộ trên bộ phát hiện `PageHinkley` đã sửa và tách seed Teacher/Student nhằm kiểm chứng sâu *Idempotent Mimicry Trap* (Stress Testing).
+- **Đã hoàn tất mở rộng Full Scope trên đủ 19 bộ dữ liệu (nhánh `full-scope-reproduction`):**
+  - **Minh bạch Hạt giống (Seed Audit):**
+    | Phiên chạy / Nhánh | Teacher Seed | Student Seed | RNG / Mask Seed | Ghi chú kỹ thuật |
+    |---|---:|---:|---:|---|
+    | **Khoa (lưu trữ Kaggle `Testing`)** | `42` | `42` | `42` | Cấu hình lưu trữ ban đầu trước tách seed → `RF/RF` trên `InsectsAbrupt` trùng 100% cây nên `0` cảnh báo |
+    | **Khoa (notebook đã cập nhật)** | `42` | `142` | `42` | Tách `seed + 100` được khóa bởi `Test 4` trong `tests/test_studd_main_fixes.py` |
+    | **Khánh (7 bộ)** | `42` | `142` *(hoặc `42` trên cùng họ)* | `42` | Riêng `Bike` (`XGB/RF`) là khác họ mô hình |
+    | **Đạt (6 bộ)** | `42` | `142` | `42` | Đã tách `Teacher=42`, `Student=142` |
+    | **Full Scope Suite (nhánh hiện tại)** | **`42`** | **`142`** | **`42`** | Áp dụng đồng nhất 100% cho Commits 2–6 trên đủ 19 bộ |
+  - **5 Run W&B tổng hợp Full Scope (`https://wandb.ai/lgkai-hcmus/STUDD`):**
+    1. **Mục 5.6.2 Table 2 Selection (70/30 Validation):** [`runs/5t33q8ec`](https://wandb.ai/lgkai-hcmus/STUDD/runs/5t33q8ec) — Teacher khớp trực tiếp `7/19` (`8/19` tính cả hòa `Keystroke=0.9556`), Student khớp **`14/19`** khi cố định Teacher của Bảng 2 (`table2_selection_verification.csv`).
+    2. **Bayesian Sign Test (Hình 11–12) & Labeling Efficiency (Hình 13):** [`runs/7m7nlw0g`](https://wandb.ai/lgkai-hcmus/STUDD/runs/7m7nlw0g) — `STUDD` đứng Pareto-optimal với Mean Kappa `0.5002` (Paper `0.5174`, `-3.32%`), Mean Cost `0.2523` (Paper `0.2195`), tỷ suất `Kappa/Cost = 1.9821` (#1 trong nhóm thích nghi); xác suất Bayesian thắng giảm chi phí `P = 0.9687` trước `SS/DSS` và `1.0000` trước `BL-ret`.
+    3. **Bảng 5 Cảnh báo (15/19 bộ có báo động `SS`) & Chuẩn hóa Hình 7–8:** [`runs/he47zwzd`](https://wandb.ai/lgkai-hcmus/STUDD/runs/he47zwzd) — `STUDD` giữ `FAR = 0.0000` (khớp tuyệt đối Paper `0.00`), `MDR = 0.4000` (do `InsectsAbrupt/Arabic` lưu trữ ở phiên `42/42`); khi chuẩn hóa `42/142`, Fig. 7 `InsectsAbrupt` đạt **`0.7788`** (1 cảnh báo `[2105]`, vượt Paper `0.73`), Fig. 8 `Posture` đạt **`0.4688`** (10 cảnh báo).
+    4. **Mục 5.8.5 Sensitivity `l_access × l_delay` (Hình 14, RQ3):** [`runs/qr4t9aym`](https://wandb.ai/lgkai-hcmus/STUDD/runs/qr4t9aym) — Dưới chuẩn đồng nhất (`T=42/S=142`, fixed PH), `STUDD` đạt **Mean Kappa `0.5166`** *(lệch `-0.15%` so với Paper `0.5174`)*, vượt trung bình trên **`20/24` ô lưới**, với `Bayes P(STUDD >= S) = 0.959–0.998` tại `l_access <= 10%` và `0.815–0.966` tại `l_access = 50%, l_delay >= 1000`.
+    5. **Đối chiếu Protocol A (Paper-Text) vs Protocol B (Author-Code) & Ablation Seed/Detector:** [`runs/yiouyosl`](https://wandb.ai/lgkai-hcmus/STUDD/runs/yiouyosl) — Xác nhận `Protocol B (W=1000, cumulative Student)` tái lập sát chi phí Paper (`Powersupply Cost 0.07 = 0.07`, `Electricity Cost 0.46 ≈ 0.43`, `Posture Cost 0.05 ≈ 0.02`); tách seed `42->142` gỡ bẫy cho `InsectsAbrupt` (`0.5770 -> 0.7788`) nhưng không đủ cho `XGB/XGB` hoặc `DT/DT`; fixed `PageHinkley max(0)` khôi phục Kappa `Sensors` từ `0.2684` lên **`0.5526`**.
 
 ---
 

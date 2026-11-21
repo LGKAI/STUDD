@@ -74,14 +74,21 @@ Project1_STUDD/
 │   ├── plot_19datasets_rank.py       # Vẽ biểu đồ Average Rank (Hình 10) trên 19 bộ dữ liệu
 │   ├── build_khoa_kaggle_notebooks.py # Đóng gói notebook Kaggle của Khoa
 │   ├── reproduce_khoa_6datasets.py   # Chạy và đồng bộ 6 bộ của Khoa
+│   ├── fullscope_wandb.py            # Chuẩn hóa W&B URL & manifest cho bộ Full Scope
+│   ├── verify_table2_selection.py    # Kiểm chứng chọn thuật toán 70/30 Bảng 2 trên 19 bộ
+│   ├── analyze_19datasets_full.py    # Bayesian Sign Test (Hình 11-12) & Efficiency (Hình 13)
+│   ├── extract_full_alarms_and_figs.py # Tổng hợp Bảng 5 cảnh báo 19 bộ & Hình 7-8
+│   ├── run_sensitivity_rq3.py        # Quét lưới l_access × l_delay (Hình 14, RQ3)
+│   ├── compare_original_code_protocols.py # Đối chiếu Protocol A/B & ablation seed/detector
 │   └── stress_test.py                # Kịch bản kiểm thử chịu tải và phản biện lý thuyết
-├── notebooks/                        # Notebook thực nghiệm của Khoa và hướng dẫn
+├── notebooks/                        # Notebook tổng hợp Full Scope & các notebook của Khoa
 ├── results/                          # Bảng CSV kết quả, report chung và biểu đồ 300 DPI
 │   ├── README.md                     # Report tổng hợp & phân tích độ lệch 19 bộ dữ liệu
 │   ├── studd_19datasets_summary.csv  # Bảng tổng hợp 190 kết quả (19 bộ × 10 phương pháp)
 │   └── fig_19datasets_rank_plot.png  # Biểu đồ Average Rank (Hình 10) trên 19 bộ dữ liệu
-├── tests/                            # Kiểm thử tự động xác minh các bản vá cốt lõi
-│   └── test_studd_main_fixes.py      # Bộ kiểm thử tích hợp cho nhánh main
+├── tests/                            # Kiểm thử tự động xác minh các bản vá cốt lõi & Full Scope
+│   ├── test_studd_main_fixes.py      # Bộ kiểm thử tích hợp cho nhánh main (7 tests)
+│   └── test_full_scope_analytics.py  # Bộ kiểm thử Full Scope Analytics, Bảng 5 & RQ3 (5 tests)
 ├── docs/                             # Bài báo gốc STUDD và báo cáo kiểm tra 19 bộ dữ liệu
 ├── .gitignore                        # Cấu hình bỏ qua môi trường ảo, cache nặng và tài liệu nháp
 ├── requirements.txt                  # Thư viện cho các script thực nghiệm
@@ -163,6 +170,17 @@ python src/baselines.py
   kaggle kernels push -p /tmp/khoa-kaggle-ten/insects-abrupt
   ```
   Xem [hướng dẫn Kaggle](notebooks/README.md), [đồng bộ W&B](experiments/README.md) và [report của Khoa](results/khoa/README.md). Arabic và ArabicShuffled cần quyền truy cập Kaggle Dataset riêng tư.
+
+* **Chạy bộ phân tích Full Scope trên đủ 19 bộ dữ liệu (Seed `Teacher=42`, `Student=142`, `RNG=42`):**
+  ```powershell
+  python experiments/verify_table2_selection.py
+  python experiments/analyze_19datasets_full.py
+  python experiments/extract_full_alarms_and_figs.py
+  python experiments/run_sensitivity_rq3.py --resume
+  python experiments/compare_original_code_protocols.py
+  python -m unittest discover -s tests -v
+  ```
+  Xem notebook tổng hợp đã thực thi tại [notebooks/STUDD_Full_Scope_Reproduction.ipynb](notebooks/STUDD_Full_Scope_Reproduction.ipynb).
 
 ---
 
