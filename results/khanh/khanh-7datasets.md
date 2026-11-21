@@ -4,8 +4,8 @@
 * **Nhánh thực nghiệm:** `khanh-7datasets`
 * **7 bộ dữ liệu phụ trách:** `Bike` (chạy trước), `Luxembourg`, `Outdoor`, `Rialto`, `Gas`, `Ozone`, `GMSC`
 * **Tổng số lượt chạy mô hình:** **70 runs** (7 bộ dữ liệu × đầy đủ 10 phương pháp chuẩn bài báo: `BL-st`, `BL-ret`, `STUDD`, `SS`, `DSS`, `WS`, `DWS`, `OS`, `OF`, `FF`)
-* **Dashboard Weights & Biases (W&B) chung của nhóm:** https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD
-* **W&B Run Tổng hợp cả 70 runs của Khánh:** https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/tekuwx8d
+* **Dashboard Weights & Biases (W&B) chung của nhóm:** https://wandb.ai/lgkai-hcmus/STUDD
+* **W&B Run Tổng hợp cả 70 runs của Khánh:** https://wandb.ai/lgkai-hcmus/STUDD/runs/tekuwx8d
 
 ---
 
@@ -51,13 +51,13 @@ Tất cả 10 phương pháp đều chạy từng bước mẫu một (`step = 1
 
 | Bộ dữ liệu | Teacher / Student | `W` | `Our_Kappa` (`STUDD`) | `Paper_Kappa` (Bảng 3) | Độ lệch `Kappa_Diff` | `Our_Cost_W` | `Our_Cost_1000` | `Paper_Cost` (Bảng 4) | Alarms | Thời điểm báo động (`t`) | Link W&B Run |
 | :--- | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :-: | :--- | :--- |
-| **Bike** | `XGB` / `RF` | 2000 | **`0.3175`** (`≈0.32`) | **`0.32`** | **`-0.0025`** | `0.2086` | `0.1151` | `0.06` | **1** | `[3625]` | [z7gwi104](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/z7gwi104) |
-| **Luxembourg** | `RF` / `RF` | 500 | **`1.0000`** | **`1.00`** | **`0.0000`** | `0.2630` | `0.2630` | `0.53` | **0** | `[]` | [270g3uw7](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/270g3uw7) |
-| **Outdoor** | `RF` / `RF` | 500 | **`0.3736`** | **`0.36`** | **`+0.0136`** | **`0.2500`** | **`0.2500`** | **`0.25`** | **1** | `[2513]` | [0putgi2v](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/0putgi2v) |
-| **Rialto** | `XGB` / `XGB` | 2000 | **`0.3953`** | **`0.38`** | **`+0.0153`** | `0.0434` | `0.0243` | `0.21` | **1** | `[3565]` | [sufuaw3n](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/sufuaw3n) |
-| **Gas** | `RC` / `RC` | 2000 | `0.7173` | `0.48` | `+0.2373` | **`0.8627`** | `0.4313` | **`0.86`** | **5** | `[6815, 7282, 9187, 10284, 13577]` | [7jfppc33](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/7jfppc33) |
-| **Ozone** | `XGB` / `XGB` | 500 | `0.2202` | `0.13` | `+0.0902` | `0.2707` | `0.2707` | `0.39` | **0** | `[]` | [lngaqacb](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/lngaqacb) |
-| **GMSC** | `XGB` / `XGB` | 2000 | `0.1940` | `0.32` | `-0.1260` | **`0.0133`** (`≈0.01`) | **`0.0067`** (`≈0.01`) | **`0.01`** | **0** | `[]` | [o3l912e1](https://forge.coreweave.com/wandb/lgkai-hcmus/STUDD/runs/o3l912e1) |
+| **Bike** | `XGB` / `RF` | 2000 | **`0.3175`** (`≈0.32`) | **`0.32`** | **`-0.0025`** | `0.2086` | `0.1151` | `0.06` | **1** | `[3625]` | [z7gwi104](https://wandb.ai/lgkai-hcmus/STUDD/runs/z7gwi104) |
+| **Luxembourg** | `RF` / `RF` | 500 | **`1.0000`** | **`1.00`** | **`0.0000`** | `0.2630` | `0.2630` | `0.53` | **0** | `[]` | [270g3uw7](https://wandb.ai/lgkai-hcmus/STUDD/runs/270g3uw7) |
+| **Outdoor** | `RF` / `RF` | 500 | **`0.3736`** | **`0.36`** | **`+0.0136`** | **`0.2500`** | **`0.2500`** | **`0.25`** | **1** | `[2513]` | [0putgi2v](https://wandb.ai/lgkai-hcmus/STUDD/runs/0putgi2v) |
+| **Rialto** | `XGB` / `XGB` | 2000 | **`0.3953`** | **`0.38`** | **`+0.0153`** | `0.0434` | `0.0243` | `0.21` | **1** | `[3565]` | [sufuaw3n](https://wandb.ai/lgkai-hcmus/STUDD/runs/sufuaw3n) |
+| **Gas** | `RC` / `RC` | 2000 | `0.7173` | `0.48` | `+0.2373` | **`0.8627`** | `0.4313` | **`0.86`** | **5** | `[6815, 7282, 9187, 10284, 13577]` | [7jfppc33](https://wandb.ai/lgkai-hcmus/STUDD/runs/7jfppc33) |
+| **Ozone** | `XGB` / `XGB` | 500 | `0.2202` | `0.13` | `+0.0902` | `0.2707` | `0.2707` | `0.39` | **0** | `[]` | [lngaqacb](https://wandb.ai/lgkai-hcmus/STUDD/runs/lngaqacb) |
+| **GMSC** | `XGB` / `XGB` | 2000 | `0.1940` | `0.32` | `-0.1260` | **`0.0133`** (`≈0.01`) | **`0.0067`** (`≈0.01`) | **`0.01`** | **0** | `[]` | [o3l912e1](https://wandb.ai/lgkai-hcmus/STUDD/runs/o3l912e1) |
 
 ---
 
