@@ -301,7 +301,7 @@ def write_report(records):
         "",
         "| Thành viên (Số bộ) | Biến thể Page–Hinkley | `delta` cho nhóm giám sát (`SS/DSS/WS/DWS`) | Buffer tái huấn luyện Student (`STUDD`) | Công thức `Our_Cost` | Dự án W&B |",
         "| :--- | :--- | :---: | :--- | :--- | :--- |",
-        "| **Khoa** (6 bộ) | `src/detector.py` (nhánh Đạt): `PH = sum - min_sum`, `alpha = 0.9999` (bản lưu cũ chưa chặn dưới `0.0`) | `0.001` | Cửa sổ `W` mẫu gần nhất `[t-W+1 : t+1]` | `(W + W × Retrains) / N` | `lgkai-hcmus/Testing` |",
+        "| **Khoa** (6 bộ) | `src/detector.py` (nhánh Đạt): `PH = sum - min_sum`, `alpha = 0.9999` (bản lưu cũ chưa chặn dưới `0.0`) | `0.001` | Cửa sổ `W` mẫu gần nhất `[t-W+1 : t+1]` | `(W + W × Retrains) / N` | `lgkai-hcmus/STUDD` |",
         "| **Khánh** (7 bộ) | `SkMultiflowPageHinkley`: `sum = max(0.0, alpha * sum + (x - mean - delta))`, `alpha = 0.9999` | `0.002` (`STUDD`: `0.001`) | Buffer online tích lũy `X[W : t+1]` (`upd_std_model=True`) | `(W + samples_used_online) / N` *(kèm `Our_Cost_1000_Reported`)* | `lgkai-hcmus/STUDD` |",
         "| **Đạt** (6 bộ) | `src/detector.py`: `PH = sum - min_sum`, `alpha = 0.9999` (bản lưu cũ chưa chặn dưới `0.0`) | `0.001` | Cửa sổ `W` mẫu gần nhất `[t-W+1 : t+1]` | `(W + W × Retrains) / N` | `lgkai-hcmus/STUDD` |",
         "",
