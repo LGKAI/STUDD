@@ -83,6 +83,40 @@
         "seed_teacher": 42,
         "seed_student": 142
       }
+    },
+    "sensitivity_rq3": {
+      "run_name": "fullscope-sensitivity-rq3",
+      "run_id": "qr4t9aym",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/qr4t9aym",
+      "job_type": "sensitivity_analysis_rq3",
+      "config": {
+        "scope": "19_datasets_section_5_8_5",
+        "l_access_grid": [
+          0.01,
+          0.1,
+          0.25,
+          0.5
+        ],
+        "l_delay_grid": [
+          250,
+          500,
+          1000,
+          1500,
+          2000,
+          4000
+        ],
+        "seed_teacher": 42,
+        "seed_student": 142,
+        "seed_rng": 42
+      },
+      "summary": {
+        "grid_cells": 24,
+        "studd_mean_kappa": 0.5166,
+        "ss_mean_kappa": 0.5789,
+        "studd_outperforms_mean_cells": 20,
+        "seed_teacher": 42,
+        "seed_student": 142
+      }
     }
   }
 }
