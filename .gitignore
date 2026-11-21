@@ -30,12 +30,20 @@ data/openml_cache/
 # 7. File rác hệ điều hành
 .DS_Store
 Thumbs.db
-# 8. Tài liệu nội bộ & kế hoạch cá nhân (không push lên GitHub)
+# 8. Tài liệu nội bộ & kế hoạch cá nhân / khóa bí mật (không push lên GitHub)
+wandb_author_key
+Slide STUDD.pdf
+noi_dung_slide_giua_ky_STUDD.md
 docs/bao_cao_va_ke_hoach_thuc_nghiem_Dat.md
+docs/bao_cao_kiem_tra_slide_giua_ky_STUDD.md
+docs/ke_hoach_full_scope_va_commits_STUDD.md
+docs/noi_dung_slide_giua_ky_STUDD.md
 docs/index.md
 docs/reading.md
 docs/reproduction.md
 docs/selection.md
+docs/analysis.md
+docs/empirics.md
 docs/reading_vi.md
 docs/reproduction_vi.md
 # Dataset snapshot intentionally tracked on the data branch.

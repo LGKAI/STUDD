@@ -12,6 +12,12 @@ Thư mục `experiments/` chứa các kịch bản tái hiện thực nghiệm, 
 | `reproduce_khoa_6datasets.py` | Chạy và đồng bộ kết quả 10 phương pháp cho 6 bộ dữ liệu của Khoa lên Weights & Biases (`--publish`). |
 | `aggregate_studd_results.py` | Tổng hợp toàn bộ 190 kết quả (19 bộ × 10 phương pháp) thành `results/studd_19datasets_summary.csv` và tạo báo cáo đối chiếu `results/README.md`. |
 | `plot_19datasets_rank.py` | Vẽ biểu đồ Hình 10 (Average Rank Performance vs. Cost) trên cả 19 bộ dữ liệu, xuất `results/fig_19datasets_rank_plot.png`. |
+| `fullscope_wandb.py` | Chuẩn hóa URL W&B về `https://wandb.ai/...` và ghi manifest vào `results/fullscope_wandb_runs.json`. |
+| `verify_table2_selection.py` | Kiểm chứng chọn thuật toán 70/30 theo Mục 5.6.2 & Bảng 2 trên đủ 19 bộ (`Teacher=42, Student=142`). |
+| `analyze_19datasets_full.py` | Tính Bayesian Sign Test (`ROPE=±5%`, Hình 11–12) & Labeling Efficiency (Hình 13) trên 19 bộ. |
+| `extract_full_alarms_and_figs.py` | Trích xuất toàn bộ `alarm_indices` 19 bộ, tổng hợp **Bảng 5** (`MDR/FAR/MTD/MTFA`) & chuẩn hóa Hình 7–8. |
+| `run_sensitivity_rq3.py` | Quét lưới Mục 5.8.5 `l_access × l_delay` trên 19 bộ để trả lời **RQ3** & xuất Hình 14. |
+| `compare_original_code_protocols.py` | Đối chiếu có kiểm soát Protocol A (Paper-Text) vs Protocol B (Author-Code Audit) & ablation seed/detector. |
 | `reproduce.py` | Kịch bản tái hiện cơ bản trên 3 luồng chuẩn để kiểm tra nhanh pipeline. |
 | `stress_test.py` | Kịch bản kiểm thử chịu tải và phản biện lý thuyết (Lab 2). |
 
