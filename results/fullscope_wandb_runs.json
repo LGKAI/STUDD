@@ -56,6 +56,33 @@
         "bayes_our_cost_p_win_vs_ss": 0.9687,
         "seed_rng": 42
       }
+    },
+    "table5_alarms": {
+      "run_name": "fullscope-table5-alarms-and-figs7-8",
+      "run_id": "he47zwzd",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/he47zwzd",
+      "job_type": "table5_alarm_analysis",
+      "config": {
+        "scope": "19_datasets_alarm_analysis",
+        "seed_teacher": 42,
+        "seed_student": 142,
+        "delta": 0.001,
+        "ph_threshold": 50.0,
+        "ks_alpha": 0.001
+      },
+      "summary": {
+        "ss_alarmed_datasets_count": 15,
+        "studd_our_mdr": 0.4,
+        "studd_our_far": 0.0,
+        "studd_our_mtd": 0.1535,
+        "studd_total_alarms_all19": 122,
+        "fig7_insects_abrupt_studd_kappa": 0.7788,
+        "fig7_insects_abrupt_studd_alarms": 1,
+        "fig8_posture_studd_kappa": 0.4688,
+        "fig8_posture_studd_alarms": 10,
+        "seed_teacher": 42,
+        "seed_student": 142
+      }
     }
   }
 }
