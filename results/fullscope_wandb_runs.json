@@ -32,6 +32,30 @@
         "seed_teacher": 42,
         "seed_student": 142
       }
+    },
+    "bayesian_efficiency": {
+      "run_name": "fullscope-bayesian-and-efficiency",
+      "run_id": "7m7nlw0g",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/7m7nlw0g",
+      "job_type": "bayesian_and_efficiency",
+      "config": {
+        "scope": "19_datasets_10_methods",
+        "rope": 0.05,
+        "dirichlet_samples": 50000,
+        "prior_s": 1.0,
+        "seed_rng": 42
+      },
+      "summary": {
+        "studd_our_mean_kappa": 0.5002,
+        "studd_paper_mean_kappa": 0.5174,
+        "studd_our_mean_cost": 0.2523,
+        "studd_paper_mean_cost": 0.2195,
+        "studd_our_kappa_per_cost": 1.9821,
+        "studd_paper_kappa_per_cost": 2.3573,
+        "bayes_our_kappa_p_win_vs_ss": 0.0002,
+        "bayes_our_cost_p_win_vs_ss": 0.9687,
+        "seed_rng": 42
+      }
     }
   }
 }
