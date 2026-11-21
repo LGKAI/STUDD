@@ -117,6 +117,33 @@
         "seed_teacher": 42,
         "seed_student": 142
       }
+    },
+    "protocol_ablation": {
+      "run_name": "fullscope-protocol-ablation",
+      "run_id": "yiouyosl",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/yiouyosl",
+      "job_type": "protocol_comparison_ablation",
+      "config": {
+        "datasets": [
+          "CoverType",
+          "Poker",
+          "Powersupply",
+          "Electricity",
+          "Sensors",
+          "Posture",
+          "Insects",
+          "InsectsAbrupt"
+        ],
+        "seed_teacher": 42,
+        "seed_student": 142
+      },
+      "summary": {
+        "protoA_mean_kappa": 0.4881,
+        "protoB_mean_kappa": 0.4115,
+        "paper_mean_kappa": 0.5025,
+        "seed_teacher": 42,
+        "seed_student": 142
+      }
     }
   }
 }
