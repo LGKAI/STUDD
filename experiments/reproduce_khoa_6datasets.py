@@ -194,7 +194,7 @@ if __name__ == "__main__":
     parser.add_argument("--publish", metavar="DATASET", required=True)
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--entity", default="lgkai-hcmus")
-    parser.add_argument("--project", default="Testing")
+    parser.add_argument("--project", default="STUDD")
     parser.add_argument("--existing-run")
     args = parser.parse_args()
     publish_dataset(args.publish, args.output, entity=args.entity, project=args.project,

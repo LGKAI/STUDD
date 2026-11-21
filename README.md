@@ -48,7 +48,7 @@ Bài báo nghiên cứu đề xuất phương pháp **STUDD** (*A Student-Teache
 * **Giai đoạn 3:** Milestone 3 (Phản biện lý thuyết) + Lab 2 (Stress test thực nghiệm) ──► Nộp **POSTER CUỐI KỲ (50% điểm)**
   * **Sản phẩm nộp:** File `ID.pptx` (Poster workshop)
 * **Kỷ luật thực nghiệm (5% điểm):** Chất lượng repository GitHub và theo dõi thực nghiệm đầy đủ trên Weights & Biases (W&B)
-  * **W&B:** [STUDD](https://wandb.ai/lgkai-hcmus/STUDD) và [Testing](https://wandb.ai/lgkai-hcmus/Testing)
+  * **W&B:** [STUDD](https://wandb.ai/lgkai-hcmus/STUDD) (Run tổng hợp 19 bộ × 10 phương pháp: [`kg3far4d`](https://wandb.ai/lgkai-hcmus/STUDD/runs/kg3far4d))
 
 ---
 

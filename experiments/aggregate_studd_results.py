@@ -238,8 +238,9 @@ def write_report(records):
         "[CSV toàn bộ 190 kết quả](studd_19datasets_summary.csv) · "
         "[Bài báo STUDD, Bảng 3–4](https://doi.org/10.1007/s10994-022-06188-7)",
         "",
+        "- **Tổng hợp 19 bộ × 10 phương pháp (190 kết quả):** [run tổng hợp W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/kg3far4d).\n",
         "- **Khoa (6 bộ dữ liệu):** [Report và 60 kết quả](khoa/README.md), "
-        "[CSV 60 kết quả](khoa/khoa_6datasets_summary.csv), W&B [`lgkai-hcmus/Testing`](https://wandb.ai/lgkai-hcmus/Testing).",
+        "[CSV 60 kết quả](khoa/khoa_6datasets_summary.csv), W&B [`lgkai-hcmus/STUDD`](https://wandb.ai/lgkai-hcmus/STUDD).",
         "- **Khánh (7 bộ dữ liệu):** [Report và 70 kết quả](khanh/khanh-7datasets.md), "
         "[CSV 70 kết quả](khanh/khanh_7datasets_summary.csv), "
         f"[run tổng hợp W&B]({KHANH_SUMMARY_RUN_URL}).",

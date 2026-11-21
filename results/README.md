@@ -2,7 +2,9 @@
 
 Bảng tổng hợp lưu trữ **190 kết quả**, gồm **19 bộ dữ liệu × 10 phương pháp** từ ba nhánh thực nghiệm của nhóm. Toàn bộ số liệu đo lường gốc (`Our_Kappa`, `Our_Accuracy`, `Our_Cost`, `Paper_Kappa`, `Paper_Cost`) được bảo toàn nguyên vẹn theo đúng nguồn lưu trữ. [CSV toàn bộ 190 kết quả](studd_19datasets_summary.csv) · [Bài báo STUDD, Bảng 3–4](https://doi.org/10.1007/s10994-022-06188-7)
 
-- **Khoa (6 bộ dữ liệu):** [Report và 60 kết quả](khoa/README.md), [CSV 60 kết quả](khoa/khoa_6datasets_summary.csv), W&B [`lgkai-hcmus/Testing`](https://wandb.ai/lgkai-hcmus/Testing).
+- **Tổng hợp 19 bộ × 10 phương pháp (190 kết quả):** [run tổng hợp W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/kg3far4d).
+
+- **Khoa (6 bộ dữ liệu):** [Report và 60 kết quả](khoa/README.md), [CSV 60 kết quả](khoa/khoa_6datasets_summary.csv), W&B [`lgkai-hcmus/STUDD`](https://wandb.ai/lgkai-hcmus/STUDD).
 - **Khánh (7 bộ dữ liệu):** [Report và 70 kết quả](khanh/khanh-7datasets.md), [CSV 70 kết quả](khanh/khanh_7datasets_summary.csv), [run tổng hợp W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/tekuwx8d).
 - **Đạt (6 bộ dữ liệu):** [CSV 60 kết quả](dat_6datasets_summary.csv), [thống kê cảnh báo MDR/FAR/MTD/MTFA](dat_6datasets_alarm_summary.csv) và [run tổng hợp W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/iuigzb01).
 
@@ -10,12 +12,12 @@ Bảng tổng hợp lưu trữ **190 kết quả**, gồm **19 bộ dữ liệu 
 
 | Dataset | Người chạy | Teacher / Student | N | W | Kappa nhóm / paper | Chi phí nhãn nhóm / paper | Cảnh báo | Nguồn |
 | --- | --- | :---: | ---: | ---: | ---: | ---: | ---: | --- |
-| Arabic | Khoa | XGB / XGB | 8800 | 2000 | 0.6441 / 0.71 | 0.2273 / 0.23 | 0 | [CSV](khoa/arabic_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/Testing/runs/50og8cwl) |
-| ArabicShuffled | Khoa | RF / RF | 8800 | 2000 | 0.8905 / 0.88 | 0.2273 / 0.11 | 0 | [CSV](khoa/arabic-shuffled_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/Testing/runs/zuq3ehd6) |
-| Insects | Khoa | XGB / XGB | 5325 | 500 | 0.8191 / 0.81 | 0.0939 / 0.09 | 0 | [CSV](khoa/insects_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/Testing/runs/dn36pykx) |
-| InsectsAbrupt | Khoa | RF / RF | 5325 | 500 | 0.5770 / 0.73 | 0.0939 / 0.28 | 0 | [CSV](khoa/insects-abrupt_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/Testing/runs/9ov2duqt) |
-| Keystroke | Khoa | XGB / RF | 1600 | 500 | 0.8861 / 0.84 | 0.3125 / 0.31 | 0 | [CSV](khoa/keystroke_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/Testing/runs/07yv50m5) |
-| Posture | Khoa | XGB / RF | 150000 | 2000 | 0.4724 / 0.50 | 0.1600 / 0.02 | 11 | [CSV](khoa/posture_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/Testing/runs/a3c5djlv) |
+| Arabic | Khoa | XGB / XGB | 8800 | 2000 | 0.6441 / 0.71 | 0.2273 / 0.23 | 0 | [CSV](khoa/arabic_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/bj3jcne9) |
+| ArabicShuffled | Khoa | RF / RF | 8800 | 2000 | 0.8905 / 0.88 | 0.2273 / 0.11 | 0 | [CSV](khoa/arabic-shuffled_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/dshyx0hx) |
+| Insects | Khoa | XGB / XGB | 5325 | 500 | 0.8191 / 0.81 | 0.0939 / 0.09 | 0 | [CSV](khoa/insects_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/s6lcevkf) |
+| InsectsAbrupt | Khoa | RF / RF | 5325 | 500 | 0.5770 / 0.73 | 0.0939 / 0.28 | 0 | [CSV](khoa/insects-abrupt_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/tujkdqpz) |
+| Keystroke | Khoa | XGB / RF | 1600 | 500 | 0.8861 / 0.84 | 0.3125 / 0.31 | 0 | [CSV](khoa/keystroke_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/p7k4ehtn) |
+| Posture | Khoa | XGB / RF | 150000 | 2000 | 0.4724 / 0.50 | 0.1600 / 0.02 | 11 | [CSV](khoa/posture_reproduction.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/of55ovih) |
 | Bike | Khánh | XGB / RF | 17379 | 2000 | 0.3175 / 0.32 | 0.2086 / 0.06 | 1 | [CSV](khanh/bike_comparison_table.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/z7gwi104) |
 | Gas | Khánh | RC / RC | 13910 | 2000 | 0.7173 / 0.48 | 0.8627 / 0.86 | 5 | [CSV](khanh/gas_comparison_table.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/7jfppc33) |
 | GMSC | Khánh | XGB / XGB | 150000 | 2000 | 0.1940 / 0.32 | 0.0133 / 0.01 | 0 | [CSV](khanh/gmsc_comparison_table.csv) · [W&B](https://wandb.ai/lgkai-hcmus/STUDD/runs/o3l912e1) |

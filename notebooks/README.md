@@ -17,7 +17,7 @@ Mỗi notebook chạy **BL-st** và **STUDD** trên một bộ dữ liệu. Cặ
 
 1. Tạo Kaggle Notebook rồi dùng **File → Import Notebook** để mở file `.ipynb`. Bật **Internet** và để **Accelerator = None**.
 2. Chạy cell cài thư viện đầu tiên trong một phiên mới. Notebook có sẵn lớp Page–Hinkley từ scikit-multiflow 0.5.3, nên không cần cài toàn bộ gói scikit-multiflow trên Kaggle.
-3. Cấp quyền cho secret `WANDB_API_KEY` và đặt `LOG_TO_WANDB = True` ở cell 2 nếu muốn gửi kết quả vào [Testing](https://wandb.ai/lgkai-hcmus/Testing).
+3. Cấp quyền cho secret `WANDB_API_KEY` và đặt `LOG_TO_WANDB = True` ở cell 2 nếu muốn gửi kết quả vào [STUDD](https://wandb.ai/lgkai-hcmus/STUDD).
 4. Chạy các cell theo thứ tự. Cell 5 in bảng Kappa và lưu CSV. Cell 6 in URL của hai run. Chép URL đã xác nhận **Finished** vào README chính. Chạy lại cell 6 sẽ tạo run mới.
 
 Chạy lại **01 InsectsAbrupt** để lấy kết quả với cấu hình detector trong paper. Các run mới có hậu tố `paper-seed42`. Với Arabic và ArabicShuffled, gắn [dataset Kaggle riêng tư của Khoa](https://www.kaggle.com/datasets/phmchnkhoa/studd-arabic-benchmark-inputs). Kaggle giải nén hai ZIP upstream khi nhập. Cell 3 kiểm tra SHA-256 của tệp đã giải nén và giữ nguyên thứ tự luồng.
