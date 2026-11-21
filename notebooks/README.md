@@ -1,5 +1,15 @@
 # Notebook thực nghiệm STUDD
 
+## Notebook tổng hợp Full Scope (Khuyến nghị xem trước)
+
+* [`STUDD_Full_Scope_Reproduction.ipynb`](STUDD_Full_Scope_Reproduction.ipynb): Notebook tổng hợp toàn trình (kèm đầy đủ output & biểu đồ nhúng sẵn) gọi trực tiếp các module trong `src/` và `experiments/`, bao quát 6 hạng mục Full Scope với quy chuẩn hạt giống đồng nhất (`Teacher=42`, `Student=142`, `RNG=42`):
+  1. Bộ nạp 19 luồng dữ liệu & fallback 3 tầng cho `Arabic` / `ArabicShuffled`
+  2. Kiểm chứng quy trình chọn thuật toán 70/30 (Mục 5.6.2 & Bảng 2)
+  3. Tổng hợp 19 bộ (Bảng 3–4), Bayesian Sign Test (Hình 11–12) & Labeling Efficiency (Hình 13)
+  4. Phân tích cảnh báo Bảng 5 trên 19 bộ & đồ thị chuẩn hóa Hình 7–8
+  5. Phân tích độ nhạy `l_access × l_delay` trên 19 bộ (Mục 5.8.5, Hình 14, RQ3)
+  6. Đối chiếu có kiểm soát Paper-Text vs Author-Code & Ablation nguyên nhân sai lệch
+
 ## Phần của Khoa
 
 Mỗi notebook chạy **BL-st** và **STUDD** trên một bộ dữ liệu. Cặp mô hình lấy từ Bảng 2 và số tham chiếu Kappa lấy từ Bảng 3 của paper.
