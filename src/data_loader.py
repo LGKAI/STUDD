@@ -11,8 +11,11 @@ Tuân thủ quy định của Course Lab Book (Mục Experimental Reproduction):
       nhân tạo (`generate_abrupt_drift_stream`, `generate_pure_real_drift_stream`).
 """
 
+import hashlib
+import io
 import json
 import os
+from pathlib import Path
 import zipfile
 from typing import Any, Dict, List, Optional, Tuple
 import numpy as np
@@ -38,6 +41,48 @@ DAT_6_DATASETS: Tuple[str, ...] = (
     "sensors",
 )
 
+KHOA_6_DATASETS: Tuple[str, ...] = (
+    "insectsabrupt",
+    "insects",
+    "keystroke",
+    "arabic",
+    "arabicshuffled",
+    "posture",
+)
+
+KHANH_7_DATASETS: Tuple[str, ...] = (
+    "gmsc",
+    "gas",
+    "luxembourg",
+    "ozone",
+    "outdoor",
+    "rialto",
+    "bike",
+)
+
+# Thứ tự chuẩn 19 bộ dữ liệu theo Bảng 1 & Bảng 3 bài báo STUDD
+ALL_19_DATASETS: Tuple[str, ...] = (
+    "InsectsAbrupt",
+    "Insects",
+    "Posture",
+    "Arabic",
+    "Bike",
+    "NOAA",
+    "Sensors",
+    "Powersupply",
+    "Poker",
+    "Rialto",
+    "Ozone",
+    "Outdoor",
+    "Luxembourg",
+    "Gas",
+    "Keystroke",
+    "ArabicShuffled",
+    "CoverType",
+    "GMSC",
+    "Electricity",
+)
+
 # Bản đồ ánh xạ tên chuẩn hóa sang khóa trong data/hosted_sources.json
 HOSTED_KEY_MAP: Dict[str, str] = {
     "electricity": "Electricity",
@@ -50,7 +95,15 @@ HOSTED_KEY_MAP: Dict[str, str] = {
     "sensors": "Sensors",
     "sensor": "Sensors",
     "insectsabrupt": "InsectsAbrupt",
+    "insects-abrupt": "InsectsAbrupt",
     "abruptinsects": "InsectsAbrupt",
+    "insects": "Insects",
+    "keystroke": "Keystroke",
+    "posture": "Posture",
+    "arabic": "Arabic",
+    "arabicshuffled": "ArabicShuffled",
+    "arabic-shuffled": "ArabicShuffled",
+    "arabic_shuffled": "ArabicShuffled",
     "bike": "Bike",
 }
 
@@ -78,6 +131,77 @@ def _download_file(url: str, dest_path: str, timeout: int = 120) -> str:
     return dest_path
 
 
+def _find_kaggle_input_file(filename: str) -> Optional[str]:
+    """Tìm tệp dữ liệu trong `/kaggle/input` (dành cho Arabic Tier 2)."""
+    kaggle_root = Path("/kaggle/input")
+    if not kaggle_root.exists():
+        return None
+    matches = sorted(kaggle_root.rglob(filename))
+    return str(matches[0]) if matches else None
+
+
+def _parse_ts_mfcc_stats(ts_path: str) -> Tuple[np.ndarray, np.ndarray]:
+    """Đọc tệp `.ts` đa biến SpokenArabicDigits thành 26 đặc trưng (mean + std mỗi kênh MFCC)."""
+    X_rows: List[List[float]] = []
+    y_rows: List[str] = []
+    in_data = False
+    with open(ts_path, "r", encoding="utf-8", errors="ignore") as f:
+        for raw_line in f:
+            line = raw_line.strip()
+            if not line or line.startswith("#"):
+                continue
+            if line.lower() == "@data":
+                in_data = True
+                continue
+            if not in_data:
+                continue
+            parts = line.split(":")
+            label = parts[-1].strip()
+            dims = parts[:-1]
+            means: List[float] = []
+            stds: List[float] = []
+            for dim_str in dims:
+                vals = np.fromstring(dim_str, sep=",", dtype=np.float32)
+                if len(vals) == 0:
+                    vals = np.array([0.0], dtype=np.float32)
+                means.append(float(np.mean(vals)))
+                stds.append(float(np.std(vals)))
+            X_rows.append(means + stds)
+            y_rows.append(label)
+    X = np.asarray(X_rows, dtype=np.float32)
+    y = LabelEncoder().fit_transform(np.asarray(y_rows, dtype=str)).astype(np.int64)
+    return X, y
+
+
+def _load_arabic_ts_fallback(
+    ts_dir: str,
+    shuffled: bool = False,
+    seed: int = 42,
+) -> Tuple[np.ndarray, np.ndarray]:
+    """Tier 3 fallback cho Arabic / ArabicShuffled từ snapshot `.ts` cục bộ."""
+    train_ts = os.path.join(ts_dir, "SpokenArabicDigits_TRAIN.ts")
+    test_ts = os.path.join(ts_dir, "SpokenArabicDigits_TEST.ts")
+    xs, ys = [], []
+    for p in (train_ts, test_ts):
+        if os.path.exists(p):
+            xi, yi = _parse_ts_mfcc_stats(p)
+            xs.append(xi)
+            ys.append(yi)
+    if not xs:
+        raise FileNotFoundError(f"Không tìm thấy dữ liệu SpokenArabicDigits .ts tại {ts_dir}")
+    X = np.vstack(xs).astype(np.float32)
+    y = np.concatenate(ys).astype(np.int64)
+    if shuffled:
+        # Bổ sung cột sex nhị phân tất định (4400 male=0, 4400 female=1) và xáo trộn theo seed=42
+        half = len(X) // 2
+        sex_col = np.r_[np.zeros((half, 1), dtype=np.float32), np.ones((len(X) - half, 1), dtype=np.float32)]
+        X = np.hstack([X, sex_col])
+        perm = np.random.default_rng(seed).permutation(len(X))
+        X = X[perm]
+        y = y[perm]
+    return X, y
+
+
 def _resolve_raw_source(
     spec: Dict[str, Any],
     source_mode: str = "auto",
@@ -90,9 +214,9 @@ def _resolve_raw_source(
         Mục cấu hình của bộ dữ liệu trong `data/hosted_sources.json`.
     source_mode : {"auto", "hosted", "local"}, default="auto"
         - `"auto"`: ưu tiên cache trong `data/cache/`, sau đó tới snapshot trong repo,
-          cuối cùng tải tự động từ URL trong manifest.
+          cuối cùng tải tự động từ URL trong manifest (và hỗ trợ 3-tier fallback cho Arabic).
         - `"hosted"`: ưu tiên cache đã tải từ URL, nếu chưa có sẽ tải từ URL hosted.
-        - `"local"`: chỉ dùng bản snapshot trong repo hoặc cache đã có sẵn.
+        - `"local"`: chỉ dùng bản snapshot trong repo, `/kaggle/input` hoặc cache đã có sẵn.
 
     Returns
     -------
@@ -103,15 +227,31 @@ def _resolve_raw_source(
     cache_path = os.path.join(CACHE_DIR, cache_name)
     local_rel = spec.get("local_path")
     local_path = os.path.join(PROJECT_ROOT, local_rel) if local_rel else None
+    kaggle_rel = spec.get("kaggle_relpath")
+    ts_rel = spec.get("local_ts_dir")
+    ts_dir = os.path.join(PROJECT_ROOT, ts_rel) if ts_rel else None
 
     if source_mode == "auto":
         if os.path.exists(cache_path):
             return cache_path, f"cache:{os.path.relpath(cache_path, PROJECT_ROOT)}"
         if local_path and os.path.exists(local_path):
             return local_path, f"repo:{local_rel}"
-        print(f"[DataLoader] Đang tải tự động '{spec['dataset']}' từ {spec['url']}...")
-        _download_file(spec["url"], cache_path)
-        return cache_path, f"downloaded:{spec['url']}"
+        if kaggle_rel:
+            kpath = _find_kaggle_input_file(kaggle_rel)
+            if kpath:
+                return kpath, f"kaggle_input:{kpath}"
+        try:
+            print(f"[DataLoader] Đang tải tự động '{spec['dataset']}' từ {spec['url']}...")
+            _download_file(spec["url"], cache_path)
+            return cache_path, f"downloaded:{spec['url']}"
+        except Exception as exc:
+            if ts_dir and os.path.isdir(ts_dir):
+                print(
+                    f"[DataLoader] Cảnh báo: không tải được '{spec['dataset']}' từ Tier 1/2 ({exc}). "
+                    f"Chuyển sang Tier 3 fallback (.ts) tại {ts_dir}."
+                )
+                return ts_dir, f"fallback_ts:{ts_rel}"
+            raise
 
     if source_mode == "hosted":
         if not os.path.exists(cache_path):
@@ -122,8 +262,14 @@ def _resolve_raw_source(
     if source_mode == "local":
         if local_path and os.path.exists(local_path):
             return local_path, f"repo:{local_rel}"
+        if kaggle_rel:
+            kpath = _find_kaggle_input_file(kaggle_rel)
+            if kpath:
+                return kpath, f"kaggle_input:{kpath}"
         if os.path.exists(cache_path):
             return cache_path, f"cache:{os.path.relpath(cache_path, PROJECT_ROOT)}"
+        if ts_dir and os.path.isdir(ts_dir):
+            return ts_dir, f"fallback_ts:{ts_rel}"
         raise FileNotFoundError(
             f"Không tìm thấy dữ liệu cục bộ cho '{spec['dataset']}' khi chạy ở chế độ source_mode='local'."
         )
@@ -221,6 +367,44 @@ def _parse_hosted_dataframe(
             "Định dạng bike_hourly_csv không hợp lệ: thiếu cột 'cnt' hoặc bộ cột "
             "['temp', 'atemp', 'hum', 'windspeed', 'target']."
         )
+
+    if fmt in ("arabic_at_data_zip", "arabic_sex_csv_zip"):
+        if os.path.isdir(file_path):
+            X_fb, y_fb = _load_arabic_ts_fallback(
+                file_path,
+                shuffled=(fmt == "arabic_sex_csv_zip"),
+                seed=42,
+            )
+            if nrows is not None:
+                return X_fb[:nrows], y_fb[:nrows]
+            return X_fb, y_fb
+
+        if str(file_path).lower().endswith(".zip"):
+            with zipfile.ZipFile(file_path) as zf:
+                preferred = (
+                    "Arabic_Paper_Fixed.data"
+                    if fmt == "arabic_at_data_zip"
+                    else "ArabicDigit_Shuffled_With_Sex.csv"
+                )
+                member = preferred if preferred in zf.namelist() else zf.namelist()[0]
+                raw_bytes = zf.read(member)
+        else:
+            raw_bytes = Path(file_path).read_bytes()
+
+        if fmt == "arabic_at_data_zip":
+            with io.BytesIO(raw_bytes) as stream:
+                first_line = stream.readline().strip().lower()
+                if first_line != b"@data":
+                    stream.seek(0)
+                df = pd.read_csv(stream, header=None, nrows=nrows)
+        else:
+            df = pd.read_csv(io.BytesIO(raw_bytes), nrows=nrows)
+            if "sex" in df.columns and df["sex"].dtype == object:
+                df["sex"] = df["sex"].astype(str).str.strip().str.lower().map({"male": 0, "female": 1}).fillna(0)
+
+        X = df.iloc[:, :-1].apply(pd.to_numeric, errors="coerce").fillna(0.0).to_numpy(dtype=np.float32)
+        y = LabelEncoder().fit_transform(df.iloc[:, -1].astype(str).str.strip()).astype(np.int64)
+        return X, y
 
     raise ValueError(f"Định dạng dataset chưa được hỗ trợ: '{fmt}'")
 
@@ -354,6 +538,54 @@ def load_paper_stream(
         `(X, y, meta)`.
     """
     return load_benchmark_stream(
+        dataset_name=dataset_name,
+        max_samples=max_samples,
+        normalize=normalize,
+        source_mode=source_mode,
+    )
+
+
+def load_all_19_stream(
+    dataset_name: str,
+    max_samples: Optional[int] = PAPER_MAX_SAMPLES,
+    normalize: bool = False,
+    source_mode: str = "auto",
+) -> Tuple[np.ndarray, np.ndarray, Dict[str, object]]:
+    """Nạp hợp nhất bất kỳ bộ dữ liệu nào trong toàn bộ 19 bộ của bài báo STUDD.
+
+    Điều phối tự động giữa:
+        - Manifest `data/hosted_sources.json` (6 bộ của Đạt, 6 bộ của Khoa, Bike của Khánh,
+          kèm cơ chế fallback 3 tầng cho `Arabic` / `ArabicShuffled`).
+        - Registry `STREAM_CONFIG_REGISTRY` (6 bộ còn lại của Khánh: `Luxembourg`,
+          `Outdoor`, `Rialto`, `Gas`, `Ozone`, `GMSC`), ưu tiên snapshot cục bộ khi ở chế độ `auto`.
+    """
+    name_key = dataset_name.lower().strip().replace("-", "").replace("_", "")
+    # Map sanitized keys like arabicshuffled -> arabicshuffled
+    if name_key in STREAM_CONFIG_REGISTRY:
+        cfg = STREAM_CONFIG_REGISTRY[name_key]
+        local_exists = os.path.exists(str(cfg["local_snapshot"]))
+        prefer_hf = (source_mode == "hosted") or (source_mode == "auto" and not local_exists)
+        verify_snapshot = prefer_hf and local_exists
+        X, y, raw_meta = load_stream(
+            name_key,
+            max_samples=max_samples,
+            prefer_hf=prefer_hf,
+            verify_snapshot=verify_snapshot,
+        )
+        if normalize:
+            X = StandardScaler().fit_transform(X).astype(np.float32)
+        meta: Dict[str, object] = {
+            "name": name_key,
+            "canonical_name": str(raw_meta["name"]),
+            "source": str(raw_meta["source_used"]),
+            "n_samples": int(raw_meta["n_samples"]),
+            "n_features": int(raw_meta["n_features"]),
+            "n_classes": int(raw_meta["n_classes"]),
+            "recommended_window_size": int(raw_meta["recommended_window_size"]),
+        }
+        return X, y, meta
+
+    return load_paper_stream(
         dataset_name=dataset_name,
         max_samples=max_samples,
         normalize=normalize,

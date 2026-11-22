@@ -65,6 +65,7 @@
         "x49"
       ],
       "url": "https://huggingface.co/datasets/pham121/studd-insects-abrupt/resolve/90238617f8f88f5ae0f99350e65abc1f194bf37a/AbruptInsects.zip",
+      "recommended_window_size": 500,
       "source_sha256": "ccae737717a9c2901d974e2e36d3f4f30702986a38b941a9579265ac23d7dca3",
       "ordered_sha256": "839bd05b87867866d49c142fcea9df1dece9378b378a714cabdfd38a48f472a8",
       "reference_archive_sha256": "ccae737717a9c2901d974e2e36d3f4f30702986a38b941a9579265ac23d7dca3"
@@ -182,9 +183,86 @@
         "windspeed"
       ],
       "url": "https://huggingface.co/datasets/t22000t/bike-sharing-tabular/resolve/6b645e0cedbc5208fcca11ac94544b088478bf61/hour.csv",
+      "recommended_window_size": 2000,
       "source_sha256": "e03de4ee4ef4dc376ac6e04bf829673c6269e8eba5c60fa121640fa2f829504f",
       "ordered_sha256": "b28b590b122a35f08171be9921801c88026f8d01863c56f367b95693456cbaae",
       "reference_archive_sha256": "df43014f9c0d27dc4e55cbdf23eb7fcb465ee642c1d48b8d9d414ce00d3bc267"
+    },
+    "Insects": {
+      "dataset": "Insects",
+      "rows": 5325,
+      "feature_columns": 49,
+      "n_classes": 5,
+      "format": "headerless_csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-insects/resolve/4fa53b650844ef482a59e486a2927e84cf64e09a/Insects.data",
+      "local_path": "data/dataset_not_huggingface/Insects/Insects.data",
+      "cache_filename": "Insects.data",
+      "max_samples_paper": 5325,
+      "recommended_window_size": 500,
+      "source_sha256": "5c588472b0e8f4ab4149754192d14a5514d27001a2e55cd64c39f41f2e0c374d",
+      "notes": "Khoa benchmark: Insects balanced/incremental (5,325 rows, 49 features + 1 target), W=500."
+    },
+    "Keystroke": {
+      "dataset": "Keystroke",
+      "rows": 1600,
+      "feature_columns": 10,
+      "n_classes": 4,
+      "format": "headerless_csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-keystroke/resolve/38da3e5d1a59471dee117d9e7dfe83e3a8e9d0c0/Keystroke.data",
+      "local_path": "data/dataset_not_huggingface/Keystroke/Keystroke.data",
+      "cache_filename": "Keystroke.data",
+      "max_samples_paper": 1600,
+      "recommended_window_size": 500,
+      "source_sha256": "adb61d7945185ed33f28e29d097a2dbed96c07d95d67f329c6db740d0c0ea845",
+      "notes": "Khoa benchmark: Keystroke dynamics (1,600 rows, 10 features + 1 target), W=500."
+    },
+    "Posture": {
+      "dataset": "Posture",
+      "rows": 164860,
+      "feature_columns": 3,
+      "n_classes": 11,
+      "format": "headerless_csv",
+      "url": "https://huggingface.co/datasets/pham121/studd-posture/resolve/cfd7b8b678acb60f888901839e2c109e6b5a589f/Posture.data",
+      "local_path": "data/dataset_not_huggingface/Posture/Posture.data",
+      "cache_filename": "Posture.data",
+      "max_samples_paper": 150000,
+      "recommended_window_size": 2000,
+      "source_sha256": "400e552cf8d8386c8319fab0428b266a60e2ad88b4802812af8d7666d5ef4a36",
+      "notes": "Khoa benchmark: Posture localization (164,860 raw rows truncated to 150,000 per Section 5.2, 3 features + 1 target), W=2000."
+    },
+    "Arabic": {
+      "dataset": "Arabic",
+      "rows": 8800,
+      "feature_columns": 26,
+      "n_classes": 10,
+      "format": "arabic_at_data_zip",
+      "url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/Arabic_Paper_Fixed.zip",
+      "zip_member": "Arabic_Paper_Fixed.data",
+      "kaggle_slug": "phmchnkhoa/studd-arabic-benchmark-inputs",
+      "kaggle_relpath": "Arabic_Paper_Fixed.data",
+      "local_ts_dir": "data/dataset_huggingface/Arabic",
+      "cache_filename": "Arabic_Paper_Fixed.zip",
+      "max_samples_paper": 8800,
+      "recommended_window_size": 2000,
+      "source_sha256": "3699ac8554ccae941c74c34ce443c8ce12fe9f739aca96f5c897b2b0bbec5190",
+      "notes": "Tier 1: upstream GitHub ZIP; Tier 2: Kaggle dataset phmchnkhoa/studd-arabic-benchmark-inputs; Tier 3: local SpokenArabicDigits .ts MFCC mean/std fallback."
+    },
+    "ArabicShuffled": {
+      "dataset": "ArabicShuffled",
+      "rows": 8800,
+      "feature_columns": 27,
+      "n_classes": 10,
+      "format": "arabic_sex_csv_zip",
+      "url": "https://raw.githubusercontent.com/denismr/incremental-ks/c6bc98833db67d9dc90a0f997a11877860966337/datasets/ArabicDigit_Shuffled_With_Sex.zip",
+      "zip_member": "ArabicDigit_Shuffled_With_Sex.csv",
+      "kaggle_slug": "phmchnkhoa/studd-arabic-benchmark-inputs",
+      "kaggle_relpath": "ArabicDigit_Shuffled_With_Sex.csv",
+      "local_ts_dir": "data/dataset_huggingface/Arabic",
+      "cache_filename": "ArabicDigit_Shuffled_With_Sex.zip",
+      "max_samples_paper": 8800,
+      "recommended_window_size": 2000,
+      "source_sha256": "bc710ef7a0ba3884951435e2ad31c1e0228bbcc897f2c237fd0ee0c30eca51aa",
+      "notes": "Tier 1: upstream GitHub ZIP (keeps exact shuffled order + sex column male=0, female=1); Tier 2: Kaggle dataset; Tier 3: seeded deterministic fallback."
     }
   }
 }

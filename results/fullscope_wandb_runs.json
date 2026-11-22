@@ -1,0 +1,155 @@
+{
+  "entity": "lgkai-hcmus",
+  "project": "STUDD",
+  "runs": {
+    "table2_selection": {
+      "run_name": "fullscope-table2-selection-verification",
+      "run_id": "5t33q8ec",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/5t33q8ec",
+      "job_type": "table2_selection_verification",
+      "config": {
+        "scope": "19_datasets_table2_selection",
+        "split": "70_30_chronological",
+        "candidate_pool": [
+          "RF",
+          "XGB",
+          "RC",
+          "DT",
+          "LR",
+          "NB",
+          "SVC"
+        ],
+        "seed_teacher": 42,
+        "seed_student": 142
+      },
+      "summary": {
+        "datasets_count": 19,
+        "teacher_exact_match_count": 7,
+        "student_exact_match_count": 7,
+        "student_match_given_paper_teacher_count": 14,
+        "mean_teacher_kappa_gap": 0.0728,
+        "median_teacher_kappa_gap": 0.0511,
+        "seed_teacher": 42,
+        "seed_student": 142
+      }
+    },
+    "bayesian_efficiency": {
+      "run_name": "fullscope-bayesian-and-efficiency",
+      "run_id": "5nfgcfv6",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/5nfgcfv6",
+      "job_type": "bayesian_and_efficiency",
+      "config": {
+        "scope": "19_datasets_10_methods",
+        "rope": 0.05,
+        "dirichlet_samples": 50000,
+        "prior_s": 1.0,
+        "seed_rng": 42
+      },
+      "summary": {
+        "studd_our_mean_kappa": 0.5002,
+        "studd_paper_mean_kappa": 0.5174,
+        "studd_our_mean_cost": 0.2523,
+        "studd_paper_mean_cost": 0.2195,
+        "studd_our_kappa_per_cost": 1.9821,
+        "studd_paper_kappa_per_cost": 2.3573,
+        "studd_our_median_eq1_3_eff": 1.0,
+        "studd_our_mean_eq1_3_eff": 0.7171,
+        "bayes_our_kappa_p_win_vs_ss": 0.0002,
+        "bayes_our_cost_p_win_vs_ss": 0.9687,
+        "seed_rng": 42
+      }
+    },
+    "table5_alarms": {
+      "run_name": "fullscope-table5-alarms-and-figs7-8",
+      "run_id": "he47zwzd",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/he47zwzd",
+      "job_type": "table5_alarm_analysis",
+      "config": {
+        "scope": "19_datasets_alarm_analysis",
+        "seed_teacher": 42,
+        "seed_student": 142,
+        "delta": 0.001,
+        "ph_threshold": 50.0,
+        "ks_alpha": 0.001
+      },
+      "summary": {
+        "ss_alarmed_datasets_count": 15,
+        "studd_our_mdr": 0.4,
+        "studd_our_far": 0.0,
+        "studd_our_mtd": 0.1535,
+        "studd_total_alarms_all19": 122,
+        "fig7_insects_abrupt_studd_kappa": 0.7788,
+        "fig7_insects_abrupt_studd_alarms": 1,
+        "fig8_posture_studd_kappa": 0.4688,
+        "fig8_posture_studd_alarms": 10,
+        "seed_teacher": 42,
+        "seed_student": 142
+      }
+    },
+    "sensitivity_rq3": {
+      "run_name": "fullscope-sensitivity-rq3",
+      "run_id": "3qfje87x",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/3qfje87x",
+      "job_type": "sensitivity_analysis_rq3",
+      "config": {
+        "scope": "19_datasets_section_5_8_5",
+        "l_access_grid": [
+          0.01,
+          0.1,
+          0.25,
+          0.5
+        ],
+        "l_delay_grid": [
+          250,
+          500,
+          1000,
+          1500,
+          2000,
+          4000
+        ],
+        "seed_teacher": 42,
+        "seed_student": 142,
+        "seed_rng": 42
+      },
+      "summary": {
+        "grid_cells": 24,
+        "studd_mean_kappa": 0.5166,
+        "ss_mean_kappa": 0.5789,
+        "studd_outperforms_mean_cells": 20,
+        "studd_rank_obs_1pct": 3.53,
+        "studd_rank_obs_10pct": 3.95,
+        "studd_rank_obs_25pct": 4.45,
+        "studd_rank_obs_50pct": 4.74,
+        "seed_teacher": 42,
+        "seed_student": 142
+      }
+    },
+    "protocol_ablation": {
+      "run_name": "fullscope-protocol-ablation",
+      "run_id": "yiouyosl",
+      "url": "https://wandb.ai/lgkai-hcmus/STUDD/runs/yiouyosl",
+      "job_type": "protocol_comparison_ablation",
+      "config": {
+        "datasets": [
+          "CoverType",
+          "Poker",
+          "Powersupply",
+          "Electricity",
+          "Sensors",
+          "Posture",
+          "Insects",
+          "InsectsAbrupt"
+        ],
+        "seed_teacher": 42,
+        "seed_student": 142
+      },
+      "summary": {
+        "protoA_mean_kappa": 0.4881,
+        "protoB_mean_kappa": 0.4115,
+        "paper_mean_kappa": 0.5025,
+        "seed_teacher": 42,
+        "seed_student": 142
+      }
+    }
+  }
+}
